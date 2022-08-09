@@ -21,12 +21,10 @@ app.use(cors())
 // Do mysql request
 app.post('/api/insert', (req, res)=> {
 
-    const nom = req.body.nom
-    const email = req.body.email
     const phoneNumber = req.body.phoneNumber
 
-    const sqlInsert = "INSERT INTO prepsfollowers(prepsfollowers_name, prepsfollowers_email, prepsfollowers_number) VALUES (?,?,?)"
-    db.query(sqlInsert, [nom, email, phoneNumber], (err, result) => {
+    const sqlInsert = "INSERT INTO prepsfollowers(prepsfollowers_number) VALUES (?)"
+    db.query(sqlInsert, [phoneNumber], (err, result) => {
          console.log(result)
     })
 })
