@@ -25,7 +25,7 @@ app.post('/api/insert', (req, res)=> {
 
     const sqlInsert = "INSERT INTO prepsfollowers(prepsfollowers_number) VALUES (?)"
     db.query(sqlInsert, [phoneNumber], (err, result) => {
-         console.log(result)
+         res.json({result, registered:true})
     })
 })
 
