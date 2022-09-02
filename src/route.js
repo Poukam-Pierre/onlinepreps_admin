@@ -3,6 +3,7 @@
 import TestSheetBuying from './components/achatEpreuve'
 import EmployeDashboard from './components/dashboard/EmployeDashboard'
 import TestSheet from './components/epreuves'
+import FormSheet from './components/formSheet'
 import EmployeProfil from './components/profil'
 import EmployeSkeleton from './pages/employeHomeSkeleton'
 
@@ -15,6 +16,7 @@ export const routes = [
       { path: '/epreuves', element: <TestSheet /> },
       { path: '/achat', element: <TestSheetBuying /> },
       { path: '/profil', element: <EmployeProfil /> },
+      { path: '/form/:id', element: <FormSheet /> },
     ],
   },
 ]
