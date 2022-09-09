@@ -89,7 +89,11 @@ function AdminSideBar() {
               Partenaires
             </ListItemText>
           </MenuItem>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/statistics"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <TextSnippetIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>

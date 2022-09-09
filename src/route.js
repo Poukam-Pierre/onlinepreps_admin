@@ -11,6 +11,7 @@ import FormSheet from './components/formSheet'
 import Partner from './components/partenaire'
 import ViewPartner from './components/partenaire/viewPartner'
 import EmployeProfil from './components/profil'
+import StatEpreuve from './components/statistique/epreuves'
 import AdminSkeleton from './pages/adminHomeSkeleton'
 import EmployeSkeleton from './pages/employeHomeSkeleton'
 
@@ -45,6 +46,7 @@ export const routes = [
       // { path: 'profil/:id', element: <EmployeProfil /> },
       { path: 'partner', element: <Partner /> },
       { path: 'partner/:id', element: <ViewPartner /> },
+      { path: 'statistics', element: <StatEpreuve /> },
       // { path: '/form/:id', element: <FormSheet /> },
     ],
   },
