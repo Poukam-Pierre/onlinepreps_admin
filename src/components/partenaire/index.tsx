@@ -2,19 +2,19 @@
 
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import SelleSheetTable from './sheetSelle'
+import PartnerTable from './partnerTable'
 
-function TestSheetBuying() {
+function Partner() {
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Typography variant="h4" color="#555">
-        Achat épreuves (NDE|CMR)
+        Partenaires
       </Typography>
       <Box height={600} display="flex" justifyContent="center">
-        <SelleSheetTable />
+        <PartnerTable />
       </Box>
     </Box>
   )
 }
 
-export default TestSheetBuying
+export default Partner

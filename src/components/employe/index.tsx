@@ -1,23 +1,22 @@
-//  Made by Poukam Ngamaleu
+// Made by Poukam Ngamaleu
 
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import TestSheetTable from './testSheetTable'
-import uuid from 'react-uuid'
 import { useNavigate } from 'react-router-dom'
+import EmployeTable from './employeTable'
 
-function TestSheet() {
+function Employes() {
   const navigate = useNavigate()
 
-  function createFormSheet() {
-    const id_ = uuid()
-    navigate('/form/' + id_)
+  function createEmploye() {
+    navigate('/admin/employe/new')
   }
+
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h4" color="#555">
-          Epreuves ( NDE|CMR)
+          Employes
         </Typography>
         <Button
           variant="outlined"
@@ -25,16 +24,16 @@ function TestSheet() {
             borderColor: '#369DC1',
             color: '#369DC1',
           }}
-          onClick={createFormSheet}
+          onClick={createEmploye}
         >
-          Créer épreuve
+          Créer employe
         </Button>
       </Box>
-      <Box height={600} display="flex" justifyContent="center">
-        <TestSheetTable />
+      <Box display="flex" justifyContent="center" height={600}>
+        <EmployeTable />
       </Box>
     </Box>
   )
 }
 
-export default TestSheet
+export default Employes

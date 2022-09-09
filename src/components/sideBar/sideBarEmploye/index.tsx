@@ -30,7 +30,7 @@ function EmployeSideBar() {
         height: 'calc(100vh - 168px)',
         bgcolor: theme.palette.primary.light,
         position: 'sticky',
-        top: '120px',
+        top: '115px',
       }}
     >
       <Box

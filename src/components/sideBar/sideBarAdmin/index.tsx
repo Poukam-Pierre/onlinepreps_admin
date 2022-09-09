@@ -16,16 +16,17 @@ import HandshakeIcon from '@mui/icons-material/Handshake'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import { StyledLink } from '../sideBarEmploye'
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'
 
 function AdminSideBar() {
   return (
     <Box
       p={3}
       sx={{
-        height: 'calc(100vh - 168px)',
+        height: 'calc(100vh - 160px)',
         bgcolor: theme.palette.primary.light,
         position: 'sticky',
-        top: '120px',
+        top: '115px',
       }}
     >
       <Box
@@ -60,7 +61,11 @@ function AdminSideBar() {
           ACCES RAPIDE
         </Typography>
         <MenuList>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/employes"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <AccountCircleIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>
@@ -70,7 +75,11 @@ function AdminSideBar() {
               Employés
             </ListItemText>
           </MenuItem>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/partner"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <HandshakeIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>
@@ -78,6 +87,16 @@ function AdminSideBar() {
               sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
             >
               Partenaires
+            </ListItemText>
+          </MenuItem>
+          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+            <ListItemIcon sx={{ color: '#F5FA05' }}>
+              <TextSnippetIcon sx={{ fontSize: 30 }} />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
+            >
+              Epreuves
             </ListItemText>
           </MenuItem>
         </MenuList>

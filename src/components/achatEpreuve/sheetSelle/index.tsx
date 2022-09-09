@@ -1,16 +1,6 @@
 // Made by Poukam Ngamaleu
 
-import {
-  Box,
-  Button,
-  Divider,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  MenuList,
-  Modal,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Divider, Modal, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { useState } from 'react'
 
@@ -23,8 +13,6 @@ const columns: {
   { field: 'id', headerName: 'ID', width: 180 },
   { field: 'category', headerName: 'Catégorie', width: 130 },
   { field: 'session', headerName: 'Session', width: 180 },
-  { field: 'departement', headerName: 'Département', width: 130 },
-  { field: 'pays', headerName: 'Pays', width: 70 },
   {
     field: 'status',
     headerName: 'Status',
@@ -76,79 +64,66 @@ const rows: {
   id: string
   category: string
   session: string
-  departement: string
-  pays: string
   status: boolean | undefined
 }[] = [
   {
     id: 'cgdho-21548-gdiys',
     category: 'B',
     session: '12 Février 2022',
-    departement: 'NDE',
-    pays: 'CMR',
     status: true,
   },
   {
     id: 'cgdho-29748-pgiys',
     category: 'B',
     session: '12 Janvier 2022',
-    departement: 'MIFI',
-    pays: 'CMR',
     status: false,
   },
   {
     id: 'ceghh-26348-gaoys',
     category: 'A',
     session: '12 Mai 2002',
-    departement: 'NDE',
-    pays: 'CMR',
     status: true,
   },
   {
     id: 'cgdho-21548-bolys',
     category: 'C',
     session: '12 Mars 2021',
-    departement: 'WOURI',
-    pays: 'CMR',
     status: false,
   },
   {
     id: 'cgdho-21946-gdiys',
     category: 'D',
     session: '12 Juin 2022',
-    departement: 'NDE',
-    pays: 'CMR',
     status: undefined,
   },
   {
     id: 'cgdho-21548-topys',
     category: 'E',
     session: '12 Mars 2022',
-    departement: 'HAUT-NKAM',
-    pays: 'CMR',
     status: true,
   },
   {
     id: 'cajgo-21548-gdiys',
     category: 'G',
     session: '02 Juillet 2022',
-    departement: 'NDE',
-    pays: 'CMR',
     status: true,
   },
   {
     id: 'cgper-21548-payys',
     category: 'B',
     session: '12 Decembre 2022',
-    departement: 'NDE',
-    pays: 'CMR',
     status: undefined,
   },
 ]
 
 function SelleSheetTable() {
   const [open, setOpen] = useState<boolean>(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    // var epreuveTable = [...rows]
+    // epreuveTable[index].status = false
+    // console.log(index)
+    setOpen(true)
+  }
   const handleClose = () => setOpen(false)
 
   const actionColumns: {

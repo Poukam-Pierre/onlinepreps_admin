@@ -1,6 +1,5 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 const columns: {
@@ -19,18 +18,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status ? (
-            <span
-              style={{
-                backgroundColor: '#D2F0F2',
-                color: '#41B2BA',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              En production
-            </span>
-          ) : (
+          {params.row.status === undefined ? (
             <span
               style={{
                 backgroundColor: '#F89E9E',
@@ -39,7 +27,29 @@ const columns: {
                 borderRadius: '15px',
               }}
             >
-              En arrêt
+              En vente
+            </span>
+          ) : params.row.status ? (
+            <span
+              style={{
+                backgroundColor: '#D2F0F2',
+                color: '#41B2BA',
+                padding: '10px',
+                borderRadius: '15px',
+              }}
+            >
+              Acheter
+            </span>
+          ) : (
+            <span
+              style={{
+                backgroundColor: '#CAD2FF',
+                color: '#626DA9',
+                padding: '10px',
+                borderRadius: '15px',
+              }}
+            >
+              Contacter
             </span>
           )}
         </>
@@ -47,12 +57,11 @@ const columns: {
     },
   },
 ]
-
 const rows: {
   id: string
   category: string
   session: string
-  status: boolean
+  status: boolean | undefined
 }[] = [
   {
     id: 'cgdho-21548-gdiys',
@@ -82,7 +91,7 @@ const rows: {
     id: 'cgdho-21946-gdiys',
     category: 'D',
     session: '12 Juin 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgdho-21548-topys',
@@ -100,57 +109,20 @@ const rows: {
     id: 'cgper-21548-payys',
     category: 'B',
     session: '12 Decembre 2022',
-    status: true,
+    status: undefined,
   },
 ]
-
-function TestSheetTable() {
-  const actionColumns: {
-    field: string
-    headerName: string
-    width: number
-    renderCell: any
-  }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 230,
-      renderCell: () => {
-        return (
-          <Box display="flex" gap="10px">
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1A9EA7',
-              }}
-            >
-              Aperçu
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1D689F',
-              }}
-            >
-              Modifier
-            </Button>
-          </Box>
-        )
-      },
-    },
-  ]
+function SheetBuy() {
   return (
     <DataGrid
       rows={rows}
-      columns={columns.concat(actionColumns)}
-      pageSize={10}
-      rowsPerPageOptions={[10]}
+      columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '50rem' }}
     />
   )
 }
 
-export default TestSheetTable
+export default SheetBuy

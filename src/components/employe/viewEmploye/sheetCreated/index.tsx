@@ -103,8 +103,7 @@ const rows: {
     status: true,
   },
 ]
-
-function TestSheetTable() {
+function SheetCreate() {
   const actionColumns: {
     field: string
     headerName: string
@@ -122,19 +121,10 @@ function TestSheetTable() {
               variant="outlined"
               sx={{
                 borderColor: '#CBCBCB',
-                color: '#1A9EA7',
+                color: 'red',
               }}
             >
-              Aperçu
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1D689F',
-              }}
-            >
-              Modifier
+              Supprimer
             </Button>
           </Box>
         )
@@ -145,12 +135,12 @@ function TestSheetTable() {
     <DataGrid
       rows={rows}
       columns={columns.concat(actionColumns)}
-      pageSize={10}
-      rowsPerPageOptions={[10]}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '60rem' }}
     />
   )
 }
 
-export default TestSheetTable
+export default SheetCreate
