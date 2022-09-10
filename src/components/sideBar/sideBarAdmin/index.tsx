@@ -92,7 +92,7 @@ function AdminSideBar() {
           <MenuItem
             sx={{ gap: '10px' }}
             component={StyledLink}
-            to="/admin/statistics"
+            to="/admin/epreuves"
           >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <TextSnippetIcon sx={{ fontSize: 30 }} />
@@ -115,7 +115,11 @@ function AdminSideBar() {
           NOTIFICATIONS
         </Typography>
         <MenuList>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/messages"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <TextsmsIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>
@@ -137,7 +141,11 @@ function AdminSideBar() {
           STUFF
         </Typography>
         <MenuList>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/manager"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <LocalMallIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>
@@ -147,7 +155,11 @@ function AdminSideBar() {
               Manager
             </ListItemText>
           </MenuItem>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem
+            sx={{ gap: '10px' }}
+            component={StyledLink}
+            to="/admin/statistics"
+          >
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <TimelineIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>

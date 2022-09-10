@@ -72,7 +72,7 @@ function EmployeDashboard() {
         </Paper>
       </Box>
       <Box paddingTop="30px">
-        <Typography variant="h5" color="#555" padding="0 0  20px 50px">
+        <Typography variant="h5" color="#555" padding="0 0  20px 2px">
           Dernières transactions
         </Typography>
         <Box display="flex" justifyContent="center">

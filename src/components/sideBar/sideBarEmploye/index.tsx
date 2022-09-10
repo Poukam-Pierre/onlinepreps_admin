@@ -97,7 +97,7 @@ function EmployeSideBar() {
           NOTIFICATIONS
         </Typography>
         <MenuList>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="/feedback">
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <DynamicFeedIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>
@@ -107,7 +107,7 @@ function EmployeSideBar() {
               Feedback
             </ListItemText>
           </MenuItem>
-          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="">
+          <MenuItem sx={{ gap: '10px' }} component={StyledLink} to="/messages">
             <ListItemIcon sx={{ color: '#F5FA05' }}>
               <TextsmsIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>

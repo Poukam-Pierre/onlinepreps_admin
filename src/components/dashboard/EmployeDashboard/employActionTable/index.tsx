@@ -53,10 +53,16 @@ function ActionTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Type transaction</TableCell>
-            <TableCell align="left">ID</TableCell>
-            <TableCell align="left">Date</TableCell>
-            <TableCell align="left">Status</TableCell>
+            <TableCell sx={{ fontSize: '1.1rem' }}>Type transaction</TableCell>
+            <TableCell align="left" sx={{ fontSize: '1.1rem' }}>
+              ID
+            </TableCell>
+            <TableCell align="left" sx={{ fontSize: '1.1rem' }}>
+              Date
+            </TableCell>
+            <TableCell align="left" sx={{ fontSize: '1.1rem' }}>
+              Status
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

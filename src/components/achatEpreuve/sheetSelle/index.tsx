@@ -118,14 +118,18 @@ const rows: {
 
 function SelleSheetTable() {
   const [open, setOpen] = useState<boolean>(false)
-  const handleOpen = () => {
-    // var epreuveTable = [...rows]
-    // epreuveTable[index].status = false
-    // console.log(index)
+
+  // En attente de l'implémentation des données de la BDD
+  const handleOpen = (index: string) => {
+    console.log(index + ", confirmation de la récupération de l'id")
     setOpen(true)
   }
   const handleClose = () => setOpen(false)
 
+  // En attente de l'implémentation des données de la BDD
+  const handleBuy = (index: string) => {
+    console.log(index + ", confirmation d'achat de l'épreuve")
+  }
   const actionColumns: {
     field: string
     headerName: string
@@ -146,7 +150,7 @@ function SelleSheetTable() {
                 color: '#1A9EA7',
               }}
               disabled={params.row.status ? true : false}
-              onClick={handleOpen}
+              onClick={() => handleOpen(params.row.id)}
             >
               Contacter
             </Button>
@@ -157,6 +161,7 @@ function SelleSheetTable() {
                 color: '#1D689F',
               }}
               disabled={params.row.status ? true : false}
+              onClick={() => handleBuy(params.row.id)}
             >
               Acheter
             </Button>
@@ -173,7 +178,7 @@ function SelleSheetTable() {
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
-        sx={{ maxWidth: '74rem' }}
+        sx={{ maxWidth: '63rem' }}
       />
       <Modal
         open={open}

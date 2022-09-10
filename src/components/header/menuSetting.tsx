@@ -71,7 +71,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
           <Typography
             textAlign="center"
             component={StyledLink}
-            to="#"
+            to="/settings"
             paddingLeft="10px"
           >
             Paramètres

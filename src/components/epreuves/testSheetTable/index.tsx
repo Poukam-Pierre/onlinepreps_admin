@@ -2,6 +2,7 @@
 
 import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import { StyledLink } from '../../sideBar/sideBarEmploye'
 
 const columns: {
   field: string
@@ -115,27 +116,31 @@ function TestSheetTable() {
       field: 'action',
       headerName: 'Action',
       width: 230,
-      renderCell: () => {
+      renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1A9EA7',
-              }}
-            >
-              Aperçu
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1D689F',
-              }}
-            >
-              Modifier
-            </Button>
+            <Box component={StyledLink} to={`/epreuve/view/${params.row.id}`}>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: '#CBCBCB',
+                  color: '#1A9EA7',
+                }}
+              >
+                Apperçu
+              </Button>
+            </Box>
+            <Box component={StyledLink} to={`/epreuve/modify/${params.row.id}`}>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: '#CBCBCB',
+                  color: '#1D689F',
+                }}
+              >
+                Modifier
+              </Button>
+            </Box>
           </Box>
         )
       },
@@ -148,7 +153,7 @@ function TestSheetTable() {
       pageSize={10}
       rowsPerPageOptions={[10]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '60rem' }}
     />
   )
 }
