@@ -160,7 +160,7 @@ function TransactionTable() {
     {
       field: 'action',
       headerName: 'Action',
-      width: 230,
+      width: 240,
       renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">

@@ -13,6 +13,7 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useFormik } from 'formik'
+import { useParams } from 'react-router-dom'
 
 export const StylePhoneNumber = styled(PhoneInput)({
   height: '60px',
@@ -34,7 +35,11 @@ export const StylePhoneNumber = styled(PhoneInput)({
 
 const Pays: string[] = ['CMR', 'GBA']
 
-function CreationEmploye() {
+function ModifyEmploye() {
+  const { employeId } = useParams()
+
+  // fetch function insert here
+
   const {
     values,
     handleSubmit,
@@ -45,6 +50,7 @@ function CreationEmploye() {
     setFieldValue,
   } = useFormik({
     initialValues: {
+      // initial value could be change by value fetching on BDD
       userName: '',
       name: '',
       email: '',
@@ -62,6 +68,7 @@ function CreationEmploye() {
       // Ici entre l'appelle API REST
       resetForm()
     },
+    enableReinitialize: true,
     //   validationSchema: ChangePasswordSchema,
   })
 
@@ -78,7 +85,7 @@ function CreationEmploye() {
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Typography variant="h4" color="#555">
-        Créer nouveau employé
+        Modifier données employé
       </Typography>
       <Paper
         sx={{
@@ -231,7 +238,7 @@ function CreationEmploye() {
               }}
               type="submit"
             >
-              Enregistrer
+              Modifier
             </Button>
           </Box>
         </Box>
@@ -240,4 +247,4 @@ function CreationEmploye() {
   )
 }
 
-export default CreationEmploye
+export default ModifyEmploye

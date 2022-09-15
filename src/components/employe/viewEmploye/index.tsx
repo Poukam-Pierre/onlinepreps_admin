@@ -10,19 +10,27 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { theme } from '../../../utils/style/theme'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
 import ChartConnexion from './connexionRecord'
 import React, { useState } from 'react'
 import Tab from '@mui/material/Tab'
 import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 import SheetCreate from './sheetCreated'
 import SheetBuy from './sheetBuying'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function ViewEmploye() {
+  const { employeId } = useParams()
+  const navigate = useNavigate()
   const [value, setValue] = useState<string>('1')
   const handleChange = (newValue: string) => {
     setValue(newValue)
   }
+
+  const handleClick = () => {
+    navigate(`/admin/employe/modify/${employeId}`)
+  }
+
+  // Fetch function insert here
 
   return (
     <Box p={3}>
@@ -39,7 +47,7 @@ function ViewEmploye() {
               borderRadius: '5px',
               cursor: 'pointer',
             }}
-            // component={StyledLink}
+            onClick={handleClick}
           >
             <Typography variant="subtitle2" padding="2px">
               Modifier
@@ -95,6 +103,20 @@ function ViewEmploye() {
                     fontWeight={400}
                   >
                     NDE | CMR
+                  </Typography>
+                </ListItem>
+                <ListItem sx={{ paddingTop: 0, paddingBottom: 0 }}>
+                  <ListItemText
+                    primary="Poste :"
+                    sx={{ '& .MuiTypography-root': { fontWeight: 500 } }}
+                  />
+                  <Typography
+                    variant="subtitle2"
+                    paddingLeft="5px"
+                    fontSize="0.89rem"
+                    fontWeight={400}
+                  >
+                    Agent | WOURI 5
                   </Typography>
                 </ListItem>
               </List>

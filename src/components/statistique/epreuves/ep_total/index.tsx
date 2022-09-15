@@ -21,7 +21,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status === 'production' ? (
+          {params.row.status === true ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -32,7 +32,7 @@ const columns: {
             >
               En production
             </span>
-          ) : params.row.status === 'stopped' ? (
+          ) : params.row.status === false ? (
             <span
               style={{
                 backgroundColor: ' #CAD2FF',
@@ -67,7 +67,7 @@ const rows: {
   session: string
   department: string
   pays: string
-  status: string
+  status: boolean | undefined
 }[] = [
   {
     id: 'cgdho-21548-gdiys',
@@ -75,7 +75,7 @@ const rows: {
     session: '12 Février 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'unvalided',
+    status: true,
   },
   {
     id: 'cgdho-29748-pgiys',
@@ -83,7 +83,7 @@ const rows: {
     session: '12 Janvier 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'production',
+    status: false,
   },
   {
     id: 'ceghh-26348-gaoys',
@@ -91,7 +91,7 @@ const rows: {
     session: '12 Mai 2002',
     department: 'NDE',
     pays: 'CMR',
-    status: 'unvalided',
+    status: undefined,
   },
   {
     id: 'cgdho-21548-bolys',
@@ -99,7 +99,7 @@ const rows: {
     session: '12 Mars 2021',
     department: 'NDE',
     pays: 'CMR',
-    status: 'production',
+    status: true,
   },
   {
     id: 'cgdho-21946-gdiys',
@@ -107,7 +107,7 @@ const rows: {
     session: '12 Juin 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'stopped',
+    status: false,
   },
   {
     id: 'cgdho-21548-topys',
@@ -115,7 +115,7 @@ const rows: {
     session: '12 Mars 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'production',
+    status: undefined,
   },
   {
     id: 'cajgo-21548-gdiys',
@@ -123,7 +123,7 @@ const rows: {
     session: '02 Juillet 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'unvalided',
+    status: true,
   },
   {
     id: 'cgper-21548-payys',
@@ -131,7 +131,7 @@ const rows: {
     session: '12 Decembre 2022',
     department: 'NDE',
     pays: 'CMR',
-    status: 'stopped',
+    status: undefined,
   },
 ]
 

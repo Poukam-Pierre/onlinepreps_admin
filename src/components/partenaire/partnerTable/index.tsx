@@ -1,8 +1,11 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button, Typography } from '@mui/material'
+import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import { theme } from '../../../utils/style/theme'
 import { StyledLink } from '../../sideBar/sideBarEmploye'
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 
 const columns: {
   field: string
@@ -147,30 +150,24 @@ function PartnerTable() {
     {
       field: 'action',
       headerName: 'Action',
-      width: 230,
+      width: 120,
       renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">
-            <Box component={StyledLink} to={`/admin/partner/${params.row.id}`}>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: '#CBCBCB',
-                  color: '#1A9EA7',
-                }}
+            <Tooltip title="Apperçu">
+              <IconButton
+                sx={{ color: theme.palette.primary.light }}
+                component={StyledLink}
+                to={`/admin/partner/${params.row.id}`}
               >
-                Apperçu
-              </Button>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#FF0000',
-              }}
-            >
-              Signaler
-            </Button>
+                <VisibilityOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Signaler">
+              <IconButton sx={{ color: '#A95454' }}>
+                <ReportProblemOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         )
       },
@@ -184,7 +181,7 @@ function PartnerTable() {
       pageSize={9}
       rowsPerPageOptions={[9]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '66rem' }}
     />
   )
 }

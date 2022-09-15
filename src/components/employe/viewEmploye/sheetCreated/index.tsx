@@ -19,7 +19,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status ? (
+          {params.row.status === true ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -30,6 +30,17 @@ const columns: {
             >
               En production
             </span>
+          ) : params.row.status === false ? (
+            <span
+              style={{
+                backgroundColor: '#CAD2FF',
+                color: '#626DA9',
+                padding: '10px',
+                borderRadius: '15px',
+              }}
+            >
+              En arrêt
+            </span>
           ) : (
             <span
               style={{
@@ -39,7 +50,7 @@ const columns: {
                 borderRadius: '15px',
               }}
             >
-              En arrêt
+              Non validé
             </span>
           )}
         </>
@@ -52,13 +63,13 @@ const rows: {
   id: string
   category: string
   session: string
-  status: boolean
+  status: boolean | undefined
 }[] = [
   {
     id: 'cgdho-21548-gdiys',
     category: 'B',
     session: '12 Février 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgdho-29748-pgiys',
@@ -82,7 +93,7 @@ const rows: {
     id: 'cgdho-21946-gdiys',
     category: 'D',
     session: '12 Juin 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgdho-21548-topys',
@@ -94,7 +105,7 @@ const rows: {
     id: 'cajgo-21548-gdiys',
     category: 'G',
     session: '02 Juillet 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgper-21548-payys',
@@ -113,7 +124,7 @@ function SheetCreate() {
     {
       field: 'action',
       headerName: 'Action',
-      width: 230,
+      width: 140,
       renderCell: () => {
         return (
           <Box display="flex" gap="10px">
@@ -138,7 +149,7 @@ function SheetCreate() {
       pageSize={5}
       rowsPerPageOptions={[5]}
       checkboxSelection
-      sx={{ maxWidth: '60rem' }}
+      sx={{ maxWidth: '55rem' }}
     />
   )
 }

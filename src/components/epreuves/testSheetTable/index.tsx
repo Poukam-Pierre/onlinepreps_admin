@@ -20,7 +20,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status ? (
+          {params.row.status === true ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -31,16 +31,27 @@ const columns: {
             >
               En production
             </span>
-          ) : (
+          ) : params.row.status === false ? (
             <span
               style={{
-                backgroundColor: '#F89E9E',
-                color: '#A95454',
+                backgroundColor: ' #CAD2FF',
+                color: '#626DA9',
                 padding: '10px',
                 borderRadius: '15px',
               }}
             >
               En arrêt
+            </span>
+          ) : (
+            <span
+              style={{
+                backgroundColor: '#F89E9E',
+                color: '#A95454 ',
+                padding: '10px',
+                borderRadius: '15px',
+              }}
+            >
+              Non validé
             </span>
           )}
         </>
@@ -53,7 +64,7 @@ const rows: {
   id: string
   category: string
   session: string
-  status: boolean
+  status: boolean | undefined
 }[] = [
   {
     id: 'cgdho-21548-gdiys',
@@ -83,7 +94,7 @@ const rows: {
     id: 'cgdho-21946-gdiys',
     category: 'D',
     session: '12 Juin 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgdho-21548-topys',
@@ -95,7 +106,7 @@ const rows: {
     id: 'cajgo-21548-gdiys',
     category: 'G',
     session: '02 Juillet 2022',
-    status: true,
+    status: undefined,
   },
   {
     id: 'cgper-21548-payys',

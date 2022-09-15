@@ -19,7 +19,6 @@ import MailIcon from '@mui/icons-material/Mail'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
 import PublishIcon from '@mui/icons-material/Publish'
 import { useFormik } from 'formik'
-import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { StylePhoneNumber } from '../employe/createEmploy'
 
@@ -188,7 +187,6 @@ function EmployeProfil() {
                 onChange={handleChange}
                 sx={{ width: '90%' }}
               />
-              {/* A changer avec le module téléphone */}
               <StylePhoneNumber
                 value={values.phoneNumber}
                 onChange={(number) =>
@@ -208,6 +206,9 @@ function EmployeProfil() {
                     overflow: 'hidden',
                     fontSize: '1rem',
                     width: '100%',
+                  },
+                  '&.PhoneInput': {
+                    width: '90%',
                   },
                 }}
               />

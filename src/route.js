@@ -21,6 +21,7 @@ import Messages from './components/messages'
 import Settings from './components/setting'
 import Manager from './components/managing'
 import Finances from './components/statistique/finance'
+import ModifyEmploye from './components/employe/modifyEmploye'
 
 export const routes = [
   {
@@ -35,9 +36,9 @@ export const routes = [
       { path: 'achat', element: <TestSheetBuying /> },
       { path: 'profil', element: <EmployeProfil /> },
       { path: 'settings', element: <Settings /> },
-      { path: 'form/:id', element: <FormSheet /> },
-      { path: 'epreuve/modify/:id', element: <ModifyTestSheet /> },
-      { path: 'epreuve/view/:id', element: <ViewTestSheet /> },
+      { path: 'form/:formId', element: <FormSheet /> },
+      { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
+      { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
       { path: 'feedback', element: <Feedback /> },
       { path: 'messages', element: <Messages /> },
     ],
@@ -49,12 +50,15 @@ export const routes = [
       { path: '', element: <AdminDashboard /> },
       { path: 'employes', element: <Employes /> },
       { path: 'employe/new', element: <CreationEmploye /> },
-      { path: 'employe/:id', element: <ViewEmploye /> },
-      // { path: 'profil/:id', element: <EmployeProfil /> },
+      { path: 'employe/:employeId', element: <ViewEmploye /> },
+      { path: 'employe/modify/:employeId', element: <ModifyEmploye /> },
       { path: 'partner', element: <Partner /> },
-      { path: 'partner/:id', element: <ViewPartner /> },
+      { path: 'partner/:partnerId', element: <ViewPartner /> },
       { path: 'epreuves', element: <StatEpreuve /> },
-      // { path: '/form/:id', element: <FormSheet /> },
+      { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
+      { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
+      { path: 'profil', element: <EmployeProfil /> },
+      { path: 'settings', element: <Settings /> },
       { path: 'messages', element: <Messages /> },
       { path: 'manager', element: <Manager /> },
       { path: 'statistics', element: <Finances /> },

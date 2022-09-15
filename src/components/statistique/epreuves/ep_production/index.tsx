@@ -1,7 +1,10 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button } from '@mui/material'
+import { Box, IconButton, Tooltip } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { StyledLink } from '../../../sideBar/sideBarEmploye'
 
 const columns: {
   field: string
@@ -123,28 +126,28 @@ function ProductionSheetTable() {
     {
       field: 'action',
       headerName: 'Action',
-      width: 230,
-      renderCell: () => {
+      width: 120,
+      renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1A9EA7',
-              }}
-            >
-              Apperçu
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1D689F',
-              }}
-            >
-              Modifier
-            </Button>
+            <Tooltip title="Apperçu">
+              <IconButton
+                sx={{ color: '#1A9EA7' }}
+                component={StyledLink}
+                to={`/admin/epreuve/view/${params.row.id}`}
+              >
+                <VisibilityOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Modifier">
+              <IconButton
+                sx={{ color: '#1D689F' }}
+                component={StyledLink}
+                to={`/admin/epreuve/modify/${params.row.id}`}
+              >
+                <EditOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         )
       },
@@ -157,7 +160,7 @@ function ProductionSheetTable() {
       pageSize={10}
       rowsPerPageOptions={[10]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '67rem' }}
     />
   )
 }

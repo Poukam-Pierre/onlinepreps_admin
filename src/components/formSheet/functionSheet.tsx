@@ -10,9 +10,10 @@ export interface Proposition {
 export interface question {
   questionBody: string
   propositionAnswers: Proposition[]
+  questionImg?: string
+  file?: string
   open: boolean
-  answer: boolean
-  answerKey: string
+  answer?: boolean
   feedback?: string
 }
 
@@ -54,6 +55,17 @@ export function removeOption(
   }
 }
 
+export function removeImage(
+  questions: question[],
+  index: number,
+  setQuestions: any
+) {
+  var question = [...questions]
+  delete question[index].file
+  delete question[index].questionImg
+  setQuestions(question)
+}
+
 export function addOption(
   questions: question[],
   index: number,
@@ -77,8 +89,10 @@ export function copyQuestion(
 ) {
   expandCloseAll(questions, setQuestions)
   let question = [...questions]
-  var copyQuestion = { ...question[index] }
-  setQuestions([...questions, copyQuestion])
+  if (question.length !== 40) {
+    var copyQuestion = { ...question[index] }
+    setQuestions([...questions, copyQuestion])
+  }
 }
 
 export function deleteQuestion(
@@ -102,17 +116,19 @@ function expandCloseAll(questions: question[], setQuestions: any) {
 }
 
 export function addMoreQuestionField(questions: question[], setQuestions: any) {
-  expandCloseAll(questions, setQuestions)
-  setQuestions([
-    ...questions,
-    {
-      questionBody: 'Question',
-      propositionAnswers: [{ proposition: 'option 1', is_answer: false }],
-      open: true,
-      answer: false,
-      answerKey: '',
-    },
-  ])
+  var question = [...questions]
+  if (question.length !== 40) {
+    expandCloseAll(questions, setQuestions)
+    setQuestions([
+      ...questions,
+      {
+        questionBody: 'Question',
+        propositionAnswers: [{ proposition: 'option 1', is_answer: false }],
+        open: true,
+        answer: false,
+      },
+    ])
+  }
 }
 
 export function handleExpand(
@@ -139,7 +155,6 @@ export function setPropositionAnswer(
   setQuestions: any
 ) {
   var question = [...questions]
-  question[index_1].answerKey = proposition
   question[index_1].propositionAnswers[index].is_answer =
     !question[index_1].propositionAnswers[index].is_answer
   setQuestions(question)
@@ -173,7 +188,6 @@ export function handleChangeFeedBack(
   feedBack: string,
   setOpen: any
 ) {
-  e.preventDefault()
   var question = [...questions]
   question[index].feedback = feedBack
   setQuestions(question)
@@ -195,4 +209,21 @@ export function handleOpen(setOpen: any) {
 }
 export function handleClose(setOpen: any) {
   setOpen(false)
+}
+
+export function photoUpload(
+  index: number,
+  questions: question[],
+  setQuestions: any,
+  e: any
+) {
+  const reader = new FileReader()
+  const File = e.target.files[0]
+  reader.onloadend = () => {
+    var question = [...questions]
+    question[index].file = File
+    question[index].questionImg = reader.result as string
+    setQuestions(question)
+  }
+  reader.readAsDataURL(File)
 }

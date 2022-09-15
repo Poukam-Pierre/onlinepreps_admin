@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 // Mqde by Poukam Ngamaleu
 
 import {
@@ -34,6 +35,8 @@ import {
   handleChangeFeedBack,
   handleOpen,
   handleClose,
+  photoUpload,
+  removeImage,
 } from './functionSheet'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import CropOriginalIcon from '@mui/icons-material/CropOriginal'
@@ -90,20 +93,34 @@ function questionsUI(
                     }}
                   />
                 </Box>
-                <Box>
-                  <Typography variant="h6">
-                    {index_1 + 1}. {quest.questionBody}
+                <Box display="flex">
+                  <Typography variant="h6">{index_1 + 1}.</Typography>
+                  <Typography variant="h6" paddingLeft="5px">
+                    {quest.questionBody}
                   </Typography>
-                  {quest.propositionAnswers.map((option, index) => (
-                    <Box key={index} paddingLeft="20px">
-                      <FormControlLabel
-                        disabled
-                        control={<Checkbox />}
-                        label={<Typography>{option.proposition}</Typography>}
-                      />
-                    </Box>
-                  ))}
                 </Box>
+                <Box
+                  paddingLeft="10px"
+                  sx={{
+                    display: quest.questionImg ? 'flex' : 'none',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img
+                    src={quest.questionImg}
+                    alt="image relatif à la question"
+                    style={{ width: '25rem' }}
+                  />
+                </Box>
+                {quest.propositionAnswers.map((option, index) => (
+                  <Box key={index} paddingLeft="20px">
+                    <FormControlLabel
+                      disabled
+                      control={<Checkbox />}
+                      label={<Typography>{option.proposition}</Typography>}
+                    />
+                  </Box>
+                ))}
               </AccordionSummary>
             ) : null}
             {quest.open ? (
@@ -144,8 +161,41 @@ function questionsUI(
                               )
                             }
                           />
-                          <IconButton>
+                          <IconButton component="label" htmlFor="file">
                             <CropOriginalIcon sx={{ fontSize: 30 }} />
+                          </IconButton>
+                          <input
+                            type="file"
+                            id="file"
+                            style={{ display: 'none' }}
+                            onChange={(e) =>
+                              photoUpload(index_1, questions, setQuestions, e)
+                            }
+                          />
+                        </Box>
+                        <Box
+                          paddingLeft="10px"
+                          position="relative"
+                          sx={{
+                            display: quest.questionImg ? 'flex' : 'none',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <img
+                            src={quest.questionImg}
+                            alt="image relatif à la question"
+                            style={{ width: '25rem' }}
+                          />
+                          <IconButton
+                            onClick={() =>
+                              removeImage(questions, index_1, setQuestions)
+                            }
+                            sx={{
+                              position: 'absolute',
+                              right: '10rem',
+                            }}
+                          >
+                            <CloseIcon />
                           </IconButton>
                         </Box>
                         {quest.propositionAnswers.map((option, index_2) => (
@@ -470,48 +520,46 @@ function questionsUI(
                             Ajouter un commentaire
                           </Typography>
                           <Divider />
-                          <Box
-                            component="form"
-                            onSubmit={(e) =>
-                              handleChangeFeedBack(
-                                questions,
-                                e,
-                                index_1,
-                                setQuestions,
-                                feedBack,
-                                setOpen
-                              )
-                            }
-                          >
-                            <TextareaAutosize
-                              aria-label="empty textarea"
-                              placeholder="Entrez le commentaire"
-                              style={{
-                                width: '100%',
-                                border: 'none',
-                                minHeight: '3rem',
-                                borderBottom: `1px solid #369DC1`,
-                                backgroundColor: 'transparent',
-                                outline: 'none',
-                                fontSize: '1.2rem',
-                                margin: '20px 0 10px',
-                              }}
-                              onChange={(e) => setFeedBack(e.target.value)}
-                              // value={quest.feedback}
-                            />
+                          <TextareaAutosize
+                            aria-label="empty textarea"
+                            placeholder="Entrez le commentaire"
+                            style={{
+                              width: '100%',
+                              border: 'none',
+                              minHeight: '3rem',
+                              borderBottom: `1px solid #369DC1`,
+                              backgroundColor: 'transparent',
+                              outline: 'none',
+                              fontSize: '1.2rem',
+                              margin: '20px 0 10px',
+                            }}
+                            onChange={(e) => setFeedBack(e.target.value)}
+                            value={quest.feedback}
+                          />
 
-                            <Divider />
-                            <Box p={2} display="flex" justifyContent="end">
-                              <Button
-                                sx={{ color: '#555' }}
-                                onClick={() => handleClose(setOpen)}
-                              >
-                                Annuler
-                              </Button>
-                              <Button variant="contained" type="submit">
-                                Enregistrer
-                              </Button>
-                            </Box>
+                          <Divider />
+                          <Box p={2} display="flex" justifyContent="end">
+                            <Button
+                              sx={{ color: '#555' }}
+                              onClick={() => handleClose(setOpen)}
+                            >
+                              Annuler
+                            </Button>
+                            <Button
+                              variant="contained"
+                              onClick={(e) => {
+                                handleChangeFeedBack(
+                                  questions,
+                                  e,
+                                  index_1,
+                                  setQuestions,
+                                  feedBack,
+                                  setOpen
+                                )
+                              }}
+                            >
+                              Enregistrer
+                            </Button>
                           </Box>
                         </Box>
                       </Modal>

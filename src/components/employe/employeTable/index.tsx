@@ -1,9 +1,14 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button } from '@mui/material'
+import { Box, Button, IconButton, Tooltip } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { Link } from 'react-router-dom'
 import { StyledLink } from '../../sideBar/sideBarEmploye'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlined'
+import HouseboatOutlinedIcon from '@mui/icons-material/HouseboatOutlined'
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
+import { theme } from '../../../utils/style/theme'
 
 const columns: {
   field: string
@@ -76,7 +81,7 @@ const columns: {
                 borderRadius: '15px',
               }}
             >
-              Conges
+              Congés
             </span>
           )}
         </>
@@ -216,26 +221,30 @@ function EmployeTable() {
       renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">
-            <Box component={StyledLink} to={`/admin/employe/${params.row.id}`}>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: '#CBCBCB',
-                  color: '#1A9EA7',
-                }}
+            <Tooltip title="Apperçu">
+              <IconButton
+                sx={{ color: theme.palette.primary.light }}
+                component={StyledLink}
+                to={`/admin/employe/${params.row.id}`}
               >
-                Apperçu
-              </Button>
-            </Box>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#FF0000',
-              }}
-            >
-              Supprimer
-            </Button>
+                <VisibilityOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="En service">
+              <IconButton sx={{ color: '#41B2BA' }}>
+                <DesignServicesOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="En congés">
+              <IconButton sx={{ color: '#626DA9' }}>
+                <HouseboatOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Démissionner">
+              <IconButton sx={{ color: '#A95454' }}>
+                <HighlightOffOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         )
       },
@@ -249,7 +258,7 @@ function EmployeTable() {
       pageSize={9}
       rowsPerPageOptions={[9]}
       checkboxSelection
-      sx={{ maxWidth: '74rem' }}
+      sx={{ maxWidth: '71rem' }}
     />
   )
 }
