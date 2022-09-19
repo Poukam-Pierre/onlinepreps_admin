@@ -19,24 +19,6 @@ import {
 } from '../../utils/dataWorking'
 import { useParams } from 'react-router-dom'
 
-// Chargement des données statiques de la BDD
-const categoryArray: string[] = []
-const dataDepartment: string[] = []
-const dataCountry: string[] = []
-
-// eslint-disable-next-line array-callback-return
-department.map(({ name }) => {
-  dataDepartment.push(name)
-})
-// eslint-disable-next-line array-callback-return
-dataCategoryOfLicence.map(({ label }) => {
-  categoryArray.push(label)
-})
-// eslint-disable-next-line array-callback-return
-countries.map(({ label }) => {
-  dataCountry.push(label)
-})
-
 function FormSheet() {
   const { formId } = useParams()
   const [date, setDate] = useState<Dayjs | null>(null)
@@ -126,7 +108,7 @@ function FormSheet() {
                 value={values.category}
                 onChange={(event, val) => setFieldValue('category', val)}
                 isOptionEqualToValue={(option, value) => option === value}
-                options={categoryArray}
+                options={dataCategoryOfLicence.map((option) => option.label)}
                 sx={{ width: 300 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Catégorie" />
@@ -137,12 +119,34 @@ function FormSheet() {
               <Autocomplete
                 id="country"
                 disablePortal
-                options={dataCountry}
+                options={countries}
                 sx={{ width: 300 }}
-                value={values.country}
-                onChange={(event, val) => setFieldValue('country', val)}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderInput={(params) => <TextField {...params} label="Pays" />}
+                onChange={(event, val) => setFieldValue('country', val?.label)}
+                getOptionLabel={(option) => option.label}
+                // isOptionEqualToValue={(option, value) => option === value}
+                renderOption={(props, option) => (
+                  <Box
+                    component="li"
+                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                  >
+                    <img
+                      loading="lazy"
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label} ({option.code})
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    inputProps={{ ...params.inputProps }}
+                    label="Pays"
+                  />
+                )}
               />
               <Autocomplete
                 disablePortal
@@ -150,7 +154,11 @@ function FormSheet() {
                 value={values.department}
                 onChange={(event, val) => setFieldValue('department', val)}
                 isOptionEqualToValue={(option, value) => option === value}
-                options={values.country === 'Cameroun' ? dataDepartment : []}
+                options={
+                  values.country === 'Cameroun'
+                    ? department.map((option) => option.name)
+                    : []
+                }
                 sx={{ width: 300 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Département" />

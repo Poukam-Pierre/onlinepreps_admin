@@ -41,6 +41,7 @@ export const routes = [
       { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
       { path: 'feedback', element: <Feedback /> },
       { path: 'messages', element: <Messages /> },
+      // { path: '*', element: <Error /> },
     ],
   },
   {
@@ -62,6 +63,7 @@ export const routes = [
       { path: 'messages', element: <Messages /> },
       { path: 'manager', element: <Manager /> },
       { path: 'statistics', element: <Finances /> },
+      // { path: '*', element: <Error /> },
     ],
   },
 ]
