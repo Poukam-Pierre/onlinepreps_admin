@@ -4,6 +4,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  FormHelperText,
   Paper,
   styled,
   TextField,
@@ -13,6 +14,7 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useFormik } from 'formik'
+import { CreateEmployeSchema } from './create_empl-schem'
 
 export const StylePhoneNumber = styled(PhoneInput)({
   height: '60px',
@@ -27,12 +29,7 @@ export const StylePhoneNumber = styled(PhoneInput)({
     height: '2rem',
     width: 'calc(2rem * 1.5 )',
   },
-  '&.PhoneInput': {
-    width: '45%',
-  },
 })
-
-const Pays: string[] = ['CMR', 'GBA']
 
 function CreationEmploye() {
   const {
@@ -62,7 +59,7 @@ function CreationEmploye() {
       // Ici entre l'appelle API REST
       resetForm()
     },
-    //   validationSchema: ChangePasswordSchema,
+    validationSchema: CreateEmployeSchema,
   })
 
   function photoUpload(e: any) {
@@ -136,6 +133,9 @@ function CreationEmploye() {
             onChange={handleChange}
             variant="filled"
             sx={{ width: '45%' }}
+            {...(errors.userName && touched.userName
+              ? { error: true, helperText: errors.userName }
+              : '')}
           />
           <TextField
             name="name"
@@ -145,6 +145,9 @@ function CreationEmploye() {
             value={values.name}
             onChange={handleChange}
             sx={{ width: '45%' }}
+            {...(errors.name && touched.name
+              ? { error: true, helperText: errors.name }
+              : '')}
           />
           <TextField
             name="email"
@@ -154,30 +157,38 @@ function CreationEmploye() {
             type="email"
             value={values.email}
             onChange={handleChange}
+            {...(errors.email && touched.email
+              ? { error: true, helperText: errors.email }
+              : '')}
           />
-
-          <StylePhoneNumber
-            value={values.phoneNumber}
-            onChange={(number) =>
-              setFieldValue(`phoneNumber`, number?.toString())
-            }
-            placeholder="Numéro de téléphone"
-            sx={{
-              '& .PhoneInputInput': {
-                height: '85%',
-                backgroundColor: '#DADADA',
-                borderColor: '#000',
-                borderTop: 'none',
-                borderLeft: 'none',
-                borderRight: 'none',
-                borderBottom: 'solid #999999',
-                borderWidth: '1px',
-                overflow: 'hidden',
-                fontSize: '1rem',
-                width: '100%',
-              },
-            }}
-          />
+          <Box display="grid" width="45%">
+            <StylePhoneNumber
+              value={values.phoneNumber}
+              onChange={(number) =>
+                setFieldValue(`phoneNumber`, number?.toString())
+              }
+              placeholder="Numéro de téléphone"
+              sx={{
+                '& .PhoneInputInput': {
+                  height: '85%',
+                  backgroundColor: '#DADADA',
+                  borderColor: '#000',
+                  borderTop: 'none',
+                  borderLeft: 'none',
+                  borderRight: 'none',
+                  borderBottom: 'solid #999999',
+                  borderWidth: '1px',
+                  overflow: 'hidden',
+                  fontSize: '1rem',
+                },
+              }}
+            />
+            {errors.phoneNumber && touched.phoneNumber ? (
+              <FormHelperText error>{errors.phoneNumber}</FormHelperText>
+            ) : (
+              ''
+            )}
+          </Box>
           <TextField
             label="Mot de passe"
             type="password"
@@ -186,6 +197,9 @@ function CreationEmploye() {
             value={values.password}
             onChange={handleChange}
             sx={{ width: '45%' }}
+            {...(errors.password && touched.password
+              ? { error: true, helperText: errors.password }
+              : '')}
           />
           <TextField
             name="adresse"
@@ -194,24 +208,19 @@ function CreationEmploye() {
             sx={{ width: '45%' }}
             value={values.adresse}
             onChange={handleChange}
+            {...(errors.adresse && touched.adresse
+              ? { error: true, helperText: errors.adresse }
+              : '')}
           />
           <Autocomplete
             disablePortal
-            options={Pays}
+            options={['CMR', 'GBA']}
             id="country"
             sx={{ width: '45%' }}
             onChange={(event, val) => setFieldValue('pays', val)}
             value={values.country}
             isOptionEqualToValue={(option, value) => option === value}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Pays"
-                // {...(errors.typeAbonnement && touched.typeAbonnement
-                //   ? { error: true, helperText: errors.typeAbonnement }
-                //   : '')}
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Pays" />}
           />
           <TextField
             name="poste"
@@ -220,6 +229,9 @@ function CreationEmploye() {
             sx={{ width: '45%' }}
             onChange={handleChange}
             value={values.poste}
+            {...(errors.poste && touched.poste
+              ? { error: true, helperText: errors.poste }
+              : '')}
           />
           <Box width="45%" display="flex" justifyContent="center">
             <Button

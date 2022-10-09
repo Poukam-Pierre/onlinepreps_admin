@@ -26,12 +26,17 @@ function FormSheet() {
   const [open, setOpen] = useState<boolean>(false)
   const [questions, setQuestions] = useState<question[]>([
     {
+      questionId: 'apk',
       questionBody: 'Question',
       propositionAnswers: [{ proposition: 'Option 1', is_answer: false }],
       open: true,
       answer: false,
     },
   ])
+  const languages = [
+    { code: 'fr', label: 'Français', country_code: 'fr' },
+    { code: 'en', label: 'English', country_code: 'gb' },
+  ]
 
   const { values, handleSubmit, setFieldValue } = useFormik({
     initialValues: {
@@ -39,6 +44,7 @@ function FormSheet() {
       session: date,
       category: 'B',
       country: 'Cameroun',
+      language: 'Français',
       department: 'Haute-Sanaga',
       questionss: questions,
     },
@@ -165,6 +171,40 @@ function FormSheet() {
                 )}
               />
             </Box>
+          </Box>
+          <Box display="grid" justifyContent="center" paddingTop="10px">
+            <Autocomplete
+              id="language"
+              disablePortal
+              options={languages}
+              sx={{ width: 300 }}
+              onChange={(event, val) => setFieldValue('language', val?.code)}
+              getOptionLabel={(option) => option.label}
+              // isOptionEqualToValue={(option, value) => option === value}
+              renderOption={(props, option) => (
+                <Box
+                  component="li"
+                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                  {...props}
+                >
+                  <img
+                    loading="lazy"
+                    width="20"
+                    src={`https://flagcdn.com/w20/${option.country_code.toLowerCase()}.png`}
+                    srcSet={`https://flagcdn.com/w40/${option.country_code.toLowerCase()}.png 2x`}
+                    alt=""
+                  />
+                  {option.label} ({option.code})
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  inputProps={{ ...params.inputProps }}
+                  label="Langue"
+                />
+              )}
+            />
           </Box>
         </Box>
         <DragDropContext onDragEnd={onDragEnd}>

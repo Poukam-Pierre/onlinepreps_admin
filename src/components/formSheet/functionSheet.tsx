@@ -3,11 +3,13 @@
 export const categoryArray: string[] = ['A', 'B', 'C', 'D', 'E']
 
 export interface Proposition {
+  propositionId?: string
   proposition: string
   is_answer: boolean
 }
 
 export interface question {
+  questionId?: string
   questionBody: string
   propositionAnswers: Proposition[]
   questionImg?: string
@@ -226,4 +228,20 @@ export function photoUpload(
     setQuestions(question)
   }
   reader.readAsDataURL(File)
+}
+
+// export function setFeedBack(
+//   questions: question[],
+//   text: string,
+//   index: number,
+//   setQuestions: any
+// ) {
+//   var newQuestion = [...questions]
+//   newQuestion[index].feedback = text
+//   setQuestions(newQuestion)
+// }
+
+export function handleFeedBack(text: string, setFeedBack: any, setOpen: any) {
+  setFeedBack(text)
+  setOpen(true)
 }

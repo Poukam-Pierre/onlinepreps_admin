@@ -37,6 +37,7 @@ import {
   handleClose,
   photoUpload,
   removeImage,
+  handleFeedBack,
 } from './functionSheet'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import CropOriginalIcon from '@mui/icons-material/CropOriginal'
@@ -463,7 +464,15 @@ function questionsUI(
                                 >
                                   <DeleteOutlinedIcon />
                                 </IconButton>
-                                <IconButton onClick={() => handleOpen(setOpen)}>
+                                <IconButton
+                                  onClick={() =>
+                                    handleFeedBack(
+                                      quest.feedback as string,
+                                      setFeedBack,
+                                      setOpen
+                                    )
+                                  }
+                                >
                                   <ModeEditOutlinedIcon />
                                 </IconButton>
                               </Box>
@@ -520,7 +529,7 @@ function questionsUI(
                             Ajouter un commentaire
                           </Typography>
                           <Divider />
-                          <TextareaAutosize
+                          {/* <TextareaAutosize
                             aria-label="empty textarea"
                             placeholder="Entrez le commentaire"
                             style={{
@@ -535,6 +544,14 @@ function questionsUI(
                             }}
                             onChange={(e) => setFeedBack(e.target.value)}
                             value={quest.feedback}
+                          /> */}
+                          <TextField
+                            label="Entrez le commentaire"
+                            multiline
+                            maxRows={4}
+                            sx={{ width: '100%' }}
+                            value={feedBack}
+                            onChange={(e) => setFeedBack(e.target.value)}
                           />
 
                           <Divider />

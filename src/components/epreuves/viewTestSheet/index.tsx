@@ -38,34 +38,6 @@ function ViewTestSheet() {
   const [valueChecked] = useState<string>()
   const [questions] = useState<question[]>([...testSheets])
 
-  // function setStudentAnswer(index_1: number, index: number) {
-  //   var question = [...questions]
-  //   question[index_1].answerKey = index
-  //   setQuestions(question)
-  // }
-
-  // function expandOpenAll() {
-  //   let question = [...questions]
-  //   for (let i = 0; i < questions.length; i++) {
-  //     question[i].open = true
-  //   }
-  //   setQuestions(question)
-  // }
-
-  // function checkingResponses() {
-  //   expandOpenAll()
-  //   var question = [...questions]
-  //   for (let i = 0; i < question.length; i++) {
-  //     var index = question[i].answerKey
-  //     if (index === -1) return
-  //     if (question[i].propositionAnswers[index].is_answer === true) {
-  //       question[i].propositionAnswers[index].is_tested = true
-  //     } else {
-  //       question[i].propositionAnswers[index].is_tested = false
-  //     }
-  //   }
-  // }
-
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
       <Box width="50rem">
@@ -117,20 +89,11 @@ function ViewTestSheet() {
                         <Box key={index} paddingLeft="20px">
                           <FormControlLabel
                             value={option.proposition}
-                            control={
-                              <Radio
-                              // onClick={() => setStudentAnswer(index_1, index)}
-                              />
-                            }
+                            control={<Radio />}
                             label={
                               <Typography>{option.proposition}</Typography>
                             }
                           />
-                          {/* {option.is_tested === true ? (
-                            <CheckIcon sx={{}} />
-                          ) : option.is_tested === false ? (
-                            <ClearIcon sx={{}} />
-                          ) : null} */}
                         </Box>
                       ))}
                     </RadioGroup>
