@@ -230,17 +230,6 @@ export function photoUpload(
   reader.readAsDataURL(File)
 }
 
-// export function setFeedBack(
-//   questions: question[],
-//   text: string,
-//   index: number,
-//   setQuestions: any
-// ) {
-//   var newQuestion = [...questions]
-//   newQuestion[index].feedback = text
-//   setQuestions(newQuestion)
-// }
-
 export function handleFeedBack(text: string, setFeedBack: any, setOpen: any) {
   setFeedBack(text)
   setOpen(true)

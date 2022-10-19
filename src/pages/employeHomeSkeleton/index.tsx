@@ -1,21 +1,28 @@
 // Made by Poukam Ngamaleu
 
-import { Box } from '@mui/system'
+import EmployeSideBar from '../../components/sideBar/sideBarEmploye'
+import { useAuth } from '../../utils/context'
 import Header from '../../components/header'
 import { Outlet } from 'react-router'
-import EmployeSideBar from '../../components/sideBar/sideBarEmploye'
+import { Box } from '@mui/system'
 
 function EmployeSkeleton() {
+  const {
+    userInfo: { is_employe },
+  } = useAuth()
+
   return (
-    <>
-      <Header />
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
-        <EmployeSideBar />
-        <Box>
-          <Outlet></Outlet>
+    is_employe && (
+      <>
+        <Header />
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
+          <EmployeSideBar />
+          <Box>
+            <Outlet></Outlet>
+          </Box>
         </Box>
-      </Box>
-    </>
+      </>
+    )
   )
 }
 

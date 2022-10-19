@@ -1,5 +1,6 @@
 // Made by Poukam Ngamaleu
 
+import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 import {
   Avatar,
   List,
@@ -8,15 +9,13 @@ import {
   Paper,
   Typography,
 } from '@mui/material'
-import { Box } from '@mui/system'
-import { theme } from '../../../utils/style/theme'
-import ChartConnexion from './connexionRecord'
-import React, { useState } from 'react'
 import Tab from '@mui/material/Tab'
-import { TabContext, TabList, TabPanel } from '@material-ui/lab'
-import SheetCreate from './sheetCreated'
-import SheetBuy from './sheetBuying'
+import { Box } from '@mui/system'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import ChartConnexion from './connexionRecord'
+import SheetBuy from './sheetBuying'
+import SheetCreate from './sheetCreated'
 
 function ViewEmploye() {
   const { employeId } = useParams()
@@ -30,7 +29,7 @@ function ViewEmploye() {
     navigate(`/admin/employe/modify/${employeId}`)
   }
 
-  // Fetch function insert here
+  //TODO Fetch function insert here
 
   return (
     <Box p={3}>

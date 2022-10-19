@@ -3,12 +3,14 @@
 import * as yup from 'yup'
 
 export const CreateEmployeSchema = yup.object().shape({
-  name: yup.string().required('Nom obligatoire'),
-  userName: yup.string().required("Entrez nom d'utilisateur"),
+  nom: yup.string().required('Nom obligatoire'),
   email: yup
     .string()
     .email('Entrer une email valide')
     .required('Email obligatoire'),
+  phoneNumber: yup.number().required('numéro obligatoire'),
+  Adresse: yup.string().required("Indiquez l'adresse"),
+  poste: yup.string().required('Poste obligatoire'),
   password: yup
     .string()
     .min(5, 'min 5 caractères,au moins 1 lettre et 1 chiffre')
@@ -17,7 +19,4 @@ export const CreateEmployeSchema = yup.object().shape({
       message: 'Mot de passe incorrect',
     })
     .required('Mot de passe obligatoire'),
-  poste: yup.string().required('Poste obligatoire'),
-  Adresse: yup.string().required("Indiquez l'adresse"),
-  phoneNumber: yup.number().required('numéro obligatoire'),
 })

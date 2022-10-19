@@ -344,9 +344,10 @@ function questionsUI(
                       bgcolor="#F5F0F0"
                     >
                       <IconButton
-                        onClick={() =>
+                        onClick={() => {
                           addMoreQuestionField(questions, setQuestions)
-                        }
+                          setFeedBack('')
+                        }}
                       >
                         <AddCircleOutlineIcon sx={{ fontSize: 30 }} />
                       </IconButton>
@@ -529,22 +530,6 @@ function questionsUI(
                             Ajouter un commentaire
                           </Typography>
                           <Divider />
-                          {/* <TextareaAutosize
-                            aria-label="empty textarea"
-                            placeholder="Entrez le commentaire"
-                            style={{
-                              width: '100%',
-                              border: 'none',
-                              minHeight: '3rem',
-                              borderBottom: `1px solid #369DC1`,
-                              backgroundColor: 'transparent',
-                              outline: 'none',
-                              fontSize: '1.2rem',
-                              margin: '20px 0 10px',
-                            }}
-                            onChange={(e) => setFeedBack(e.target.value)}
-                            value={quest.feedback}
-                          /> */}
                           <TextField
                             label="Entrez le commentaire"
                             multiline

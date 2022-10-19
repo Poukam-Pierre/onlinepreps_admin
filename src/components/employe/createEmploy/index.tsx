@@ -1,20 +1,34 @@
 // Make by Poukam Ngamaleu
 
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload'
 import {
+  Alert,
+  AlertColor,
   Autocomplete,
   Box,
   Button,
   FormHelperText,
   Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
   styled,
   TextField,
   Typography,
 } from '@mui/material'
-import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload'
+import Axios from 'axios'
+import { useFormik } from 'formik'
+import { useState } from 'react'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { useFormik } from 'formik'
 import { CreateEmployeSchema } from './create_empl-schem'
+
+type TransitionProps = Omit<SlideProps, 'direction'>
+
+export interface alertMsgInterface {
+  message: string
+  severity: AlertColor | undefined
+}
 
 export const StylePhoneNumber = styled(PhoneInput)({
   height: '60px',
@@ -42,8 +56,7 @@ function CreationEmploye() {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      userName: '',
-      name: '',
+      nom: '',
       email: '',
       phoneNumber: '',
       adresse: '',
@@ -55,8 +68,33 @@ function CreationEmploye() {
       file: '',
     },
     onSubmit: (values) => {
-      console.log(values)
-      // Ici entre l'appelle API REST
+      // TODO update this part
+      Axios.post('http://localhost:3000/api/signup/employe', values)
+        .then((res) => {
+          if (res?.status === 201) {
+            setCreatedMsg({
+              message: 'Enregistrement réussi.',
+              severity: 'success',
+            })
+            setOpen(true)
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'error',
+            })
+            setOpen(true)
+          } else {
+            setCreatedMsg({
+              message: 'Erreur serveur. Rééssayez plutard.',
+              severity: 'error',
+            })
+            setOpen(true)
+          }
+        })
+
       resetForm()
     },
     validationSchema: CreateEmployeSchema,
@@ -70,6 +108,13 @@ function CreationEmploye() {
       setFieldValue('imagePreviewUrl', reader.result)
     }
     reader.readAsDataURL(file)
+  }
+
+  const [open, setOpen] = useState<boolean>(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
   }
 
   return (
@@ -126,27 +171,15 @@ function CreationEmploye() {
             />
           </Box>
           <TextField
-            name="userName"
-            type="text"
-            label="Nom d'utilisateur"
-            value={values.userName}
-            onChange={handleChange}
-            variant="filled"
-            sx={{ width: '45%' }}
-            {...(errors.userName && touched.userName
-              ? { error: true, helperText: errors.userName }
-              : '')}
-          />
-          <TextField
-            name="name"
+            name="nom"
             type="text"
             label="Nom complet"
             variant="filled"
-            value={values.name}
+            value={values.nom}
             onChange={handleChange}
             sx={{ width: '45%' }}
-            {...(errors.name && touched.name
-              ? { error: true, helperText: errors.name }
+            {...(errors.nom && touched.nom
+              ? { error: true, helperText: errors.nom }
               : '')}
           />
           <TextField
@@ -248,6 +281,21 @@ function CreationEmploye() {
           </Box>
         </Box>
       </Paper>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }
