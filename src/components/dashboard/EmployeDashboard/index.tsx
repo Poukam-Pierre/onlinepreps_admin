@@ -6,8 +6,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Link } from 'react-router-dom'
 import { theme } from '../../../utils/style/theme'
 import ActionTable from './employActionTable'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../../../utils/context'
+import Axios from 'axios'
 
 function EmployeDashboard() {
+  const {
+    userInfo: { id },
+  } = useAuth()
+
+  useEffect(() => {
+    // TODO fetch data information
+    Axios.get(``)
+      .then((res) => {})
+      .catch((err) => {})
+  }, [])
+
   return (
     <Box p={3}>
       <Typography variant="h4" color="#555">

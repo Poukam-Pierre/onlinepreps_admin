@@ -1,31 +1,85 @@
 // Made by Poukam Ngamaleu
 
 import {
+  Alert,
   Box,
   Button,
   Divider,
   Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material'
 import { useFormik } from 'formik'
 import { theme } from '../../utils/style/theme'
-//   import { ChangePasswordSchema } from './changePassworSchema'
+import { ChangePasswordSchema } from './changePasswordSchema'
+import Axios from 'axios'
+import { useAuth } from '../../utils/context'
+import { useState } from 'react'
+import { alertMsgInterface } from '../employe/createEmploy'
+
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function Settings() {
-  const { values, handleSubmit, handleChange, errors, touched } = useFormik({
-    initialValues: {
-      oldPassword: '',
-      newPassword: '',
-      confirmPassword: '',
+  const {
+    accessToken,
+    userInfo: { id },
+  } = useAuth()
+  const authAxios = Axios.create({
+    baseURL: `http://localhost:3000/api/common`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-    onSubmit: (values) => {
-      console.log(values)
-      // Ici entre l'appelle API REST
-    },
-    //   validationSchema: ChangePasswordSchema,
   })
 
+  const { values, handleSubmit, handleChange, errors, touched, resetForm } =
+    useFormik({
+      initialValues: {
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      },
+      onSubmit: (values) => {
+        // TODO change local link to remote link
+        authAxios
+          .put(`/resetPassword/${id}`, values)
+          .then((res) => {
+            if (res?.status === 200) {
+              setCreatedMsg({
+                message: res.data.message,
+                severity: 'success',
+              })
+              resetForm()
+              setOpen(true)
+            }
+          })
+          .catch((err) => {
+            if (err.response.status === 400) {
+              setCreatedMsg({
+                message: err.response.data.message,
+                severity: 'warning',
+              })
+              setOpen(true)
+            } else {
+              setCreatedMsg({
+                message: err.response.data.message,
+                severity: 'error',
+              })
+              setOpen(true)
+            }
+          })
+      },
+      validationSchema: ChangePasswordSchema,
+    })
+
+  const [open, setOpen] = useState<boolean>(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Typography variant="h4" color="#555">
@@ -105,6 +159,21 @@ function Settings() {
           </Box>
         </Paper>
       </Box>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

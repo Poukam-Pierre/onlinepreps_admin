@@ -67,9 +67,27 @@ function CreationEmploye() {
         'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg',
       file: '',
     },
-    onSubmit: (values) => {
+    onSubmit: ({
+      nom,
+      phoneNumber,
+      file,
+      poste,
+      adresse,
+      password,
+      country,
+      email,
+    }) => {
       // TODO update this part
-      Axios.post('http://localhost:3000/api/signup/employe', values)
+      const body = new FormData()
+      body.append('file', file)
+      body.append('nom', nom)
+      body.append('email', email)
+      body.append('phoneNumber', phoneNumber)
+      body.append('adresse', adresse)
+      body.append('poste', poste)
+      body.append('country', country)
+      body.append('password', password)
+      Axios.post('http://localhost:3000/api/signup/employe', body)
         .then((res) => {
           if (res?.status === 201) {
             setCreatedMsg({
@@ -79,21 +97,23 @@ function CreationEmploye() {
             setOpen(true)
           }
         })
-        .catch((err) => {
-          if (err.response.status === 409) {
-            setCreatedMsg({
-              message: err.response.data.message,
-              severity: 'error',
-            })
-            setOpen(true)
-          } else {
-            setCreatedMsg({
-              message: 'Erreur serveur. Rééssayez plutard.',
-              severity: 'error',
-            })
-            setOpen(true)
+        .catch(
+          (err: { response: { status: number; data: { message: any } } }) => {
+            if (err.response.status === 409) {
+              setCreatedMsg({
+                message: err.response.data.message,
+                severity: 'error',
+              })
+              setOpen(true)
+            } else {
+              setCreatedMsg({
+                message: 'Erreur serveur. Rééssayez plutard.',
+                severity: 'error',
+              })
+              setOpen(true)
+            }
           }
-        })
+        )
 
       resetForm()
     },

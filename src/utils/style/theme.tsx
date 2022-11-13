@@ -17,6 +17,7 @@ declare module '@mui/material/styles' {
       // body: React.CSSProperties['color']
       // titleActive: React.CSSProperties['color']
       // dialogBackground: React.CSSProperties['color']
+      greeting: React.CSSProperties['color']
     }
   }
   interface ThemeOptions {
@@ -33,6 +34,7 @@ declare module '@mui/material/styles' {
       // body: React.CSSProperties["color"];
       // titleActive: React.CSSProperties["color"];
       // dialogBackground: React.CSSProperties["color"]
+      greeting: React.CSSProperties['color']
     }
   }
   interface TypographyVariants {
@@ -83,5 +85,6 @@ export const theme = createTheme({
   },
   common: {
     button: '#F5FA05',
+    greeting: '#f0f0f0',
   },
 })

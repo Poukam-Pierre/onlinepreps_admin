@@ -9,7 +9,7 @@ export const CreateEmployeSchema = yup.object().shape({
     .email('Entrer une email valide')
     .required('Email obligatoire'),
   phoneNumber: yup.number().required('numéro obligatoire'),
-  Adresse: yup.string().required("Indiquez l'adresse"),
+  adresse: yup.string().required("Indiquez l'adresse"),
   poste: yup.string().required('Poste obligatoire'),
   password: yup
     .string()

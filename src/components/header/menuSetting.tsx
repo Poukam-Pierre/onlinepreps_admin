@@ -12,8 +12,9 @@ import {
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { useAuth } from '../../utils/context'
 
 const StyledLink = styled(Link)({
   color: 'inherit',
@@ -23,6 +24,9 @@ const StyledLink = styled(Link)({
 function MenuSettings({ setIsDrawerOpen }: any) {
   const [openElUser, setOpenElUser] = useState(null)
 
+  const { authDispatch } = useAuth()
+  const navigate = useNavigate()
+
   const handleOpenUserMenu = (event: any) => {
     setOpenElUser(event.currentTarget)
   }
@@ -31,9 +35,21 @@ function MenuSettings({ setIsDrawerOpen }: any) {
     setOpenElUser(null)
   }
 
+  const disconnected = () => {
+    authDispatch({
+      accessToken: '',
+      userInfo: {
+        id: undefined,
+        nom: '',
+        prenom: '',
+        email: '',
+      },
+    })
+    navigate('/login')
+  }
+
   return (
     <Box>
-      {/* <Tooltip title="Ouvrir paramètres"> */}
       <IconButton
         onClick={handleOpenUserMenu}
         sx={{ display: { xs: 'none', md: 'inline-flex' }, gap: '10px' }}
@@ -78,12 +94,11 @@ function MenuSettings({ setIsDrawerOpen }: any) {
           </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ display: 'flex' }} onClick={handleCloseUserMenu}>
+        <MenuItem sx={{ display: 'flex' }} onClick={disconnected}>
           <Logout fontSize="small" />
           <Typography textAlign="center" paddingLeft="15px">
             Déconnexion
           </Typography>
-          {/* Waiting backend for account services */}
         </MenuItem>
       </Menu>
     </Box>

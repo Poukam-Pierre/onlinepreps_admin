@@ -23,6 +23,7 @@ import Feedback from './components/feedback'
 import Messages from './components/messages'
 import Settings from './components/setting'
 import Manager from './components/managing'
+import SignIn from './pages/login'
 
 export const routes = [
   {
@@ -71,5 +72,9 @@ export const routes = [
         ],
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <SignIn />,
   },
 ]

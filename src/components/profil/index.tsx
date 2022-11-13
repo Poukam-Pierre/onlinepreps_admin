@@ -1,6 +1,13 @@
 //  Made by Poukam Ngamaleu
 
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import MailIcon from '@mui/icons-material/Mail'
+import MyLocationIcon from '@mui/icons-material/MyLocation'
+import PersonIcon from '@mui/icons-material/Person'
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid'
+import PublishIcon from '@mui/icons-material/Publish'
 import {
+  Alert,
   Avatar,
   Button,
   ListItemIcon,
@@ -8,21 +15,48 @@ import {
   MenuItem,
   MenuList,
   Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import PersonIcon from '@mui/icons-material/Person'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid'
-import MailIcon from '@mui/icons-material/Mail'
-import MyLocationIcon from '@mui/icons-material/MyLocation'
-import PublishIcon from '@mui/icons-material/Publish'
+import Axios from 'axios'
 import { useFormik } from 'formik'
+import { useEffect, useState } from 'react'
 import 'react-phone-number-input/style.css'
-import { StylePhoneNumber } from '../employe/createEmploy'
+import { useAuth } from '../../utils/context'
+import { alertMsgInterface, StylePhoneNumber } from '../employe/createEmploy'
+import { LoginSchema } from './schemaProfil'
+
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function EmployeProfil() {
+  const {
+    userInfo: {
+      id,
+      nom,
+      email,
+      phoneNumber,
+      adresse,
+      profil_img,
+      poste,
+      prenom,
+      birthDate,
+    },
+    authDispatch,
+    accessToken,
+    userInfo,
+  } = useAuth()
+
+  const authAxios = Axios.create({
+    baseURL: `http://localhost:3000/api/employe`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+  const [open, setOpen] = useState<boolean>(false)
   const {
     values,
     handleSubmit,
@@ -33,21 +67,59 @@ function EmployeProfil() {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      userName: '',
-      name: '',
-      email: '',
-      phoneNumber: '',
-      adresse: '',
-      imagePreviewUrl:
-        'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true',
+      name: nom,
+      email: email,
+      phoneNumber: phoneNumber,
+      adresse: adresse,
+      imagePreviewUrl: profil_img
+        ? profil_img
+        : 'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true',
       file: '',
     },
-    onSubmit: (values) => {
-      console.log(values)
-      // Ici entre l'appelle API REST
-      resetForm()
+    onSubmit: ({ name, email, phoneNumber, file, adresse }) => {
+      const body = new FormData()
+      body.append('file', file)
+      body.append('nom', name)
+      body.append('email', email)
+      body.append('phoneNumber', phoneNumber as string)
+      body.append('adresse', adresse as string)
+
+      authAxios
+        .put(`/updateInfos/${id}`, body)
+        .then((res) => {
+          if (res?.status === 200) {
+            setCreatedMsg({
+              message: res.data.message,
+              severity: 'success',
+            })
+            setOpen(true)
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'error',
+            })
+            setOpen(true)
+          } else if (err.response.status === 401) {
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'warning',
+            })
+            setOpen(true)
+            resetForm()
+          } else {
+            setCreatedMsg({
+              message: 'Erreur serveur. Rééssayez plutard.',
+              severity: 'error',
+            })
+            setOpen(true)
+          }
+        })
     },
-    //   validationSchema: ChangePasswordSchema,
+    enableReinitialize: true,
+    validationSchema: LoginSchema,
   })
 
   function photoUpload(e: any) {
@@ -59,6 +131,34 @@ function EmployeProfil() {
       setFieldValue('imagePreviewUrl', reader.result)
     }
     reader.readAsDataURL(file)
+  }
+
+  useEffect(() => {
+    // TODO change local link to remote link
+    Axios.get(`http://localhost:3000/api/common/getProfilImg/${id}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          authDispatch({
+            accessToken: accessToken,
+            userInfo: { ...userInfo, profil_img: res.data },
+          })
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }, [open])
+
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
   }
   return (
     <Box p={3} display="grid" rowGap="70px">
@@ -78,14 +178,18 @@ function EmployeProfil() {
         >
           <Box display="flex" alignItems="center">
             <Avatar
-              src="https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true"
+              src={
+                profil_img
+                  ? profil_img
+                  : 'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true'
+              }
               sx={{ width: '5rem', height: '5rem' }}
             />
             <Box paddingLeft="30px">
               <Typography variant="h5" paddingBottom="10px" fontWeight="bold">
-                Poukam Fimeni
+                {nom} {prenom}
               </Typography>
-              <Typography paddingTop="10px">Agent Mifi</Typography>
+              <Typography paddingTop="10px">{poste}</Typography>
             </Box>
           </Box>
           <Box>
@@ -98,7 +202,7 @@ function EmployeProfil() {
                 <ListItemText
                   sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
                 >
-                  Poukam Fimeni
+                  {nom} {prenom}
                 </ListItemText>
               </MenuItem>
               <MenuItem>
@@ -108,7 +212,7 @@ function EmployeProfil() {
                 <ListItemText
                   sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
                 >
-                  03 Avril 1996
+                  {birthDate}
                 </ListItemText>
               </MenuItem>
             </MenuList>
@@ -123,7 +227,7 @@ function EmployeProfil() {
                 <ListItemText
                   sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
                 >
-                  +237 696841451
+                  {phoneNumber}
                 </ListItemText>
               </MenuItem>
               <MenuItem>
@@ -133,7 +237,7 @@ function EmployeProfil() {
                 <ListItemText
                   sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
                 >
-                  fimeni96@gmail.com
+                  {email}
                 </ListItemText>
               </MenuItem>
               <MenuItem>
@@ -143,7 +247,7 @@ function EmployeProfil() {
                 <ListItemText
                   sx={{ '& .MuiTypography-root': { fontSize: '1.2rem' } }}
                 >
-                  Bangangté | CMR
+                  {adresse}
                 </ListItemText>
               </MenuItem>
             </MenuList>
@@ -161,15 +265,6 @@ function EmployeProfil() {
           >
             <Box display="grid" gap="20px" width="30rem" height="fit-content">
               <TextField
-                name="userName"
-                type="text"
-                label="Nom d'utilisateur"
-                variant="filled"
-                value={values.userName}
-                onChange={handleChange}
-                sx={{ width: '90%' }}
-              />
-              <TextField
                 name="name"
                 type="text"
                 label="Nom"
@@ -177,6 +272,9 @@ function EmployeProfil() {
                 value={values.name}
                 onChange={handleChange}
                 sx={{ width: '90%' }}
+                {...(errors.name && touched.name
+                  ? { error: true, helperText: errors.name }
+                  : '')}
               />
               <TextField
                 name="email"
@@ -186,6 +284,9 @@ function EmployeProfil() {
                 value={values.email}
                 onChange={handleChange}
                 sx={{ width: '90%' }}
+                {...(errors.email && touched.email
+                  ? { error: true, helperText: errors.email }
+                  : '')}
               />
               <StylePhoneNumber
                 value={values.phoneNumber}
@@ -219,13 +320,16 @@ function EmployeProfil() {
                 value={values.adresse}
                 onChange={handleChange}
                 sx={{ width: '90%' }}
+                {...(errors.adresse && touched.adresse
+                  ? { error: true, helperText: errors.adresse }
+                  : '')}
               />
             </Box>
             <Box display="flex" flexDirection="column" gap="8rem">
               <Box display="flex" alignItems="center">
                 <img
                   src={values.imagePreviewUrl}
-                  alt=""
+                  alt="profil img"
                   style={{
                     width: '15rem',
                     height: '15rem',
@@ -260,6 +364,21 @@ function EmployeProfil() {
           </Box>
         </Paper>
       </Box>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

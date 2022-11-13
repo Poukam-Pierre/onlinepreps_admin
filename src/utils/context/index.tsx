@@ -6,14 +6,19 @@ export interface AuthContextProviderProps {
 }
 
 export interface userInterface {
+  id: number | undefined
   nom: string
   prenom: string
-  status: string
-  poste: string
   email: string
-  is_employe: boolean
-  is_admin: boolean
-  country: string
+  is_employe?: boolean
+  is_admin?: boolean
+  profil_img?: string
+  status?: string
+  poste?: string
+  country?: string
+  phoneNumber?: string
+  adresse?: string
+  birthDate?: string
 }
 
 export interface authInterface {
@@ -22,16 +27,20 @@ export interface authInterface {
 }
 
 const sampleAuthContext: authInterface = {
-  accessToken: '',
+  accessToken:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ5b21ldGNobWFyQGdtYWlsLmNvbSIsInVzZXJJZCI6MTI0LCJpYXQiOjE2NjgzNjU4MTksImV4cCI6MTY2ODQ1MjIxOX0.L4JTj8e1B7BiJbbymTW0aKhT7yfxwKqx4EhzXw0kYJM',
   userInfo: {
-    nom: 'kamajou',
-    prenom: 'paul',
-    status: 'active',
-    poste: 'Agent|NDE',
-    is_employe: false,
-    is_admin: true,
-    country: 'cameroun',
+    id: 154,
+    nom: 'ngamaleu',
     email: 'ngamaleu2011@gmail.com',
+    prenom: 'pierre Irénée',
+    is_employe: true,
+    is_admin: true,
+    status: 'active',
+    country: 'cameroun',
+    poste: 'agent | Mifi',
+    phoneNumber: '+237696841451',
+    birthDate: ' 03 Avril 1996',
   },
 }
 
@@ -48,14 +57,20 @@ const authReducer: Reducer<authInterface & dispatchInterface, authInterface> = (
   state: authInterface & dispatchInterface,
   payload: authInterface
 ) => {
+  localStorage.setItem('auth', JSON.stringify({ ...state, ...payload }))
   return { ...state, ...payload }
 }
-
+const authStatus = localStorage.getItem('auth')
 export default function AuthContextProvider({
   children,
 }: AuthContextProviderProps): JSX.Element {
   const initialState: authInterface & dispatchInterface = {
-    ...sampleAuthContext,
+    accessToken: authStatus
+      ? (JSON.parse(authStatus?.toString()) as authInterface).accessToken
+      : sampleAuthContext.accessToken,
+    userInfo: authStatus
+      ? (JSON.parse(authStatus?.toString()) as authInterface).userInfo
+      : sampleAuthContext.userInfo,
     authDispatch: () => null,
   }
 
