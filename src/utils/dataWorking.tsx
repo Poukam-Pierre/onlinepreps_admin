@@ -88,6 +88,7 @@ export const dataCategoryOfLicence: CategoryOfLicence[] = [
   { catId: 2, label: 'B' },
   { catId: 3, label: 'C' },
   { catId: 4, label: 'D' },
+  { catId: 4, label: 'E' },
   { catId: 5, label: 'G' },
 ]
 

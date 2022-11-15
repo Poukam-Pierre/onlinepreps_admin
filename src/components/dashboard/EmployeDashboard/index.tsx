@@ -11,15 +11,36 @@ import { useAuth } from '../../../utils/context'
 import Axios from 'axios'
 
 function EmployeDashboard() {
+  const [nberTestCreated, setNberTestCreated] = useState<number>()
+  const [nberTestBaught, setNbreTestBaught] = useState<number>()
   const {
     userInfo: { id },
   } = useAuth()
 
   useEffect(() => {
-    // TODO fetch data information
-    Axios.get(``)
-      .then((res) => {})
-      .catch((err) => {})
+    // TODO change local link to remote link
+    Axios.get(`http://localhost:3000/api/employe/getNberTestCreated/${id}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setNberTestCreated(res.data.lenght)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setNberTestCreated(0)
+        }
+      })
+    Axios.get(`http://localhost:3000/api/employe/getNberTestBaught/${id}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setNbreTestBaught(res.data.lenght)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setNbreTestBaught(0)
+        }
+      })
   }, [])
 
   return (
@@ -37,17 +58,17 @@ function EmployeDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves créées
             </Typography>
-            <Box
+            {/* <Box
               display="flex"
               alignItems="center"
               color={theme.palette.secondary.main}
             >
               <ExpandLessIcon />
               <Typography>+ 5%</Typography>
-            </Box>
+            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            10
+            {nberTestCreated}
           </Typography>
           <Box
             component={Link}
@@ -67,13 +88,13 @@ function EmployeDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves achetées
             </Typography>
-            <Box display="flex" alignItems="center" color="red">
+            {/* <Box display="flex" alignItems="center" color="red">
               <ExpandMoreIcon />
               <Typography>+5%</Typography>
-            </Box>
+            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            50
+            {nberTestBaught}
           </Typography>
           <Box
             component={Link}

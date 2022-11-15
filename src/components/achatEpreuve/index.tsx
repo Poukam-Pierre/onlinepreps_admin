@@ -3,15 +3,20 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import SelleSheetTable from './sheetSelle'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../../utils/context'
 
 function TestSheetBuying() {
+  const {
+    userInfo: { poste, id },
+  } = useAuth()
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Typography variant="h4" color="#555">
-        Achat épreuves (NDE|CMR)
+        Achat épreuves ({poste?.split('|')[1]} | CMR)
       </Typography>
       <Box height={600} display="flex" justifyContent="center">
-        <SelleSheetTable />
+        <SelleSheetTable poste={poste as string} id={id as number} />
       </Box>
     </Box>
   )

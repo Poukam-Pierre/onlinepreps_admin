@@ -18,15 +18,19 @@ import {
   dataCategoryOfLicence,
 } from '../../utils/dataWorking'
 import { useParams } from 'react-router-dom'
+import Axios from 'axios'
+import { useAuth } from '../../utils/context'
 
 function FormSheet() {
+  const {
+    userInfo: { id },
+  } = useAuth()
   const { formId } = useParams()
   const [date, setDate] = useState<Dayjs | null>(null)
   const [feedBack, setFeedBack] = useState<string>('')
   const [open, setOpen] = useState<boolean>(false)
   const [questions, setQuestions] = useState<question[]>([
     {
-      questionId: 'apk',
       questionBody: 'Question',
       propositionAnswers: [{ proposition: 'Option 1', is_answer: false }],
       open: true,
@@ -44,13 +48,51 @@ function FormSheet() {
       session: date,
       category: 'B',
       country: 'Cameroun',
-      language: 'Français',
+      language: 'fr',
       department: 'Haute-Sanaga',
       questionss: questions,
     },
-    onSubmit: (values) => {
-      console.log(values)
-      // Ici entre l'appelle API REST
+    onSubmit: ({
+      id_,
+      session,
+      category,
+      country,
+      language,
+      department,
+      questionss,
+    }) => {
+      // TODO fetch data epreuve
+      Axios.post(`http://localhost:3000/api/employe/savingExamInfos/${id}`, {
+        id: id_,
+        session: session,
+        category: category,
+        country: country,
+        language: language,
+        department: department,
+      })
+        .then((res) => {
+          if (res?.status === 201) {
+            questionss.map(
+              ({ feedback, propositionAnswers, questionBody, file }) => {
+                const body = new FormData()
+                body.append('feedback', feedback as string)
+                body.append(
+                  'propositionAnswers',
+                  JSON.stringify(propositionAnswers)
+                )
+                body.append('questionBody', questionBody)
+                body.append('file', file as string)
+                Axios.post(
+                  `http://localhost:3000/api/employe/savingExamQuestions/${id_}`,
+                  body
+                )
+                  .then((res) => {})
+                  .catch((err) => {})
+              }
+            )
+          }
+        })
+        .catch((err) => {})
     },
     enableReinitialize: true,
   })
@@ -129,7 +171,7 @@ function FormSheet() {
                 sx={{ width: 300 }}
                 onChange={(event, val) => setFieldValue('country', val?.label)}
                 getOptionLabel={(option) => option.label}
-                // isOptionEqualToValue={(option, value) => option === value}
+                isOptionEqualToValue={(option, value) => option === value}
                 renderOption={(props, option) => (
                   <Box
                     component="li"
@@ -180,7 +222,7 @@ function FormSheet() {
               sx={{ width: 300 }}
               onChange={(event, val) => setFieldValue('language', val?.code)}
               getOptionLabel={(option) => option.label}
-              // isOptionEqualToValue={(option, value) => option === value}
+              isOptionEqualToValue={(option, value) => option === value}
               renderOption={(props, option) => (
                 <Box
                   component="li"

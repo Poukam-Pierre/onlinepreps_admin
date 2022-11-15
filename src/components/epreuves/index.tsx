@@ -5,10 +5,13 @@ import { Box } from '@mui/system'
 import TestSheetTable from './testSheetTable'
 import uuid from 'react-uuid'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../utils/context'
 
 function TestSheet() {
   const navigate = useNavigate()
-
+  const {
+    userInfo: { poste, id },
+  } = useAuth()
   function createFormSheet() {
     const id_ = uuid()
     navigate('/form/' + id_)
@@ -17,7 +20,7 @@ function TestSheet() {
     <Box p={3} display="grid" rowGap="70px">
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h4" color="#555">
-          Epreuves ( NDE|CMR)
+          Epreuves ( {poste?.split('|')[1]} | CMR)
         </Typography>
         <Button
           variant="outlined"
@@ -31,7 +34,7 @@ function TestSheet() {
         </Button>
       </Box>
       <Box height={600} display="flex" justifyContent="center">
-        <TestSheetTable />
+        <TestSheetTable id_={id as number} />
       </Box>
     </Box>
   )
