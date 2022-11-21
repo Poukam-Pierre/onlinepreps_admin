@@ -2,7 +2,7 @@
 
 import { Autocomplete, Box, Button, Typography } from '@mui/material'
 import { Dayjs } from 'dayjs'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -19,6 +19,7 @@ import {
   dataTest,
 } from '../../../utils/dataWorking'
 import { useParams } from 'react-router-dom'
+import Axios from 'axios'
 
 // Chargement des données statiques de la BDD
 const categoryArray: string[] = []
@@ -50,11 +51,26 @@ const testSheetInfo: {
 } = dataTest.dataTestInfos
 
 function ModifyTestSheet() {
-  const { testId } = useParams() // pour permettre la recherche de l'épreuve dans la BDD
+  const { testId } = useParams()
   const [feedBack, setFeedBack] = useState<string>('')
   const [open, setOpen] = useState<boolean>(false)
 
   const [questions, setQuestions] = useState<question[]>([...testSheets])
+
+  useEffect(() => {
+    // TODO FETCH DATA FROM bdd
+    Axios.get(`http://localhost:3000/api/employe/getExamModif/${testId}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setQuestions(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
 
   const { values, handleSubmit, setFieldValue } = useFormik({
     initialValues: {

@@ -62,34 +62,31 @@ function FormSheet() {
       questionss,
     }) => {
       // TODO fetch data epreuve
-      Axios.post(`http://localhost:3000/api/employe/savingExamInfos/${id}`, {
-        id: id_,
-        session: session,
-        category: category,
-        country: country,
-        language: language,
-        department: department,
-      })
+      console.log(questionss)
+      Axios.post(
+        `http://localhost:3000/api/employe/savingExamInfos/${id}`,
+        values
+      )
         .then((res) => {
           if (res?.status === 201) {
-            questionss.map(
-              ({ feedback, propositionAnswers, questionBody, file }) => {
-                const body = new FormData()
-                body.append('feedback', feedback as string)
-                body.append(
-                  'propositionAnswers',
-                  JSON.stringify(propositionAnswers)
-                )
-                body.append('questionBody', questionBody)
-                body.append('file', file as string)
-                Axios.post(
-                  `http://localhost:3000/api/employe/savingExamQuestions/${id_}`,
-                  body
-                )
-                  .then((res) => {})
-                  .catch((err) => {})
-              }
-            )
+            // questionss.map(
+            //   ({ feedback, propositionAnswers, questionBody, file }) => {
+            //     const body = new FormData()
+            //     body.append('feedback', feedback as string)
+            //     body.append(
+            //       'propositionAnswers',
+            //       JSON.stringify(propositionAnswers)
+            //     )
+            //     body.append('questionBody', questionBody)
+            //     body.append('file', file as string)
+            //     Axios.post(
+            //       `http://localhost:3000/api/employe/savingExamQuestions/${id_}`,
+            //       body
+            //     )
+            //       .then((res) => {})
+            //       .catch((err) => {})
+            //   }
+            // )
           }
         })
         .catch((err) => {})

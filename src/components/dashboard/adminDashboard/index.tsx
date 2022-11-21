@@ -6,7 +6,36 @@ import { theme } from '../../../utils/style/theme'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Charts from './charts'
 import ActionAdminTable from './actionAdminTable'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+
+interface dashDataInterface {
+  employeNber: number
+  partnerNber: number
+  studentsNber: number
+  testSheetNber: number
+}
+
 function AdminDashboard() {
+  const [dashData, setDashData] = useState<dashDataInterface>({
+    employeNber: 0,
+    partnerNber: 0,
+    studentsNber: 0,
+    testSheetNber: 0,
+  })
+  useEffect(() => {
+    // TODO Fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getStatAdmin`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setDashData(res.data)
+        }
+      })
+      .catch((err) => {
+        return
+      })
+  }, [])
+
   return (
     <Box p={3}>
       <Typography variant="h4" color="#555">
@@ -18,11 +47,11 @@ function AdminDashboard() {
             Employes
           </Typography>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            10
+            {dashData.employeNber}
           </Typography>
           <Box
             component={Link}
-            to=""
+            to="/admin/employes"
             color={theme.palette.primary.main}
             sx={{ '& :hover': { color: theme.palette.secondary.main } }}
           >
@@ -38,17 +67,17 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Partenaires
             </Typography>
-            <Box display="flex" alignItems="center" color="red">
+            {/* <Box display="flex" alignItems="center" color="red">
               <ExpandMoreIcon />
               <Typography>+5%</Typography>
-            </Box>
+            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            30
+            {dashData.partnerNber}
           </Typography>
           <Box
             component={Link}
-            to=""
+            to="/admin/partner"
             color={theme.palette.primary.main}
             sx={{ '& :hover': { color: theme.palette.secondary.main } }}
           >
@@ -64,13 +93,13 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Apprenant
             </Typography>
-            <Box display="flex" alignItems="center" color="red">
+            {/* <Box display="flex" alignItems="center" color="red">
               <ExpandMoreIcon />
               <Typography>5%</Typography>
-            </Box>
+            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            500
+            {dashData.studentsNber}
           </Typography>
         </Paper>
         <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
@@ -82,17 +111,17 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves
             </Typography>
-            <Box display="flex" alignItems="center" color="red">
+            {/* <Box display="flex" alignItems="center" color="red">
               <ExpandMoreIcon />
               <Typography>5%</Typography>
-            </Box>
+            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            1000
+            {dashData.testSheetNber}
           </Typography>
           <Box
             component={Link}
-            to=""
+            to="/admin/epreuves"
             color={theme.palette.primary.main}
             sx={{ '& :hover': { color: theme.palette.secondary.main } }}
           >

@@ -12,31 +12,43 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
 import { useParams } from 'react-router-dom'
-import { dataTest } from '../../../utils/dataWorking'
+import Axios from 'axios'
 
 export interface Proposition {
-  proposition: string
-  is_answer: boolean
+  libele_propo: string
+  is_answer?: boolean
 }
 
 export interface question {
-  questionBody: string
+  libele_quest: string
   propositionAnswers: Proposition[]
-  questionImg?: string
-  file?: string
+  image?: string
   open: boolean
-  feedback: string
+  commentaire: string
 }
 
-const testSheets: question[] = dataTest.questions
-
 function ViewTestSheet() {
-  const { testId } = useParams() // pour permettre la recherche de l'épreuve dans la BDD
+  const { testId } = useParams()
   const [valueChecked] = useState<string>()
-  const [questions] = useState<question[]>([...testSheets])
+  const [questions, setQuestions] = useState<question[]>()
+
+  useEffect(() => {
+    // TODO FETCH DATA FROM bdd
+    Axios.get(`http://localhost:3000/api/employe/getExamView/${testId}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setQuestions(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
 
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
@@ -53,7 +65,7 @@ function ViewTestSheet() {
             Epreuve du permis de conduire
           </Typography>
         </Box>
-        {questions.map((question, index_1) => (
+        {questions?.map((question, index_1) => (
           <Box key={index_1} paddingTop="15px">
             <Accordion sx={{ bgcolor: '#F5F0F0' }}>
               <AccordionSummary>
@@ -67,18 +79,18 @@ function ViewTestSheet() {
                       fontSize="1.1rem"
                       paddingLeft="5px"
                     >
-                      {question.questionBody}
+                      {question.libele_quest}
                     </Typography>
                   </Box>
                   <Box
                     paddingLeft="10px"
                     sx={{
-                      display: question.questionImg ? 'flex' : 'none',
+                      display: question.image ? 'flex' : 'none',
                       justifyContent: 'center',
                     }}
                   >
                     <img
-                      src={question.questionImg}
+                      src={question.image}
                       alt="image relatif à la question"
                       style={{ width: '15rem' }}
                     />
@@ -88,10 +100,10 @@ function ViewTestSheet() {
                       {question.propositionAnswers.map((option, index) => (
                         <Box key={index} paddingLeft="20px">
                           <FormControlLabel
-                            value={option.proposition}
+                            value={option.libele_propo}
                             control={<Radio />}
                             label={
-                              <Typography>{option.proposition}</Typography>
+                              <Typography>{option.libele_propo}</Typography>
                             }
                           />
                         </Box>
@@ -101,7 +113,9 @@ function ViewTestSheet() {
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography textAlign="justify">{question.feedback}</Typography>
+                <Typography textAlign="justify">
+                  {question.commentaire}
+                </Typography>
               </AccordionDetails>
             </Accordion>
           </Box>

@@ -8,6 +8,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+
+interface souscriptionDataInterface {
+  month: string
+  total: number
+}
 
 const data: { name: string; total: number }[] = [
   { name: 'Janvier', total: 540 },
@@ -24,6 +31,23 @@ const data: { name: string; total: number }[] = [
 ]
 
 function Charts() {
+  const [souscriptionData, setSouscriptionData] = useState<
+    souscriptionDataInterface[]
+  >([
+    {
+      month: 'Janvier',
+      total: 0,
+    },
+  ])
+
+  useEffect(() => {
+    //TODO Fetch data to BDD for souscription statistique
+
+    Axios.get(``)
+      .then((res) => {})
+      .catch((err) => {})
+  }, [])
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
