@@ -11,41 +11,35 @@ import {
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 
-interface souscriptionDataInterface {
-  month: string
+export interface souscriptionDataInterface {
+  name: string
   total: number
 }
-
-const data: { name: string; total: number }[] = [
-  { name: 'Janvier', total: 540 },
-  { name: 'Fevrier', total: 9000 },
-  { name: 'Mars', total: 80 },
-  { name: 'Avril', total: 7000 },
-  { name: 'Mai', total: 6500 },
-  { name: 'Juin', total: 1540 },
-  { name: 'Juillet', total: 3500 },
-  { name: 'Septembre', total: 5000 },
-  { name: 'Octobre', total: 7500 },
-  { name: 'Novembre', total: 10000 },
-  { name: 'Decembre', total: 15000 },
-]
 
 function Charts() {
   const [souscriptionData, setSouscriptionData] = useState<
     souscriptionDataInterface[]
   >([
     {
-      month: 'Janvier',
+      name: 'Janvier',
       total: 0,
     },
   ])
 
   useEffect(() => {
-    //TODO Fetch data to BDD for souscription statistique
+    //TODO change local link to remote link
 
-    Axios.get(``)
-      .then((res) => {})
-      .catch((err) => {})
+    Axios.get(`http://localhost:3000/api/admin/getSouscriptionDate`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setSouscriptionData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
   }, [])
 
   return (
@@ -53,7 +47,7 @@ function Charts() {
       <AreaChart
         width={730}
         height={250}
-        data={data}
+        data={souscriptionData}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
         <defs>

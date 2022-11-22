@@ -2,25 +2,45 @@
 
 import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 import {
+  Alert,
   Avatar,
   List,
   ListItem,
   ListItemText,
   Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
   Typography,
 } from '@mui/material'
 import Tab from '@mui/material/Tab'
 import { Box } from '@mui/system'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChartConnexion from './connexionRecord'
 import SheetBuy from './sheetBuying'
 import SheetCreate from './sheetCreated'
+import Axios from 'axios'
+import { alertMsgInterface } from '../createEmploy'
+
+interface employeDataInterface {
+  nom: string
+  email: string
+  phone: string
+  poste: string
+  adresse: string
+  profil_img?: string
+}
+
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function ViewEmploye() {
   const { employeId } = useParams()
   const navigate = useNavigate()
   const [value, setValue] = useState<string>('1')
+  const [employeData, setEmployeData] = useState<employeDataInterface>()
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
   const handleChange = (newValue: string) => {
     setValue(newValue)
   }
@@ -29,8 +49,34 @@ function ViewEmploye() {
     navigate(`/admin/employe/modify/${employeId}`)
   }
 
-  //TODO Fetch function insert here
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getEmployeInfo/${employeId}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setEmployeData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+        } else {
+          setCreatedMsg({
+            message: 'Rééssayez plutard',
+            severity: 'error',
+          })
+        }
+      })
+  }, [])
 
+  const [open, setOpen] = useState(false)
+
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
   return (
     <Box p={3}>
       <Box display="flex" gap="20px">
@@ -54,12 +100,12 @@ function ViewEmploye() {
           </Box>
           <Box display="flex">
             <Avatar
-              src="https://www.booska-p.com/wp-content/uploads/2022/02/Nicki-Minaj-Verzuz-Visu-News.jpg"
+              src={employeData?.profil_img}
               sx={{ width: '5rem', height: '5rem' }}
             />
             <Box>
               <Typography padding="0px 16px" variant="h5" fontWeight="bold">
-                Ngamaleu Poukam
+                {employeData?.nom}
               </Typography>
               <List>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -73,7 +119,7 @@ function ViewEmploye() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    Ngamaleu2011@gmail.com
+                    {employeData?.email}
                   </Typography>
                 </ListItem>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -87,7 +133,7 @@ function ViewEmploye() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    +237 696841451
+                    {employeData?.phone}
                   </Typography>
                 </ListItem>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -101,7 +147,7 @@ function ViewEmploye() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    NDE | CMR
+                    {employeData?.adresse}
                   </Typography>
                 </ListItem>
                 <ListItem sx={{ paddingTop: 0, paddingBottom: 0 }}>
@@ -115,7 +161,7 @@ function ViewEmploye() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    Agent | WOURI 5
+                    {employeData?.poste}
                   </Typography>
                 </ListItem>
               </List>
@@ -126,7 +172,7 @@ function ViewEmploye() {
           sx={{ flex: 2, padding: 3, bgcolor: '#F5F0F0', height: '12rem' }}
         >
           <Typography color="#555">Taux de connexion</Typography>
-          <ChartConnexion />
+          <ChartConnexion id={employeId} />
         </Paper>
       </Box>
       <Box
@@ -148,7 +194,12 @@ function ViewEmploye() {
           </Box>
           <TabPanel value="1">
             <Box height="24rem" display="flex" justifyContent="center">
-              <SheetCreate />
+              <SheetCreate
+                id={employeId}
+                setCreatedMsg={setCreatedMsg}
+                setOpen={setOpen}
+                createdMsg={createdMsg}
+              />
             </Box>
           </TabPanel>
           <TabPanel value="2">
@@ -158,6 +209,21 @@ function ViewEmploye() {
           </TabPanel>
         </TabContext>
       </Box>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

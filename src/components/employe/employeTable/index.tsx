@@ -1,6 +1,15 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button, IconButton, Tooltip } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Button,
+  IconButton,
+  Slide,
+  SlideProps,
+  Snackbar,
+  Tooltip,
+} from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { Link } from 'react-router-dom'
 import { StyledLink } from '../../sideBar/sideBarEmploye'
@@ -9,6 +18,19 @@ import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlin
 import HouseboatOutlinedIcon from '@mui/icons-material/HouseboatOutlined'
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
 import { theme } from '../../../utils/style/theme'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { alertMsgInterface } from '../createEmploy'
+
+interface rowsInterface {
+  id_user: number
+  nom: string
+  poste: string
+  email: string
+  user_country: string
+  status: string
+  profil_img?: string
+}
 
 const columns: {
   field: string
@@ -16,7 +38,7 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'ID', width: 80 },
+  { field: 'id_user', headerName: 'ID', width: 80 },
   {
     field: 'nom',
     headerName: 'Nom',
@@ -25,7 +47,7 @@ const columns: {
       return (
         <Box display="flex" alignItems="center">
           <img
-            src={params.row.avatar}
+            src={params.row.profil_img}
             alt=""
             style={{
               width: '32px',
@@ -42,7 +64,7 @@ const columns: {
   },
   { field: 'poste', headerName: 'Poste', width: 100 },
   { field: 'email', headerName: 'Email', width: 230 },
-  { field: 'pays', headerName: 'Pays', width: 70 },
+  { field: 'user_country', headerName: 'Pays', width: 70 },
   {
     field: 'status',
     headerName: 'Status',
@@ -50,7 +72,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status === 'service' ? (
+          {params.row.status === 'active' ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -61,7 +83,7 @@ const columns: {
             >
               En service
             </span>
-          ) : params.row.status === 'demissionner' ? (
+          ) : params.row.status === 'resigned' ? (
             <span
               style={{
                 backgroundColor: '#F89E9E',
@@ -90,124 +112,99 @@ const columns: {
   },
 ]
 
-const rows: {
-  id: number
-  nom: string
-  poste: string
-  email: string
-  pays: string
-  status: string
-  avatar?: string
-}[] = [
-  {
-    id: 1,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'service',
-  },
-  {
-    id: 2,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS71qs8UY6Mkdn8e6o5cW0jUJFq2MLqQT3pgQ&usqp=CAU',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'conges',
-  },
-  {
-    id: 3,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'GBA',
-    status: 'service',
-  },
-  {
-    id: 4,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    avatar:
-      'https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/assets/2019/02/01-02-2019-UNDP-Peru-Amarakaeri+18.jpg/image770x420cropped.jpg',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'demissionner',
-  },
-  {
-    id: 5,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'service',
-  },
-  {
-    id: 6,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'conges',
-  },
-  {
-    id: 7,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'GBA',
-    status: 'service',
-  },
-  {
-    id: 8,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_CcP11FT5ZA4gFXEk9Yv3jMbBab_qsZnG6Q&usqp=CAU',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'service',
-  },
-  {
-    id: 9,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'GBA',
-    status: 'service',
-  },
-  {
-    id: 10,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'service',
-  },
-  {
-    id: 11,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvuLruADwP85XloHkjzEoqu0ZJfShMWhlcA&usqp=CAU',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'GBA',
-    status: 'demissionner',
-  },
-  {
-    id: 12,
-    nom: 'Poukam Ngamaleu',
-    poste: 'NDE|CMR',
-    email: 'ngamaleu2011@gmail.com',
-    pays: 'CMR',
-    status: 'conges',
-  },
-]
+function EmployeTable({
+  setCreatedMsg,
+  createdMsg,
+  setOpen,
+}: {
+  setCreatedMsg: ({ message, severity }: alertMsgInterface) => void
+  createdMsg: alertMsgInterface | undefined
+  setOpen: (bool: boolean) => void
+}) {
+  const [rows, setRows] = useState<rowsInterface[]>()
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getAllEmployeInfo`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [createdMsg])
 
-function EmployeTable() {
+  const activateEmploye = (id: number) => {
+    // TODO fetch data status to activate employe
+    Axios.put(`http://localhost:3000/api/admin/updateActiveStatus/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setCreatedMsg({
+            message: res.data.message,
+            severity: 'success',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }
+  const dismissEmploye = (id: number) => {
+    // TODO fetch data status to  dismiss employe
+    Axios.put(`http://localhost:3000/api/admin/updateDismissStatus/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setCreatedMsg({
+            message: res.data.message,
+            severity: 'warning',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }
+
+  const resignedEmploye = (id: number) => {
+    // TODO fetch data status to resigned employe
+    Axios.put(`http://localhost:3000/api/admin/updateResignStatus/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setCreatedMsg({
+            message: res.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status == 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }
+
   const actionColumns: {
     field: string
     headerName: string
@@ -225,23 +222,32 @@ function EmployeTable() {
               <IconButton
                 sx={{ color: theme.palette.primary.light }}
                 component={StyledLink}
-                to={`/admin/employe/${params.row.id}`}
+                to={`/admin/employe/${params.row.id_user}`}
               >
                 <VisibilityOutlinedIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="En service">
-              <IconButton sx={{ color: '#41B2BA' }}>
+              <IconButton
+                sx={{ color: '#41B2BA' }}
+                onClick={() => activateEmploye(params.row.id_user)}
+              >
                 <DesignServicesOutlinedIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="En congés">
-              <IconButton sx={{ color: '#626DA9' }}>
+              <IconButton
+                sx={{ color: '#626DA9' }}
+                onClick={() => dismissEmploye(params.row.id_user)}
+              >
                 <HouseboatOutlinedIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Démissionner">
-              <IconButton sx={{ color: '#A95454' }}>
+              <IconButton
+                sx={{ color: '#A95454' }}
+                onClick={() => resignedEmploye(params.row.id_user)}
+              >
                 <HighlightOffOutlinedIcon />
               </IconButton>
             </Tooltip>
@@ -253,7 +259,8 @@ function EmployeTable() {
 
   return (
     <DataGrid
-      rows={rows}
+      getRowId={(row) => row.id_user}
+      rows={rows ? rows : []}
       columns={columns.concat(actionColumns)}
       pageSize={9}
       rowsPerPageOptions={[9]}
