@@ -23,13 +23,14 @@ import SheetCreate from './sheetCreated'
 import Axios from 'axios'
 import { alertMsgInterface } from '../createEmploy'
 
-interface employeDataInterface {
+export interface employeDataInterface {
   nom: string
   email: string
   phone: string
   poste: string
   adresse: string
   profil_img?: string
+  user_country?: string
 }
 
 type TransitionProps = Omit<SlideProps, 'direction'>

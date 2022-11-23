@@ -1,10 +1,14 @@
 // Make by Poukam Ngamaleu
 
 import {
+  Alert,
   Autocomplete,
   Box,
   Button,
   Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
   styled,
   TextField,
   Typography,
@@ -14,6 +18,12 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { alertMsgInterface } from '../createEmploy'
+import { employeDataInterface } from '../viewEmploye'
+
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 export const StylePhoneNumber = styled(PhoneInput)({
   height: '60px',
@@ -37,40 +47,101 @@ const Pays: string[] = ['CMR', 'GBA']
 
 function ModifyEmploye() {
   const { employeId } = useParams()
+  const [employeData, setEmployeData] = useState<employeDataInterface>()
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+  const [open, setOpen] = useState<boolean>(false)
 
-  // fetch function insert here
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getEmployeInfo/${employeId}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setEmployeData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'error',
+          })
+          setOpen(true)
+        } else {
+          setCreatedMsg({
+            message: 'Rééssayez plutard',
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }, [])
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    errors,
-    touched,
-    resetForm,
-    setFieldValue,
-  } = useFormik({
-    initialValues: {
-      // initial value could be change by value fetching on BDD
-      userName: '',
-      name: '',
-      email: '',
-      phoneNumber: '',
-      adresse: '',
-      poste: '',
-      country: 'CMR',
-      password: '',
-      imagePreviewUrl:
-        'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg',
-      file: '',
-    },
-    onSubmit: (values) => {
-      console.log(values)
-      // Ici entre l'appelle API REST
-      resetForm()
-    },
-    enableReinitialize: true,
-    //   validationSchema: ChangePasswordSchema,
-  })
+  const { values, handleSubmit, handleChange, resetForm, setFieldValue } =
+    useFormik({
+      initialValues: {
+        name: employeData?.nom,
+        email: employeData?.email,
+        phoneNumber: employeData?.phone,
+        adresse: employeData?.adresse,
+        poste: employeData?.poste,
+        country: 'CMR',
+        password: '',
+        imagePreviewUrl:
+          'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg',
+        file: '',
+      },
+      onSubmit: ({
+        name,
+        email,
+        phoneNumber,
+        adresse,
+        poste,
+        country,
+        password,
+        file,
+      }) => {
+        const body = new FormData()
+        body.append('file', file)
+        body.append('nom', name as string)
+        body.append('email', email as string)
+        body.append('phone', phoneNumber as string)
+        body.append('adresse', adresse as string)
+        body.append('poste', poste as string)
+        body.append('country', country)
+        body.append('password', password)
+
+        Axios.put(
+          `http://localhost:3000/api/admin/updateEmployeInfo/${employeId}`,
+          body
+        )
+          .then((res) => {
+            if (res?.status === 201) {
+              setCreatedMsg({
+                message: res.data.message,
+                severity: 'success',
+              })
+              setOpen(true)
+              resetForm()
+            }
+          })
+          .catch((err) => {
+            if (err.response.status === 400) {
+              setCreatedMsg({
+                message: err.response.data.message,
+                severity: 'error',
+              })
+              setOpen(true)
+            } else {
+              setCreatedMsg({
+                message: 'Erreur serveur. Rééssayez plutard',
+                severity: 'error',
+              })
+              setOpen(true)
+            }
+          })
+      },
+      enableReinitialize: true,
+    })
 
   function photoUpload(e: any) {
     const reader = new FileReader()
@@ -82,6 +153,9 @@ function ModifyEmploye() {
     reader.readAsDataURL(file)
   }
 
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
   return (
     <Box p={3} display="grid" rowGap="70px">
       <Typography variant="h4" color="#555">
@@ -97,7 +171,11 @@ function ModifyEmploye() {
       >
         <Box flex={1}>
           <img
-            src={values.imagePreviewUrl}
+            src={
+              employeData?.profil_img
+                ? employeData.profil_img
+                : values.imagePreviewUrl
+            }
             alt=""
             style={{
               width: '100%',
@@ -136,31 +214,20 @@ function ModifyEmploye() {
             />
           </Box>
           <TextField
-            name="userName"
-            type="text"
-            label="Nom d'utilisateur"
-            value={values.userName}
-            onChange={handleChange}
-            variant="filled"
-            sx={{ width: '45%' }}
-          />
-          <TextField
-            name="name"
-            type="text"
-            label="Nom complet"
-            variant="filled"
-            value={values.name}
-            onChange={handleChange}
-            sx={{ width: '45%' }}
-          />
-          <TextField
             name="email"
-            label="Email"
             variant="filled"
             sx={{ width: '45%' }}
             type="email"
             value={values.email}
             onChange={handleChange}
+          />
+          <TextField
+            name="name"
+            type="text"
+            variant="filled"
+            value={values.name}
+            onChange={handleChange}
+            sx={{ width: '45%' }}
           />
 
           <StylePhoneNumber
@@ -196,7 +263,7 @@ function ModifyEmploye() {
           />
           <TextField
             name="adresse"
-            label="Adresse"
+            label={values.adresse ? '' : 'Adresse'}
             variant="filled"
             sx={{ width: '45%' }}
             value={values.adresse}
@@ -210,19 +277,11 @@ function ModifyEmploye() {
             onChange={(event, val) => setFieldValue('pays', val)}
             value={values.country}
             isOptionEqualToValue={(option, value) => option === value}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Pays"
-                // {...(errors.typeAbonnement && touched.typeAbonnement
-                //   ? { error: true, helperText: errors.typeAbonnement }
-                //   : '')}
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Pays" />}
           />
           <TextField
             name="poste"
-            label="Poste"
+            label={values.poste ? '' : 'Poste'}
             variant="filled"
             sx={{ width: '45%' }}
             onChange={handleChange}
@@ -243,6 +302,21 @@ function ModifyEmploye() {
           </Box>
         </Box>
       </Paper>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

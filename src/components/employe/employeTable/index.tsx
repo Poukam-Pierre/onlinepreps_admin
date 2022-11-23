@@ -47,7 +47,11 @@ const columns: {
       return (
         <Box display="flex" alignItems="center">
           <img
-            src={params.row.profil_img}
+            src={
+              params.row.profil_img
+                ? `http://localhost:3000/uploads/${params.row.profil_img}`
+                : undefined
+            }
             alt=""
             style={{
               width: '32px',

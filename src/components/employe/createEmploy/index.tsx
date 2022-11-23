@@ -46,6 +46,8 @@ export const StylePhoneNumber = styled(PhoneInput)({
 })
 
 function CreationEmploye() {
+  const [open, setOpen] = useState<boolean>(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
   const {
     values,
     handleSubmit,
@@ -129,9 +131,6 @@ function CreationEmploye() {
     }
     reader.readAsDataURL(file)
   }
-
-  const [open, setOpen] = useState<boolean>(false)
-  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
 
   function TransitionUp(props: TransitionProps) {
     return <Slide {...props} direction="up" />

@@ -1,6 +1,9 @@
 // Made by Poukam Ngamaleu
 
 import { DataGrid } from '@mui/x-data-grid'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { useAuth } from '../../../../utils/context'
 
 const columns: {
   field: string
@@ -8,9 +11,16 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'ID', width: 180 },
+  { field: 'test_selling_id', headerName: 'ID', width: 180 },
   { field: 'category', headerName: 'Catégorie', width: 130 },
-  { field: 'session', headerName: 'Session', width: 180 },
+  {
+    field: 'session',
+    headerName: 'Session',
+    width: 180,
+    renderCell: (params: any) => {
+      return new Date(params.row.session).toLocaleDateString()
+    },
+  },
   {
     field: 'status',
     headerName: 'Status',
@@ -18,7 +28,7 @@ const columns: {
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status === undefined ? (
+          {params.row.status === 'waiting' ? (
             <span
               style={{
                 backgroundColor: '#F89E9E',
@@ -29,7 +39,7 @@ const columns: {
             >
               En vente
             </span>
-          ) : params.row.status ? (
+          ) : params.row.status === 'buy' ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -57,65 +67,43 @@ const columns: {
     },
   },
 ]
-const rows: {
-  id: string
+
+interface rowsInterface {
+  test_selling_id: string
   category: string
   session: string
-  status: boolean | undefined
-}[] = [
-  {
-    id: 'cgdho-21548-gdiys',
-    category: 'B',
-    session: '12 Février 2022',
-    status: true,
-  },
-  {
-    id: 'cgdho-29748-pgiys',
-    category: 'B',
-    session: '12 Janvier 2022',
-    status: false,
-  },
-  {
-    id: 'ceghh-26348-gaoys',
-    category: 'A',
-    session: '12 Mai 2002',
-    status: true,
-  },
-  {
-    id: 'cgdho-21548-bolys',
-    category: 'C',
-    session: '12 Mars 2021',
-    status: false,
-  },
-  {
-    id: 'cgdho-21946-gdiys',
-    category: 'D',
-    session: '12 Juin 2022',
-    status: undefined,
-  },
-  {
-    id: 'cgdho-21548-topys',
-    category: 'E',
-    session: '12 Mars 2022',
-    status: true,
-  },
-  {
-    id: 'cajgo-21548-gdiys',
-    category: 'G',
-    session: '02 Juillet 2022',
-    status: true,
-  },
-  {
-    id: 'cgper-21548-payys',
-    category: 'B',
-    session: '12 Decembre 2022',
-    status: undefined,
-  },
-]
+  status: string
+}
+
 function SheetBuy() {
+  const {
+    userInfo: { poste },
+  } = useAuth()
+  const [rows, setRows] = useState<rowsInterface[]>()
+
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(
+      `http://localhost:3000/api/admin/getEpreuveByDepartment/${
+        poste?.split('|')[1]
+      }`
+    )
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
+
   return (
     <DataGrid
-      rows={rows}
+      getRowId={(row) => row.test_selling_id}
+      rows={rows ? rows : []}
       columns={columns}
       pageSize={5}
       rowsPerPageOptions={[5]}
