@@ -8,28 +8,41 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { souscriptionDataInterface } from '../../../dashboard/adminDashboard/charts'
 
-const data: { name: string; total: number }[] = [
-  { name: 'Janvier', total: 540 },
-  { name: 'Fevrier', total: 9000 },
-  { name: 'Mars', total: 80 },
-  { name: 'Avril', total: 7000 },
-  { name: 'Mai', total: 6500 },
-  { name: 'Juin', total: 1540 },
-  { name: 'Juillet', total: 3500 },
-  { name: 'Septembre', total: 5000 },
-  { name: 'Octobre', total: 7500 },
-  { name: 'Novembre', total: 10000 },
-  { name: 'Decembre', total: 15000 },
-]
+function ChartInscription({ id }: { id: string | undefined }) {
+  const [inscriptionData, setInscriptionData] = useState<
+    souscriptionDataInterface[]
+  >([
+    {
+      name: 'Janvier',
+      total: 0,
+    },
+  ])
 
-function ChartInscription() {
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getCodePrepsInscrit/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setInscriptionData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         width={730}
         height={250}
-        data={data}
+        data={inscriptionData}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
         <defs>

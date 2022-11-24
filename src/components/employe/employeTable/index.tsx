@@ -1,25 +1,15 @@
 // Made by Poukam Ngamaleu
 
-import {
-  Alert,
-  Box,
-  Button,
-  IconButton,
-  Slide,
-  SlideProps,
-  Snackbar,
-  Tooltip,
-} from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
-import { Link } from 'react-router-dom'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlined'
-import HouseboatOutlinedIcon from '@mui/icons-material/HouseboatOutlined'
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
-import { theme } from '../../../utils/style/theme'
-import { useState, useEffect } from 'react'
+import HouseboatOutlinedIcon from '@mui/icons-material/HouseboatOutlined'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import { Box, IconButton, Tooltip } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 import Axios from 'axios'
+import { useEffect, useState } from 'react'
+import { theme } from '../../../utils/style/theme'
+import { StyledLink } from '../../sideBar/sideBarEmploye'
 import { alertMsgInterface } from '../createEmploy'
 
 interface rowsInterface {
@@ -67,8 +57,8 @@ const columns: {
     },
   },
   { field: 'poste', headerName: 'Poste', width: 100 },
-  { field: 'email', headerName: 'Email', width: 230 },
-  { field: 'user_country', headerName: 'Pays', width: 70 },
+  { field: 'email', headerName: 'Email', width: 200 },
+  { field: 'user_country', headerName: 'Pays', width: 100 },
   {
     field: 'status',
     headerName: 'Status',
@@ -199,7 +189,7 @@ function EmployeTable({
         }
       })
       .catch((err) => {
-        if (err.response.status == 400) {
+        if (err.response.status === 400) {
           setCreatedMsg({
             message: err.response.data.message,
             severity: 'error',
@@ -232,28 +222,37 @@ function EmployeTable({
               </IconButton>
             </Tooltip>
             <Tooltip title="En service">
-              <IconButton
-                sx={{ color: '#41B2BA' }}
-                onClick={() => activateEmploye(params.row.id_user)}
-              >
-                <DesignServicesOutlinedIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  sx={{ color: '#41B2BA' }}
+                  onClick={() => activateEmploye(params.row.id_user)}
+                  disabled={params.row.status === 'active' ? true : false}
+                >
+                  <DesignServicesOutlinedIcon />
+                </IconButton>
+              </span>
             </Tooltip>
             <Tooltip title="En congés">
-              <IconButton
-                sx={{ color: '#626DA9' }}
-                onClick={() => dismissEmploye(params.row.id_user)}
-              >
-                <HouseboatOutlinedIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  sx={{ color: '#626DA9' }}
+                  onClick={() => dismissEmploye(params.row.id_user)}
+                  disabled={params.row.status === 'holiday' ? true : false}
+                >
+                  <HouseboatOutlinedIcon />
+                </IconButton>
+              </span>
             </Tooltip>
             <Tooltip title="Démissionner">
-              <IconButton
-                sx={{ color: '#A95454' }}
-                onClick={() => resignedEmploye(params.row.id_user)}
-              >
-                <HighlightOffOutlinedIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  sx={{ color: '#A95454' }}
+                  onClick={() => resignedEmploye(params.row.id_user)}
+                  disabled={params.row.status === 'resigned' ? true : false}
+                >
+                  <HighlightOffOutlinedIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </Box>
         )

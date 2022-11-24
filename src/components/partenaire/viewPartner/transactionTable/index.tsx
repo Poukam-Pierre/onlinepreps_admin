@@ -1,7 +1,16 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import Axios from 'axios'
+import { useEffect, useState } from 'react'
+
+interface rowsInterface {
+  num_paiement: number
+  paiement_date: string
+  montant: number
+  status: string
+}
 
 const columns: {
   field: string
@@ -9,29 +18,31 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'TransactionID', width: 130 },
+  { field: 'num_paiement', headerName: 'TransactionID', width: 250 },
   {
-    field: 'date',
+    field: 'paiement_date',
     headerName: 'date',
     width: 150,
+    renderCell: (params: any) => {
+      return new Date(params.row.paiement_date).toLocaleDateString()
+    },
   },
   {
     field: 'montant',
     headerName: 'Montant',
-    width: 180,
+    width: 210,
     renderCell: (params: any) => {
       return <Typography>{params.row.montant} frs CFA</Typography>
     },
   },
-  { field: 'payement', headerName: 'N°payement', width: 180 },
   {
     field: 'status',
     headerName: 'Status',
-    width: 130,
+    width: 150,
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status === 'en attente' ? (
+          {params.row.status === 'waiting' ? (
             <span
               style={{
                 backgroundColor: '#F89E9E',
@@ -42,7 +53,7 @@ const columns: {
             >
               En attente
             </span>
-          ) : params.row.status === 'valider' ? (
+          ) : (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -53,17 +64,6 @@ const columns: {
             >
               Valider
             </span>
-          ) : (
-            <span
-              style={{
-                backgroundColor: '#CAD2FF',
-                color: '#626DA9',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              Refuser
-            </span>
           )}
         </>
       )
@@ -71,143 +71,33 @@ const columns: {
   },
 ]
 
-const rows: {
-  id: number
-  date: string
-  payement: number
-  montant: number
-  status: string
-}[] = [
-  {
-    id: 1,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'valider',
-  },
-  {
-    id: 2,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'refuser',
-  },
-  {
-    id: 3,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'valider',
-  },
-  {
-    id: 4,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'en attente',
-  },
-  {
-    id: 5,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'valider',
-  },
-  {
-    id: 6,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'refuser',
-  },
-  {
-    id: 7,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'valider',
-  },
-  {
-    id: 8,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'en attente',
-  },
-  {
-    id: 9,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'valider',
-  },
-  {
-    id: 10,
-    date: '11 Juin 2022',
-    payement: 696841451,
-    montant: 20000,
-    status: 'en attente',
-  },
-]
+function TransactionTable({ id }: { id: string | undefined }) {
+  const [rows, setRows] = useState<rowsInterface[]>()
 
-function TransactionTable() {
-  const actionColumns: {
-    field: string
-    headerName: string
-    width: number
-    renderCell: any
-  }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 240,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#1A9EA7',
-              }}
-              disabled={
-                params.row.status === 'valider' ||
-                params.row.status === 'refuser'
-                  ? true
-                  : false
-              }
-            >
-              Accepter
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#CBCBCB',
-                color: '#FF0000',
-              }}
-              disabled={
-                params.row.status === 'valider' ||
-                params.row.status === 'refuser'
-                  ? true
-                  : false
-              }
-            >
-              Refuser
-            </Button>
-          </Box>
-        )
-      },
-    },
-  ]
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getpartnerTransaction/${id}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
 
   return (
     <DataGrid
-      rows={rows}
-      columns={columns.concat(actionColumns)}
+      getRowId={(row) => row.num_paiement}
+      rows={rows ? rows : []}
+      columns={columns}
       pageSize={5}
       rowsPerPageOptions={[5]}
       checkboxSelection
-      sx={{ maxWidth: '70rem' }}
+      sx={{ maxWidth: '51rem' }}
     />
   )
 }

@@ -1,6 +1,6 @@
 // Made by Poukam Ngamaleu
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { theme } from '../../../utils/style/theme'
@@ -8,6 +8,7 @@ import TotalTestSheet from './ep_total'
 import ProductionSheetTable from './ep_production'
 import UnvalidedSheetTable from './ep_non_valide'
 import StoppedSheetTable from './ep_arrêt'
+import Axios from 'react'
 
 function StatEpreuve() {
   const [afficher, setAfficher] = useState<string>('total')

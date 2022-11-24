@@ -101,7 +101,11 @@ function ViewEmploye() {
           </Box>
           <Box display="flex">
             <Avatar
-              src={employeData?.profil_img}
+              src={
+                employeData
+                  ? employeData.profil_img
+                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+              }
               sx={{ width: '5rem', height: '5rem' }}
             />
             <Box>

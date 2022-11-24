@@ -1,11 +1,33 @@
 // Made by Poukam Ngamaleu
 
-import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import {
+  Alert,
+  Box,
+  IconButton,
+  Slide,
+  SlideProps,
+  Snackbar,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { theme } from '../../../utils/style/theme'
 import { StyledLink } from '../../sideBar/sideBarEmploye'
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { alertMsgInterface } from '../../employe/createEmploy'
+
+interface rowsInsterface {
+  id_user: number
+  nom: string
+  phone: string
+  email: string
+  montant: number
+  profil_img?: string
+  signaled: boolean | null
+}
 
 const columns: {
   field: string
@@ -13,7 +35,7 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'ID', width: 80 },
+  { field: 'id_user', headerName: 'ID', width: 80 },
   {
     field: 'nom',
     headerName: 'Nom',
@@ -22,7 +44,11 @@ const columns: {
       return (
         <Box display="flex" alignItems="center">
           <img
-            src={params.row.avatar}
+            src={
+              params.row.profil_img
+                ? `http://localhost:3000/uploads/${params.row.profil_img}`
+                : undefined
+            }
             alt=""
             style={{
               width: '32px',
@@ -38,109 +64,58 @@ const columns: {
     },
   },
   { field: 'phone', headerName: 'Phone', width: 180 },
-  { field: 'email', headerName: 'Email', width: 180 },
+  { field: 'email', headerName: 'Email', width: 210 },
   {
-    field: 'last_transaction',
+    field: 'montant',
     headerName: 'Dernière transaction',
-    width: 230,
+    width: 200,
     renderCell: (params: any) => {
-      return <Typography>{params.row.last_transaction} frs CFA</Typography>
+      return <Typography>{params.row.montant} frs CFA</Typography>
     },
   },
 ]
 
-const rows: {
-  id: number
-  nom: string
-  phone: string
-  email: string
-  last_transaction: number
-  avatar?: string
-}[] = [
-  {
-    id: 1,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 2,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 3,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 4,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 5,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 6,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 7,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 8,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-  {
-    id: 9,
-    nom: 'Poukam Ngamaleu',
-    phone: '+237 696841451',
-    avatar:
-      'https://media.nationalgeographic.org/assets/photos/111/820/541fc44b-e230-4fab-a429-d26913025a4c_c144-0-1856-1355_r800x633.jpg?378ee45b5204bcd6b5ff63f2edfdee7cabdf3eb4',
-    email: 'jk@gmail.com',
-    last_transaction: 20000,
-  },
-]
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function PartnerTable() {
+  const [rows, setRows] = useState<rowsInsterface[]>()
+  const [open, setOpen] = useState(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getAllPartnerInfo`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [createdMsg])
+
+  const signaledPartner = (id: string) => {
+    // TODO fetch data to BDD
+    Axios.post(`http://localhost:3000/api/admin/SignaledPartner/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setCreatedMsg({
+            message: res.data.message,
+            severity: 'success',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }
+
   const actionColumns: {
     field: string
     headerName: string
@@ -158,15 +133,21 @@ function PartnerTable() {
               <IconButton
                 sx={{ color: theme.palette.primary.light }}
                 component={StyledLink}
-                to={`/admin/partner/${params.row.id}`}
+                to={`/admin/partner/${params.row.id_user}`}
               >
                 <VisibilityOutlinedIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Signaler">
-              <IconButton sx={{ color: '#A95454' }}>
-                <ReportProblemOutlinedIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  sx={{ color: '#A95454' }}
+                  onClick={() => signaledPartner(params.row.id_user)}
+                  disabled={params.row.signaled !== null ? true : false}
+                >
+                  <ReportProblemOutlinedIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </Box>
         )
@@ -174,15 +155,36 @@ function PartnerTable() {
     },
   ]
 
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
   return (
-    <DataGrid
-      rows={rows}
-      columns={columns.concat(actionColumns)}
-      pageSize={9}
-      rowsPerPageOptions={[9]}
-      checkboxSelection
-      sx={{ maxWidth: '66rem' }}
-    />
+    <>
+      <DataGrid
+        getRowId={(row) => row.id_user}
+        rows={rows ? rows : []}
+        columns={columns.concat(actionColumns)}
+        pageSize={9}
+        rowsPerPageOptions={[9]}
+        checkboxSelection
+        sx={{ maxWidth: '66rem' }}
+      />
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }
 

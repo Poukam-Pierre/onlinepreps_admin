@@ -9,24 +9,56 @@ import {
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { theme } from '../../../utils/style/theme'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
+import Axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import ChartInscription from './chartInscription'
 import TransactionTable from './transactionTable'
 
+interface partnerDataInterface {
+  nom: string
+  prenom: string
+  email: string
+  phone: string
+  adresse: string
+  profil_img: string
+}
+
 function ViewPartner() {
+  const { partnerId } = useParams()
+  const [partnerData, setPartnerData] = useState<partnerDataInterface>()
+
+  useEffect(() => {
+    // TODO fetch data to BDD
+    Axios.get(`http://localhost:3000/api/admin/getPartnerInfo/${partnerId}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setPartnerData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  }, [])
+
   return (
     <Box p={3}>
       <Box display="flex" gap="20px">
         <Paper sx={{ flex: 1, padding: 3, bgcolor: '#F5F0F0' }}>
           <Box display="flex">
             <Avatar
-              src="https://www.booska-p.com/wp-content/uploads/2022/02/Nicki-Minaj-Verzuz-Visu-News.jpg"
+              src={
+                partnerData
+                  ? partnerData.profil_img
+                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+              }
               sx={{ width: '5rem', height: '5rem' }}
             />
             <Box>
               <Typography padding="0px 16px" variant="h5" fontWeight="bold">
-                Ngamaleu Poukam
+                {partnerData?.nom} {partnerData?.prenom}
               </Typography>
               <List>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -40,7 +72,7 @@ function ViewPartner() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    Ngamaleu2011@gmail.com
+                    {partnerData?.email}
                   </Typography>
                 </ListItem>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -54,7 +86,7 @@ function ViewPartner() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    +237 696841451
+                    {partnerData?.phone}
                   </Typography>
                 </ListItem>
                 <ListItem sx={{ paddingTop: 0 }}>
@@ -68,7 +100,7 @@ function ViewPartner() {
                     fontSize="0.89rem"
                     fontWeight={400}
                   >
-                    NDE | CMR
+                    {partnerData?.adresse}
                   </Typography>
                 </ListItem>
               </List>
@@ -79,7 +111,7 @@ function ViewPartner() {
           sx={{ flex: 2, padding: 3, bgcolor: '#F5F0F0', height: '12rem' }}
         >
           <Typography color="#555">courbe des inscriptions</Typography>
-          <ChartInscription />
+          <ChartInscription id={partnerId} />
         </Paper>
       </Box>
       <Box
@@ -95,7 +127,7 @@ function ViewPartner() {
           justifyContent="center"
           padding="15px 0"
         >
-          <TransactionTable />
+          <TransactionTable id={partnerId} />
         </Box>
       </Box>
     </Box>
