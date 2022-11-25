@@ -1,17 +1,59 @@
 // Made by Poukam Ngamaleu
 
 import { useState, useEffect } from 'react'
-import { Paper, Typography } from '@mui/material'
+import {
+  Alert,
+  Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import { Box } from '@mui/system'
 import { theme } from '../../../utils/style/theme'
 import TotalTestSheet from './ep_total'
 import ProductionSheetTable from './ep_production'
 import UnvalidedSheetTable from './ep_non_valide'
 import StoppedSheetTable from './ep_arrêt'
-import Axios from 'react'
+import Axios from 'axios'
+import { alertMsgInterface } from '../../employe/createEmploy'
+
+interface EpreuveDataInterface {
+  totalEpreuve: number
+  productionEpreuve: number
+  unValideEpreuve: number
+  stoppedEpreuve: number
+}
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function StatEpreuve() {
   const [afficher, setAfficher] = useState<string>('total')
+  const [epreuveData, setEpreuveData] = useState<EpreuveDataInterface>()
+  const [open, setOpen] = useState(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+
+  useEffect(() => {
+    // TODO fetch data from BDD
+    Axios.get(`http://localhost:3000/api/admin/getStatisticEpreuve`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setEpreuveData(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setCreatedMsg({
+            message: 'Erreur serveur, rééssayez plutard',
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }, [])
+
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
   return (
     <Box p={2}>
       <Box display="flex" justifyContent="space-around">
@@ -20,7 +62,7 @@ function StatEpreuve() {
             Total
           </Typography>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            1000
+            {epreuveData?.totalEpreuve}
           </Typography>
           <Box
             color={theme.palette.primary.main}
@@ -46,7 +88,7 @@ function StatEpreuve() {
             </Typography>
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            900
+            {epreuveData?.productionEpreuve}
           </Typography>
           <Box
             color={theme.palette.primary.main}
@@ -72,7 +114,7 @@ function StatEpreuve() {
             </Typography>
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            30
+            {epreuveData?.unValideEpreuve}
           </Typography>
           <Box
             color={theme.palette.primary.main}
@@ -98,7 +140,7 @@ function StatEpreuve() {
             </Typography>
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            70
+            {epreuveData?.stoppedEpreuve}
           </Typography>
           <Box
             color={theme.palette.primary.main}
@@ -121,15 +163,30 @@ function StatEpreuve() {
         paddingTop="20px"
       >
         {afficher === 'total' ? (
-          <TotalTestSheet />
+          <TotalTestSheet setMsg={setCreatedMsg} setOpen={setOpen} />
         ) : afficher === 'production' ? (
-          <ProductionSheetTable />
+          <ProductionSheetTable setMsg={setCreatedMsg} setOpen={setOpen} />
         ) : afficher === 'unvalided' ? (
-          <UnvalidedSheetTable />
+          <UnvalidedSheetTable setMsg={setCreatedMsg} setOpen={setOpen} />
         ) : (
-          <StoppedSheetTable />
+          <StoppedSheetTable setMsg={setCreatedMsg} setOpen={setOpen} />
         )}
       </Box>
+      <Snackbar
+        open={open}
+        onClose={() => setOpen(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

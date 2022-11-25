@@ -1,7 +1,18 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+import Axios from 'axios'
+import { useEffect, useState } from 'react'
+import { alertMsgInterface } from '../../../employe/createEmploy'
+
+export interface rowsInterface {
+  id_epreuve: string
+  libele_cat: string
+  date_session: string
+  libele_depart: string
+  code_pays: string
+  status: string
+}
 
 const columns: {
   field: string
@@ -9,19 +20,26 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'ID', width: 180 },
-  { field: 'category', headerName: 'Catégorie', width: 130 },
-  { field: 'session', headerName: 'Session', width: 180 },
-  { field: 'department', headerName: 'Département', width: 180 },
-  { field: 'pays', headerName: 'Pays', width: 70 },
+  { field: 'id_epreuve', headerName: 'ID', width: 270 },
+  { field: 'libele_cat', headerName: 'Catégorie', width: 130 },
+  {
+    field: 'date_session',
+    headerName: 'Session',
+    width: 150,
+    renderCell: (params: any) => {
+      return new Date(params.row.date_session).toLocaleDateString()
+    },
+  },
+  { field: 'libele_depart', headerName: 'Département', width: 180 },
+  { field: 'code_pays', headerName: 'Pays', width: 70 },
   {
     field: 'status',
     headerName: 'Status',
-    width: 180,
+    width: 156,
     renderCell: (params: any) => {
       return (
         <>
-          {params.row.status === true ? (
+          {params.row.status === 'production' ? (
             <span
               style={{
                 backgroundColor: '#D2F0F2',
@@ -32,7 +50,7 @@ const columns: {
             >
               En production
             </span>
-          ) : params.row.status === false ? (
+          ) : params.row.status === 'stopped' ? (
             <span
               style={{
                 backgroundColor: ' #CAD2FF',
@@ -61,89 +79,49 @@ const columns: {
   },
 ]
 
-const rows: {
-  id: string
-  category: string
-  session: string
-  department: string
-  pays: string
-  status: boolean | undefined
-}[] = [
-  {
-    id: 'cgdho-21548-gdiys',
-    category: 'B',
-    session: '12 Février 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-29748-pgiys',
-    category: 'B',
-    session: '12 Janvier 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: false,
-  },
-  {
-    id: 'ceghh-26348-gaoys',
-    category: 'A',
-    session: '12 Mai 2002',
-    department: 'NDE',
-    pays: 'CMR',
-    status: undefined,
-  },
-  {
-    id: 'cgdho-21548-bolys',
-    category: 'C',
-    session: '12 Mars 2021',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-21946-gdiys',
-    category: 'D',
-    session: '12 Juin 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: false,
-  },
-  {
-    id: 'cgdho-21548-topys',
-    category: 'E',
-    session: '12 Mars 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: undefined,
-  },
-  {
-    id: 'cajgo-21548-gdiys',
-    category: 'G',
-    session: '02 Juillet 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgper-21548-payys',
-    category: 'B',
-    session: '12 Decembre 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: undefined,
-  },
-]
+function TotalTestSheet({
+  setMsg,
+  setOpen,
+}: {
+  setMsg: ({ message, severity }: alertMsgInterface) => void
+  setOpen: (bool: boolean) => void
+}) {
+  const [rows, setRows] = useState<rowsInterface[]>()
 
-function TotalTestSheet() {
+  useEffect(() => {
+    // TODO fetch from BDD
+    Axios.get(`http://localhost:3000/api/admin/getAllEpreuveInfo`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setMsg({
+            message: err.response.data.message,
+            severity: 'info',
+          })
+          setOpen(true)
+        } else {
+          setMsg({
+            message: 'Erreur serveur, rééssayez plutard',
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }, [])
+
   return (
     <DataGrid
-      rows={rows}
+      getRowId={(row) => row.id_epreuve}
+      rows={rows ? rows : []}
       columns={columns}
       pageSize={10}
       rowsPerPageOptions={[10]}
       checkboxSelection
-      sx={{ maxWidth: '64rem' }}
+      sx={{ maxWidth: '63rem' }}
     />
   )
 }

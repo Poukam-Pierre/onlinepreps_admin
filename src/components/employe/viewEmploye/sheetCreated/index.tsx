@@ -117,7 +117,7 @@ function SheetCreate({
         }
       })
       .catch((err) => {
-        if (err.response.status == 400) {
+        if (err.response.status === 400) {
           setCreatedMsg({
             message: err.response.data.message,
             severity: 'error',

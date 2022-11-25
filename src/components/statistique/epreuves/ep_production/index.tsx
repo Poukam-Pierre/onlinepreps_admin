@@ -5,6 +5,10 @@ import { DataGrid } from '@mui/x-data-grid'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import { StyledLink } from '../../../sideBar/sideBarEmploye'
+import { rowsInterface } from '../ep_total'
+import { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { alertMsgInterface } from '../../../employe/createEmploy'
 
 const columns: {
   field: string
@@ -12,111 +16,73 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id', headerName: 'ID', width: 180 },
-  { field: 'category', headerName: 'Catégorie', width: 130 },
-  { field: 'session', headerName: 'Session', width: 180 },
-  { field: 'department', headerName: 'Département', width: 180 },
-  { field: 'pays', headerName: 'Pays', width: 70 },
+  { field: 'id_epreuve', headerName: 'ID', width: 220 },
+  { field: 'libele_cat', headerName: 'Catégorie', width: 90 },
+  {
+    field: 'date_session',
+    headerName: 'Session',
+    width: 180,
+    renderCell: (params: any) => {
+      return new Date(params.row.date_session).toLocaleDateString()
+    },
+  },
+  { field: 'libele_depart', headerName: 'Département', width: 180 },
+  { field: 'code_pays', headerName: 'Pays', width: 70 },
   {
     field: 'status',
     headerName: 'Status',
     width: 150,
-    renderCell: (params: any) => {
+    renderCell: () => {
       return (
-        <>
-          {params.row.status ? (
-            <span
-              style={{
-                backgroundColor: '#D2F0F2',
-                color: '#41B2BA',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              En production
-            </span>
-          ) : null}
-        </>
+        <span
+          style={{
+            backgroundColor: '#D2F0F2',
+            color: '#41B2BA',
+            padding: '10px',
+            borderRadius: '15px',
+          }}
+        >
+          En production
+        </span>
       )
     },
   },
 ]
 
-const rows: {
-  id: string
-  category: string
-  session: string
-  department: string
-  pays: string
-  status: boolean
-}[] = [
-  {
-    id: 'cgdho-21548-gdiys',
-    category: 'B',
-    session: '12 Février 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-29748-pgiys',
-    category: 'B',
-    session: '12 Janvier 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'ceghh-26348-gaoys',
-    category: 'A',
-    session: '12 Mai 2002',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-21548-bolys',
-    category: 'C',
-    session: '12 Mars 2021',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-21946-gdiys',
-    category: 'D',
-    session: '12 Juin 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgdho-21548-topys',
-    category: 'E',
-    session: '12 Mars 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cajgo-21548-gdiys',
-    category: 'G',
-    session: '02 Juillet 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-  {
-    id: 'cgper-21548-payys',
-    category: 'B',
-    session: '12 Decembre 2022',
-    department: 'NDE',
-    pays: 'CMR',
-    status: true,
-  },
-]
+function ProductionSheetTable({
+  setMsg,
+  setOpen,
+}: {
+  setMsg: ({ message, severity }: alertMsgInterface) => void
+  setOpen: (bool: boolean) => void
+}) {
+  const [rows, setRows] = useState<rowsInterface[]>()
 
-function ProductionSheetTable() {
+  useEffect(() => {
+    // TODO fetch data from DATA
+    Axios.get(`http://localhost:3000/api/admin/getAllEpreuveInProduction`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setMsg({
+            message: err.response.data.message,
+            severity: 'info',
+          })
+          setOpen(true)
+        } else {
+          setMsg({
+            message: 'Erreur serveur, rééssayez plutard',
+            severity: 'error',
+          })
+          setOpen(true)
+        }
+      })
+  }, [])
+
   const actionColumns: {
     field: string
     headerName: string
@@ -134,7 +100,7 @@ function ProductionSheetTable() {
               <IconButton
                 sx={{ color: '#1A9EA7' }}
                 component={StyledLink}
-                to={`/admin/epreuve/view/${params.row.id}`}
+                to={`/admin/epreuve/view/${params.row.id_epreuve}`}
               >
                 <VisibilityOutlinedIcon />
               </IconButton>
@@ -143,7 +109,7 @@ function ProductionSheetTable() {
               <IconButton
                 sx={{ color: '#1D689F' }}
                 component={StyledLink}
-                to={`/admin/epreuve/modify/${params.row.id}`}
+                to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
               >
                 <EditOutlinedIcon />
               </IconButton>
@@ -155,7 +121,8 @@ function ProductionSheetTable() {
   ]
   return (
     <DataGrid
-      rows={rows}
+      getRowId={(row) => row.id_epreuve}
+      rows={rows ? rows : []}
       columns={columns.concat(actionColumns)}
       pageSize={10}
       rowsPerPageOptions={[10]}

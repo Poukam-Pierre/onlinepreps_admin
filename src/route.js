@@ -63,7 +63,6 @@ export const routes = [
           { path: 'epreuves', element: <StatEpreuve /> },
           { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
           { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
-          { path: 'profil', element: <EmployeProfil /> },
           { path: 'settings', element: <Settings /> },
           { path: 'messages', element: <Messages /> },
           { path: 'manager', element: <Manager /> },

@@ -24,7 +24,10 @@ const StyledLink = styled(Link)({
 function MenuSettings({ setIsDrawerOpen }: any) {
   const [openElUser, setOpenElUser] = useState(null)
 
-  const { authDispatch } = useAuth()
+  const {
+    authDispatch,
+    userInfo: { is_admin },
+  } = useAuth()
   const navigate = useNavigate()
 
   const handleOpenUserMenu = (event: any) => {
@@ -71,7 +74,11 @@ function MenuSettings({ setIsDrawerOpen }: any) {
         open={Boolean(openElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem sx={{ display: 'flex' }} onClick={handleCloseUserMenu}>
+        <MenuItem
+          sx={{ display: 'flex' }}
+          onClick={handleCloseUserMenu}
+          disabled={is_admin}
+        >
           <AccountCircleIcon fontSize="small" />
           <Typography
             textAlign="center"
@@ -87,7 +94,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
           <Typography
             textAlign="center"
             component={StyledLink}
-            to="/settings"
+            to="/admin/settings"
             paddingLeft="10px"
           >
             Paramètres
