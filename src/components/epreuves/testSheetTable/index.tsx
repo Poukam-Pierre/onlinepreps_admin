@@ -14,7 +14,14 @@ const columns: {
 }[] = [
   { field: 'id_epreuve', headerName: 'ID', width: 200 },
   { field: 'libele_cat', headerName: 'Catégorie', width: 130 },
-  { field: 'date_session', headerName: 'Session', width: 180 },
+  {
+    field: 'date_session',
+    headerName: 'Session',
+    width: 180,
+    renderCell: (params: any) => {
+      return new Date(params.row.date_session).toDateString()
+    },
+  },
   {
     field: 'status',
     headerName: 'Status',

@@ -37,6 +37,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import ClearIcon from '@mui/icons-material/Clear'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from 'react-router-dom'
+import { useBeforeunload } from 'react-beforeunload'
 
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -95,6 +96,7 @@ function FormSheet() {
       testInformations.append('country', country)
       testInformations.append('language', language)
       testInformations.append('department', department)
+      // eslint-disable-next-line array-callback-return
       questionss.map(({ questionBody, propositionAnswers, feedback, file }) => {
         testInformations.append(`questionBody`, questionBody)
         testInformations.append(
@@ -104,6 +106,7 @@ function FormSheet() {
         testInformations.append('file', file as string)
         testInformations.append(`feedback`, feedback as string)
       })
+
       setLoading(true)
       Axios.post(
         `http://localhost:3000/api/employe/savingExamInfos/${id}`,
@@ -143,14 +146,14 @@ function FormSheet() {
           }
         })
 
-      // const socket = io('http://localhost:3000')
-      // socket.emit('newCreation', {
-      //   category: values.category,
-      //   session: values.session,
-      //   department: values.department,
-      //   nom: nom,
-      //   profil_img: profil_img,
-      // })
+      const socket = io('http://localhost:3000')
+      socket.emit('newCreation', {
+        category: values.category,
+        session: values.session,
+        department: values.department,
+        nom: nom,
+        profil_img: profil_img,
+      })
     },
     enableReinitialize: true,
   })
@@ -192,9 +195,12 @@ function FormSheet() {
           bgcolor: theme.common.submitBtnEchec,
         }),
   }
+
+  // useBeforeunload(() => 'Are you sure to close this tab?')
+
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={handleSubmit} width="53rem">
         <Box
           p={3}
           sx={{
@@ -289,7 +295,12 @@ function FormSheet() {
               />
             </Box>
           </Box>
-          <Box display="grid" justifyContent="center" paddingTop="10px">
+          <Box
+            display="grid"
+            justifyContent="center"
+            paddingTop="10px"
+            width="50rem"
+          >
             <Autocomplete
               id="language"
               disablePortal
@@ -297,7 +308,9 @@ function FormSheet() {
               sx={{ width: 300 }}
               onChange={(event, val) => setFieldValue('language', val?.code)}
               getOptionLabel={(option) => option.label}
-              isOptionEqualToValue={(option, value) => option === value}
+              isOptionEqualToValue={(option, value) =>
+                option.label === value.label
+              }
               renderOption={(props, option) => (
                 <Box
                   component="li"
@@ -355,6 +368,7 @@ function FormSheet() {
               <Fab
                 arial-label="save"
                 color="primary"
+                id="saveBtn"
                 sx={submitButtonSx}
                 disabled={values.questionss.length !== 40 ? true : false}
                 type="submit"
@@ -382,6 +396,7 @@ function FormSheet() {
             </Box>
             <Box sx={{ m: 1, position: 'relative' }}>
               <Button
+                id="saveBtn"
                 variant="contained"
                 type="submit"
                 disabled={

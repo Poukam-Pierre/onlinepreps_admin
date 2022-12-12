@@ -150,6 +150,7 @@ function questionsUI(
                         >
                           <TextField
                             placeholder="Intitulé de la question"
+                            multiline
                             variant="filled"
                             value={quest.questionBody}
                             sx={{ width: '30rem' }}
@@ -365,13 +366,16 @@ function questionsUI(
                         <Box p={2}>
                           <TextField
                             placeholder="Intitulé de la question"
+                            // multiline
                             variant="filled"
                             value={quest.questionBody}
                             sx={{
-                              width: '30rem',
+                              width: '100%',
                               '& .MuiInputBase-input': {
                                 bgcolor: '#F5F0F0',
+                                fontWeight: 'bold',
                               },
+
                               '& ::before': {
                                 borderBottom: 'none',
                               },

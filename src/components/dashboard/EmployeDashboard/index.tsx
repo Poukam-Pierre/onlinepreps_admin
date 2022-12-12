@@ -22,7 +22,7 @@ function EmployeDashboard() {
     Axios.get(`http://localhost:3000/api/employe/getNberTestCreated/${id}`)
       .then((res) => {
         if (res?.status === 200 && res.data) {
-          setNberTestCreated(res.data.lenght)
+          setNberTestCreated(res.data.length)
         }
       })
       .catch((err) => {
@@ -33,7 +33,7 @@ function EmployeDashboard() {
     Axios.get(`http://localhost:3000/api/employe/getNberTestBaught/${id}`)
       .then((res) => {
         if (res?.status === 200 && res.data) {
-          setNbreTestBaught(res.data.lenght)
+          setNbreTestBaught(res.data.length)
         }
       })
       .catch((err) => {
