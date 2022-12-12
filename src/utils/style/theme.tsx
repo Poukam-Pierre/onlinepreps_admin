@@ -1,5 +1,6 @@
 //  Made by Ngamaleu Poukam Pierre Irénée
 import { createTheme } from '@mui/material'
+import { green, red } from '@mui/material/colors'
 import React from 'react'
 
 declare module '@mui/material/styles' {
@@ -9,7 +10,9 @@ declare module '@mui/material/styles' {
       // inputBackground: React.CSSProperties['color']
       // adminElement: React.CSSProperties['color']
       button: React.CSSProperties['color']
-      // actionbtn: React.CSSProperties['color']
+      notification: React.CSSProperties['color']
+      submitBtnSuccess: React.CSSProperties['color']
+      submitBtnEchec: React.CSSProperties['color']
       // adminBackground: React.CSSProperties['color']
       // offWhite: React.CSSProperties['color']
       // placeholder: React.CSSProperties['color']
@@ -26,7 +29,9 @@ declare module '@mui/material/styles' {
       // inputBackground: React.CSSProperties["color"];
       // adminElement: React.CSSProperties["color"];
       button: React.CSSProperties['color']
-      // actionbtn: React.CSSProperties['color']
+      notification: React.CSSProperties['color']
+      submitBtnSuccess: React.CSSProperties['color']
+      submitBtnEchec: React.CSSProperties['color']
       // adminBackground: React.CSSProperties["color"];
       // offWhite: React.CSSProperties["color"];
       // placeholder: React.CSSProperties["color"];
@@ -86,5 +91,8 @@ export const theme = createTheme({
   common: {
     button: '#F5FA05',
     greeting: '#f0f0f0',
+    notification: '#1a7ea0',
+    submitBtnSuccess: green[500],
+    submitBtnEchec: red[500],
   },
 })

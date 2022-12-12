@@ -1,25 +1,25 @@
 // Made by Poukam Ngamaleu
 
 import { Autocomplete, Box, Button, Typography } from '@mui/material'
-import { Dayjs } from 'dayjs'
-import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { theme } from '../../../utils/style/theme'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import questionsUI from '../../formSheet/questionUI'
-import { question } from '../../formSheet/functionSheet'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import Axios from 'axios'
 import { useFormik } from 'formik'
+import { useEffect, useState } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { useParams } from 'react-router-dom'
+import { io } from 'socket.io-client'
 import {
   countries,
-  department,
   dataCategoryOfLicence,
   dataTest,
+  department,
 } from '../../../utils/dataWorking'
-import { useParams } from 'react-router-dom'
-import Axios from 'axios'
+import { theme } from '../../../utils/style/theme'
+import { question } from '../../formSheet/functionSheet'
+import questionsUI from '../../formSheet/questionUI'
 
 // Chargement des données statiques de la BDD
 const categoryArray: string[] = []
@@ -84,6 +84,12 @@ function ModifyTestSheet() {
     onSubmit: (values) => {
       console.log(values)
       // Ici entre l'appelle des différents API REST
+      const socket = io('http://localhost:3000')
+      socket.emit('newEpreuve', {
+        category: values.category,
+        session: values.session,
+        department: values.department,
+      })
     },
     enableReinitialize: true,
   })

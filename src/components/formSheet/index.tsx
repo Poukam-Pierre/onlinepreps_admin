@@ -1,6 +1,16 @@
 // Made by Poukam Ngamaleu
 
-import { Autocomplete, Box, Button, Typography } from '@mui/material'
+import {
+  Alert,
+  Autocomplete,
+  Box,
+  Button,
+  Fab,
+  Slide,
+  SlideProps,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
@@ -20,15 +30,29 @@ import {
 import { useParams } from 'react-router-dom'
 import Axios from 'axios'
 import { useAuth } from '../../utils/context'
+import { io } from 'socket.io-client'
+import { alertMsgInterface } from '../employe/createEmploy'
+import SaveIcon from '@mui/icons-material/Save'
+import CheckIcon from '@mui/icons-material/Check'
+import ClearIcon from '@mui/icons-material/Clear'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useNavigate } from 'react-router-dom'
+
+type TransitionProps = Omit<SlideProps, 'direction'>
 
 function FormSheet() {
   const {
-    userInfo: { id },
+    userInfo: { id, nom, profil_img },
   } = useAuth()
+  const navigate = useNavigate()
   const { formId } = useParams()
   const [date, setDate] = useState<Dayjs | null>(null)
   const [feedBack, setFeedBack] = useState<string>('')
+  const [success, setSuccess] = useState<string>('default')
   const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [openS, setOpenS] = useState<boolean>(false)
+  const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
   const [questions, setQuestions] = useState<question[]>([
     {
       questionBody: 'Question',
@@ -62,34 +86,71 @@ function FormSheet() {
       questionss,
     }) => {
       // TODO fetch data epreuve
-      console.log(questionss)
+
+      const testInformations = new FormData()
+
+      testInformations.append('epreuveId', id_ as string)
+      testInformations.append('session', JSON.stringify(session))
+      testInformations.append('category', category)
+      testInformations.append('country', country)
+      testInformations.append('language', language)
+      testInformations.append('department', department)
+      questionss.map(({ questionBody, propositionAnswers, feedback, file }) => {
+        testInformations.append(`questionBody`, questionBody)
+        testInformations.append(
+          `propositionAnswer`,
+          JSON.stringify(propositionAnswers)
+        )
+        testInformations.append('file', file as string)
+        testInformations.append(`feedback`, feedback as string)
+      })
+      setLoading(true)
       Axios.post(
         `http://localhost:3000/api/employe/savingExamInfos/${id}`,
-        values
+        testInformations
       )
         .then((res) => {
           if (res?.status === 201) {
-            // questionss.map(
-            //   ({ feedback, propositionAnswers, questionBody, file }) => {
-            //     const body = new FormData()
-            //     body.append('feedback', feedback as string)
-            //     body.append(
-            //       'propositionAnswers',
-            //       JSON.stringify(propositionAnswers)
-            //     )
-            //     body.append('questionBody', questionBody)
-            //     body.append('file', file as string)
-            //     Axios.post(
-            //       `http://localhost:3000/api/employe/savingExamQuestions/${id_}`,
-            //       body
-            //     )
-            //       .then((res) => {})
-            //       .catch((err) => {})
-            //   }
-            // )
+            setSuccess('success')
+            setLoading(false)
+            setCreatedMsg({
+              message: res.data.message,
+              severity: 'success',
+            })
+            setOpenS(true)
+            setTimeout(() => {
+              navigate('/epreuves')
+            }, 3000)
           }
         })
-        .catch((err) => {})
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setSuccess('echec')
+            setLoading(false)
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'info',
+            })
+            setOpenS(true)
+          } else {
+            setSuccess('echec')
+            setLoading(false)
+            setCreatedMsg({
+              message: 'Erreur serveur. Veuillez rééssayer plutard',
+              severity: 'error',
+            })
+            setOpenS(true)
+          }
+        })
+
+      // const socket = io('http://localhost:3000')
+      // socket.emit('newCreation', {
+      //   category: values.category,
+      //   session: values.session,
+      //   department: values.department,
+      //   nom: nom,
+      //   profil_img: profil_img,
+      // })
     },
     enableReinitialize: true,
   })
@@ -114,6 +175,23 @@ function FormSheet() {
     setQuestions(item)
   }
 
+  function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />
+  }
+
+  const submitButtonSx = {
+    ...(success === 'default'
+      ? {
+          bgcolor: theme.palette.primary.main,
+        }
+      : success === 'success'
+      ? {
+          bgcolor: theme.common.submitBtnSuccess,
+        }
+      : {
+          bgcolor: theme.common.submitBtnEchec,
+        }),
+  }
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
       <Box component="form" onSubmit={handleSubmit}>
@@ -272,16 +350,77 @@ function FormSheet() {
           <Typography variant="subtitle1" color="#555">
             questions restantes {40 - values.questionss.length}
           </Typography>
-          <Button
-            variant="contained"
-            type="submit"
-            disabled={values.questionss.length !== 40 ? true : false}
-            sx={{ bgcolor: theme.palette.primary.main }}
-          >
-            Valider
-          </Button>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ m: 1, position: 'relative' }}>
+              <Fab
+                arial-label="save"
+                color="primary"
+                sx={submitButtonSx}
+                disabled={values.questionss.length !== 40 ? true : false}
+                type="submit"
+              >
+                {success === 'default' ? (
+                  <SaveIcon />
+                ) : success === 'success' ? (
+                  <CheckIcon />
+                ) : (
+                  <ClearIcon />
+                )}
+              </Fab>
+              {loading && (
+                <CircularProgress
+                  size={68}
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 1,
+                    top: -6,
+                    left: -6,
+                    color: theme.common.submitBtnSuccess,
+                  }}
+                />
+              )}
+            </Box>
+            <Box sx={{ m: 1, position: 'relative' }}>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={
+                  values.questionss.length !== 40 ? true : false || loading
+                }
+                sx={submitButtonSx}
+              >
+                Valider
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    top: 6,
+                    left: 30,
+                    color: theme.common.submitBtnSuccess,
+                  }}
+                />
+              )}
+            </Box>
+          </Box>
         </Box>
       </Box>
+      <Snackbar
+        open={openS}
+        onClose={() => setOpenS(false)}
+        TransitionComponent={TransitionUp}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setOpenS(false)}
+          severity={createdMsg?.severity}
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {createdMsg?.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }
