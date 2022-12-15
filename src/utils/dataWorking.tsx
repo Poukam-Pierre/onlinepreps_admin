@@ -96,7 +96,7 @@ export const dataTest = {
   dataTestInfos: {
     langueType: 'fr',
     epreuveId: 'cgdho-21548-gdiys',
-    session: Date(),
+    session: '2022-07-29T22:00:00.000Z',
     department: 'Haute-Sanaga',
     category: 'B',
     user_created: 'agent | Mifi',

@@ -108,7 +108,7 @@ function FormSheet() {
 
       setLoading(true)
       Axios.post(
-        `http://localhost:3000/api/employe/savingExamInfos/${id}`,
+        `http://localhost:3000/api/employe/modifExam`,
         testInformations
       )
         .then((res) => {
