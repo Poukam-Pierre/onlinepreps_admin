@@ -57,20 +57,20 @@ function ModifyTestSheet() {
 
   const [questions, setQuestions] = useState<question[]>([...testSheets])
 
-  useEffect(() => {
-    // TODO FETCH DATA FROM bdd
-    Axios.get(`http://localhost:3000/api/employe/getExamModif/${testId}`)
-      .then((res) => {
-        if (res?.status === 200 && res.data) {
-          setQuestions(res.data)
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          console.log(err.response.data.message)
-        }
-      })
-  }, [])
+  // useEffect(() => {
+  //   // TODO FETCH DATA FROM bdd
+  //   Axios.get(`http://localhost:3000/api/employe/getExamModif/${testId}`)
+  //     .then((res) => {
+  //       if (res?.status === 200 && res.data) {
+  //         setQuestions(res.data)
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 400) {
+  //         console.log(err.response.data.message)
+  //       }
+  //     })
+  // }, [])
 
   const { values, handleSubmit, setFieldValue } = useFormik({
     initialValues: {

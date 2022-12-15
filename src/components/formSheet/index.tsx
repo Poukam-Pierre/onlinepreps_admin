@@ -1,5 +1,8 @@
 // Made by Poukam Ngamaleu
 
+import CheckIcon from '@mui/icons-material/Check'
+import ClearIcon from '@mui/icons-material/Clear'
+import SaveIcon from '@mui/icons-material/Save'
 import {
   Alert,
   Autocomplete,
@@ -11,33 +14,29 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material'
-import { Dayjs } from 'dayjs'
-import { useState } from 'react'
+import CircularProgress from '@mui/material/CircularProgress'
 import TextField from '@mui/material/TextField'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { theme } from '../../utils/style/theme'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import questionsUI from './questionUI'
-import { question } from './functionSheet'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import Axios from 'axios'
+import { Dayjs } from 'dayjs'
 import { useFormik } from 'formik'
+import { useEffect, useState } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { useBeforeunload } from 'react-beforeunload'
+import { useNavigate, useParams } from 'react-router-dom'
+import { io } from 'socket.io-client'
+import { useAuth } from '../../utils/context'
 import {
   countries,
-  department,
   dataCategoryOfLicence,
+  department,
 } from '../../utils/dataWorking'
-import { useParams } from 'react-router-dom'
-import Axios from 'axios'
-import { useAuth } from '../../utils/context'
-import { io } from 'socket.io-client'
+import { theme } from '../../utils/style/theme'
 import { alertMsgInterface } from '../employe/createEmploy'
-import SaveIcon from '@mui/icons-material/Save'
-import CheckIcon from '@mui/icons-material/Check'
-import ClearIcon from '@mui/icons-material/Clear'
-import CircularProgress from '@mui/material/CircularProgress'
-import { useNavigate } from 'react-router-dom'
-import { useBeforeunload } from 'react-beforeunload'
+import { question } from './functionSheet'
+import questionsUI from './questionUI'
 
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -178,7 +177,7 @@ function FormSheet() {
     setQuestions(item)
   }
 
-  function TransitionUp(props: TransitionProps) {
+  function TransitionUp(props: TransitionProps): JSX.Element {
     return <Slide {...props} direction="up" />
   }
 
@@ -196,8 +195,26 @@ function FormSheet() {
         }),
   }
 
-  // useBeforeunload(() => 'Are you sure to close this tab?')
+  useBeforeunload(() => 'Are you sure to close this tab?')
 
+  function componentWillUnmount(): void {
+    alert(
+      "Attention!!! Les informations de l'épreuve en cours de création seront perdues. Aucune autre manoeuvre de récupération n'est encore possible."
+    )
+  }
+
+  function componentDidMount(): void {
+    alert(
+      "Attention!!! Les informations de l'épreuve que vous créérez doivent être enregistrer avant tout tentative de sortie de cette page. Aucune autre manoeuvre de récupération n'est encore possible."
+    )
+  }
+
+  useEffect(() => {
+    componentDidMount()
+    return () => {
+      componentWillUnmount()
+    }
+  }, [])
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
       <Box component="form" onSubmit={handleSubmit} width="53rem">

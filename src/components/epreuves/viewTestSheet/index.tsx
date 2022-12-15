@@ -24,9 +24,9 @@ export interface Proposition {
 
 export interface question {
   libele_quest: string
-  propositionAnswers: Proposition[]
+  libele_propo: string[]
   image?: string
-  open: boolean
+  open?: boolean
   commentaire: string
 }
 
@@ -97,14 +97,12 @@ function ViewTestSheet() {
                   </Box>
                   <FormControl>
                     <RadioGroup value={valueChecked}>
-                      {question.propositionAnswers.map((option, index) => (
+                      {question.libele_propo.map((option, index) => (
                         <Box key={index} paddingLeft="20px">
                           <FormControlLabel
-                            value={option.libele_propo}
+                            value={option}
                             control={<Radio />}
-                            label={
-                              <Typography>{option.libele_propo}</Typography>
-                            }
+                            label={<Typography>{option}</Typography>}
                           />
                         </Box>
                       ))}
