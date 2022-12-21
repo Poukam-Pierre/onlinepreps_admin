@@ -24,7 +24,7 @@ interface rowsInsterface {
   nom: string
   phone: string
   email: string
-  montant: number
+  montant?: number
   profil_img?: string
   signaled: boolean | null
 }
@@ -70,7 +70,11 @@ const columns: {
     headerName: 'Dernière transaction',
     width: 200,
     renderCell: (params: any) => {
-      return <Typography>{params.row.montant} frs CFA</Typography>
+      return (
+        <Typography>
+          {params.row.montant ? params.row.montant : 0} frs CFA
+        </Typography>
+      )
     },
   },
 ]

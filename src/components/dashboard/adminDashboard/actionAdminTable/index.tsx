@@ -54,7 +54,7 @@ function ActionAdminTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -65,7 +65,7 @@ function ActionAdminTable() {
               <TableCell align="left">{row.id}</TableCell>
               <TableCell align="left">{row.date}</TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { rowsInterface } from '../ep_total'
 import { alertMsgInterface } from '../../../employe/createEmploy'
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
 
 const columns: {
   field: string
@@ -83,6 +84,26 @@ function UnvalidedSheetTable({
       })
   }, [])
 
+  const productionStatement = (id: string) => {
+    Axios.put(`http://localhost:3000/api/admin/putInProduction/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setMsg({
+            message: res.data.message,
+            severity: 'success',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        setMsg({
+          message: err.response.data.message,
+          severity: 'error',
+        })
+        setOpen(true)
+      })
+  }
+
   const actionColumns: {
     field: string
     headerName: string
@@ -92,7 +113,7 @@ function UnvalidedSheetTable({
     {
       field: 'action',
       headerName: 'Action',
-      width: 120,
+      width: 150,
       renderCell: (params: any) => {
         return (
           <Box display="flex" gap="10px">
@@ -105,11 +126,19 @@ function UnvalidedSheetTable({
                 <VisibilityOutlinedIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Valider">
+            <Tooltip title="Modifier">
               <IconButton
                 sx={{ color: '#1D689F' }}
                 component={StyledLink}
                 to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
+              >
+                <EditRoundedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Valider">
+              <IconButton
+                sx={{ color: '#1D689F' }}
+                onClick={() => productionStatement(params.row.id_epreuve)}
               >
                 <ThumbUpIcon />
               </IconButton>
@@ -127,7 +156,7 @@ function UnvalidedSheetTable({
       pageSize={10}
       rowsPerPageOptions={[10]}
       checkboxSelection
-      sx={{ maxWidth: '67rem' }}
+      sx={{ maxWidth: '70rem' }}
     />
   )
 }

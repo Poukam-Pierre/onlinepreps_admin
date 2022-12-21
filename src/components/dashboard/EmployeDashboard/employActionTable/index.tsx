@@ -1,7 +1,6 @@
 //  Made by Poukam Ngamaleu
 
 import {
-  Box,
   Paper,
   Table,
   TableBody,
@@ -10,41 +9,38 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-
-const rows: {
-  id: number
-  transaction_type: string
-  date: string
-  status: boolean | undefined
-}[] = [
-  { id: 2564182, transaction_type: 'Achat', date: '24 Mai 2022', status: true },
-  {
-    id: 2849761,
-    transaction_type: 'Création',
-    date: '21 Juin 2020',
-    status: true,
-  },
-  {
-    id: 6597481,
-    transaction_type: 'Création',
-    date: '24 Janvier 2002',
-    status: false,
-  },
-  {
-    id: 5849613,
-    transaction_type: 'Achat',
-    date: '01 Mai 2012',
-    status: undefined,
-  },
-  {
-    id: 7985431,
-    transaction_type: 'Modification',
-    date: '18 Mars 2015',
-    status: true,
-  },
-]
+import Axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../../../../utils/context'
 
 function ActionTable() {
+  const {
+    userInfo: { id },
+  } = useAuth()
+  const [rows, setRows] = useState<
+    {
+      id: number
+      transaction_type: string
+      date_creation: string
+      status: string
+    }[]
+  >()
+
+  useEffect(() => {
+    // TODO Fetch data for employe's action
+    Axios.get(`http://localhost:3000/api/employe/getState/${id}`)
+      .then((res) => {
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          console.log(err.response.data.message)
+        }
+      })
+  })
+
   return (
     <TableContainer
       component={Paper}
@@ -66,7 +62,7 @@ function ActionTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows?.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -75,9 +71,11 @@ function ActionTable() {
                 {row.transaction_type}
               </TableCell>
               <TableCell align="left">{row.id}</TableCell>
-              <TableCell align="left">{row.date}</TableCell>
               <TableCell align="left">
-                {row.status === undefined ? (
+                {new Date(row.date_creation).toLocaleDateString()}
+              </TableCell>
+              <TableCell align="left">
+                {row.status === 'stopped' || row.status === 'waiting' ? (
                   <span
                     style={{
                       backgroundColor: '#CAD2FF',
@@ -88,7 +86,7 @@ function ActionTable() {
                   >
                     En attente
                   </span>
-                ) : row.status ? (
+                ) : row.status === 'production' || row.status === 'buy' ? (
                   <span
                     style={{
                       backgroundColor: '#D2F0F2',

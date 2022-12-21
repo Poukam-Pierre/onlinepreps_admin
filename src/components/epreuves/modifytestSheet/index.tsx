@@ -5,6 +5,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  CircularProgress,
   Slide,
   SlideProps,
   Snackbar,
@@ -110,6 +111,12 @@ function ModifyTestSheet() {
       department,
       questionss,
     }) => {
+      const positionImgArray: number[] = []
+      questionss.map((question, index) => {
+        if (question.file) {
+          positionImgArray.push(index)
+        }
+      })
       // Ici entre l'appelle des différents API REST
       const testInformations = new FormData()
 
@@ -132,7 +139,9 @@ function ModifyTestSheet() {
 
       setLoading(true)
       Axios.post(
-        `http://localhost:3000/api/employe/savingExamInfos`,
+        positionImgArray
+          ? `http://localhost:3000/api/employe/savingModifExam/${positionImgArray}`
+          : 'http://localhost:3000/api/employe/savingModifExam',
         testInformations
       )
         .then((res) => {
@@ -212,7 +221,7 @@ function ModifyTestSheet() {
 
   function componentDidMount(): void {
     alert(
-      "Attention!!! Les informations de l'épreuve que vous créérez doivent être enregistrer avant tout tentative de sortie de cette page. Aucune autre manoeuvre de récupération n'est encore possible."
+      "Attention!!! Les informations de l'épreuve que vous modifierez doivent être enregistrer avant tout tentative de sortie de cette page. Aucune autre manoeuvre de récupération n'est encore possible."
     )
   }
 
@@ -222,6 +231,20 @@ function ModifyTestSheet() {
       componentWillUnmount()
     }
   }, [])
+  const submitButtonSx = {
+    ...(success === 'default'
+      ? {
+          bgcolor: theme.palette.primary.main,
+        }
+      : success === 'success'
+      ? {
+          bgcolor: theme.common.submitBtnSuccess,
+        }
+      : {
+          bgcolor: theme.common.submitBtnEchec,
+        }),
+  }
+
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
       <Box component="form" onSubmit={handleSubmit} width="53rem">
@@ -361,14 +384,30 @@ function ModifyTestSheet() {
           <Typography variant="subtitle1" color="#555">
             questions restantes {40 - values.questionss.length}
           </Typography>
-          <Button
-            variant="contained"
-            type="submit"
-            disabled={values.questionss.length !== 10 ? true : false}
-            sx={{ bgcolor: theme.palette.primary.main }}
-          >
-            Enregistrer
-          </Button>
+          <Box sx={{ m: 1, position: 'relative' }}>
+            <Button
+              id="saveBtn"
+              variant="contained"
+              type="submit"
+              disabled={
+                values.questionss.length !== 10 ? true : false || loading
+              }
+              sx={submitButtonSx}
+            >
+              Enregistrer
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: 6,
+                  left: 60,
+                  color: theme.common.submitBtnSuccess,
+                }}
+              />
+            )}
+          </Box>
         </Box>
       </Box>
       <Snackbar

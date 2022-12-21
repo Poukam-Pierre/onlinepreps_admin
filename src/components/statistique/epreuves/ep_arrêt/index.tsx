@@ -1,10 +1,12 @@
 // Made by Poukam Ngamaleu
 
+import { Box, IconButton, Tooltip } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { alertMsgInterface } from '../../../employe/createEmploy'
 import { rowsInterface } from '../ep_total'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 
 const columns: {
   field: string
@@ -27,7 +29,7 @@ const columns: {
   {
     field: 'status',
     headerName: 'Status',
-    width: 180,
+    width: 130,
     renderCell: () => {
       return (
         <span
@@ -79,15 +81,61 @@ function StoppedSheetTable({
       })
   }, [])
 
+  const productionStatement = (id: string) => {
+    Axios.put(`http://localhost:3000/api/admin/putInProduction/${id}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          setMsg({
+            message: res.data.message,
+            severity: 'success',
+          })
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        setMsg({
+          message: err.response.data.message,
+          severity: 'error',
+        })
+        setOpen(true)
+      })
+  }
+  const actionColumns: {
+    field: string
+    headerName: string
+    width: number
+    renderCell: any
+  }[] = [
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 110,
+      renderCell: (params: any) => {
+        return (
+          <Box display="flex" gap="10px">
+            <Tooltip title="Valider">
+              <IconButton
+                sx={{ color: '#1D689F' }}
+                onClick={() => productionStatement(params.row.id_epreuve)}
+              >
+                <ThumbUpIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )
+      },
+    },
+  ]
+
   return (
     <DataGrid
       getRowId={(row) => row.id_epreuve}
       rows={rows ? rows : []}
-      columns={columns}
+      columns={columns.concat(actionColumns)}
       pageSize={10}
       rowsPerPageOptions={[10]}
       checkboxSelection
-      sx={{ maxWidth: '63rem' }}
+      sx={{ maxWidth: '67rem' }}
     />
   )
 }
