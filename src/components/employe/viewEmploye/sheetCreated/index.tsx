@@ -91,7 +91,9 @@ function SheetCreate({
 
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getEpreuveByEmploye/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getEpreuveByEmploye/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)
@@ -106,7 +108,9 @@ function SheetCreate({
 
   const deleteEpreuve = (id: number) => {
     // TODO fetch data status to stop production of epreuve
-    Axios.put(`http://localhost:3000/api/admin/updateStatusEpreuve/${id}`)
+    Axios.put(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/updateStatusEpreuve/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setCreatedMsg({

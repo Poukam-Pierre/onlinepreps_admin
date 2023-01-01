@@ -79,7 +79,9 @@ function TestSheetTable({ id_ }: { id_: number }) {
   const [rows, setRows] = useState<rowsInterface[]>([])
   useEffect(() => {
     // TODO fetch data in epreuve table
-    Axios.get(`http://localhost:3000/api/employe/getAllTestCreated/${id_}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getAllTestCreated/${id_}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) setRows(res.data)
       })

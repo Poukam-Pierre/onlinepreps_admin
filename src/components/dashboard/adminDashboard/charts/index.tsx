@@ -29,7 +29,9 @@ function Charts() {
   useEffect(() => {
     //TODO change local link to remote link
 
-    Axios.get(`http://localhost:3000/api/admin/getSouscriptionDate`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getSouscriptionDate`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setSouscriptionData(res.data)

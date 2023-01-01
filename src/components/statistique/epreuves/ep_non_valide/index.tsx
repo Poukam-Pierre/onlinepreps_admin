@@ -61,7 +61,9 @@ function UnvalidedSheetTable({
 
   useEffect(() => {
     // TODO fetch data from DATA
-    Axios.get(`http://localhost:3000/api/admin/getAllEpreuveUnValide`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllEpreuveUnValide`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)
@@ -85,7 +87,9 @@ function UnvalidedSheetTable({
   }, [])
 
   const productionStatement = (id: string) => {
-    Axios.put(`http://localhost:3000/api/admin/putInProduction/${id}`)
+    Axios.put(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/putInProduction/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setMsg({

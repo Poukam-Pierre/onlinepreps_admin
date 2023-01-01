@@ -25,7 +25,7 @@ function AdminDashboard() {
   })
   useEffect(() => {
     // TODO Fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getStatAdmin`)
+    Axios.get(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getStatAdmin`)
       .then((res) => {
         if (res?.status === 200) {
           setDashData(res.data)

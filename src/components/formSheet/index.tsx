@@ -108,7 +108,7 @@ function FormSheet() {
 
       setLoading(true)
       Axios.post(
-        `http://localhost:3000/api/employe/modifExam`,
+        `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/modifExam`,
         testInformations
       )
         .then((res) => {
@@ -145,7 +145,7 @@ function FormSheet() {
           }
         })
 
-      const socket = io('http://localhost:3000')
+      const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
       socket.emit('newCreation', {
         category: values.category,
         session: values.session,

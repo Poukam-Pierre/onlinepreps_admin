@@ -52,7 +52,9 @@ function ViewEmploye() {
 
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getEmployeInfo/${employeId}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getEmployeInfo/${employeId}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setEmployeData(res.data)

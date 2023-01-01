@@ -89,7 +89,10 @@ function CreationEmploye() {
       body.append('poste', poste)
       body.append('country', country)
       body.append('password', password)
-      Axios.post('http://localhost:3000/api/signup/employe', body)
+      Axios.post(
+        `${process.env.REACT_APP_URL_REMOTE_LINK}/signup/employe`,
+        body
+      )
         .then((res) => {
           if (res?.status === 201) {
             setCreatedMsg({

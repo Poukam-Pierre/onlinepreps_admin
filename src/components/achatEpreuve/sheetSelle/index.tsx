@@ -101,7 +101,9 @@ function SelleSheetTable({
   useEffect(() => {
     // TODO fetch data from BDD
     Axios.get(
-      `http://localhost:3000/api/employe/getAllTestSell/${poste?.split('|')[1]}`
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getAllTestSell/${
+        poste?.split('|')[1]
+      }`
     )
       .then((res) => {
         if (res?.status === 200 && res.data) setRows(res.data)
@@ -112,7 +114,9 @@ function SelleSheetTable({
   }, [open])
 
   const handleOpen = (id_: string) => {
-    Axios.get(`http://localhost:3000/api/employe/getSellerInfos/${id_}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getSellerInfos/${id_}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setSellerInfos(res.data)
@@ -127,7 +131,7 @@ function SelleSheetTable({
 
   const handleBuy = (id_: string) => {
     Axios.put(
-      `http://localhost:3000/api/employe/buyTestSheet/${id_}`,
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/buyTestSheet/${id_}`,
       employeId
     )
       .then((res) => {

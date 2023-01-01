@@ -46,7 +46,7 @@ const columns: {
           <img
             src={
               params.row.profil_img
-                ? `http://localhost:3000/uploads/${params.row.profil_img}`
+                ? `${process.env.REACT_APP_URL_SOCKET_LINK}/uploads/${params.row.profil_img}`
                 : undefined
             }
             alt=""
@@ -88,7 +88,9 @@ function PartnerTable() {
 
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getAllPartnerInfo`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllPartnerInfo`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)
@@ -103,7 +105,9 @@ function PartnerTable() {
 
   const signaledPartner = (id: string) => {
     // TODO fetch data to BDD
-    Axios.post(`http://localhost:3000/api/admin/SignaledPartner/${id}`)
+    Axios.post(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SignaledPartner/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setCreatedMsg({

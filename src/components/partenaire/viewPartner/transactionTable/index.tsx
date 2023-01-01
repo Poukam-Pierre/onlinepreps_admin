@@ -76,7 +76,9 @@ function TransactionTable({ id }: { id: string | undefined }) {
 
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getpartnerTransaction/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getpartnerTransaction/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)

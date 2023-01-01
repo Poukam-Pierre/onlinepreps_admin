@@ -28,7 +28,9 @@ function ActionTable() {
 
   useEffect(() => {
     // TODO Fetch data for employe's action
-    Axios.get(`http://localhost:3000/api/employe/getState/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}://localhost:3000/api/employe/getState/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)

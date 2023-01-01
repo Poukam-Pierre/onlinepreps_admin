@@ -90,7 +90,9 @@ function TotalTestSheet({
 
   useEffect(() => {
     // TODO fetch from BDD
-    Axios.get(`http://localhost:3000/api/admin/getAllEpreuveInfo`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllEpreuveInfo`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)

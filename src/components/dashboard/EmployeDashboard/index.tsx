@@ -19,7 +19,9 @@ function EmployeDashboard() {
 
   useEffect(() => {
     // TODO change local link to remote link
-    Axios.get(`http://localhost:3000/api/employe/getNberTestCreated/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getNberTestCreated/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setNberTestCreated(res.data.length)
@@ -30,7 +32,9 @@ function EmployeDashboard() {
           setNberTestCreated(0)
         }
       })
-    Axios.get(`http://localhost:3000/api/employe/getNberTestBaught/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getNberTestBaught/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setNbreTestBaught(res.data.length)

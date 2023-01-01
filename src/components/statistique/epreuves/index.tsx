@@ -34,7 +34,9 @@ function StatEpreuve() {
 
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getStatisticEpreuve`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getStatisticEpreuve`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setEpreuveData(res.data)

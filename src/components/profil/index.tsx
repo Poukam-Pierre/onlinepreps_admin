@@ -51,7 +51,7 @@ function EmployeProfil() {
   } = useAuth()
 
   const authAxios = Axios.create({
-    baseURL: `http://localhost:3000/api/employe`,
+    baseURL: `${process.env.REACT_APP_URL_REMOTE_LINK}/employe`,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -135,7 +135,9 @@ function EmployeProfil() {
 
   useEffect(() => {
     // TODO change local link to remote link
-    Axios.get(`http://localhost:3000/api/common/getProfilImg/${id}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/common/getProfilImg/${id}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           authDispatch({

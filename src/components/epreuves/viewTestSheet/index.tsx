@@ -37,7 +37,9 @@ function ViewTestSheet() {
 
   useEffect(() => {
     // TODO FETCH DATA FROM bdd
-    Axios.get(`http://localhost:3000/api/employe/getExamView/${testId}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getExamView/${testId}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setQuestions(res.data)

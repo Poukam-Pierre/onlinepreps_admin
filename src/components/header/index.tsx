@@ -52,7 +52,7 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function Header() {
   const {
-    userInfo: { nom, id },
+    userInfo: { nom, id, is_admin },
   } = useAuth()
 
   const [selected, setSelected] = useState<string>(
@@ -94,7 +94,7 @@ function Header() {
   useEffect(() => {
     // TODO make greeting connection
     if (id) {
-      const socket = io('http://localhost:3000')
+      const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
 
       socket.on('greeting', (msg: string) => {
         setCreatedMsg({
@@ -110,7 +110,7 @@ function Header() {
   }, [])
 
   useEffect(() => {
-    const socket = io('http://localhost:3000')
+    const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
 
     // listing notification from socket
     socket.on('getNotificationCreationTest', (data: notificationInterface) => {
@@ -130,17 +130,19 @@ function Header() {
       <StyledToolbar>
         <Box component="img" sx={{ width: 250 }} src={logo} alt="OnlinePreps" />
         <Box display="flex" alignItems="center">
-          <IconButton
-            sx={{ color: theme.palette.secondary.contrastText }}
-            onClick={() => {
-              setOpenNotif(!openNotif)
-              setBadgeContent(0)
-            }}
-          >
-            <Badge badgeContent={badgeContent} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          {is_admin && (
+            <IconButton
+              sx={{ color: theme.palette.secondary.contrastText }}
+              onClick={() => {
+                setOpenNotif(!openNotif)
+                setBadgeContent(0)
+              }}
+            >
+              <Badge badgeContent={badgeContent} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          )}
           <Button
             id="basic-button"
             aria-controls={open ? 'basic-menu' : undefined}

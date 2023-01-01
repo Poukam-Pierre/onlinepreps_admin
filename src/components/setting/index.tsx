@@ -28,7 +28,7 @@ function Settings() {
     userInfo: { id },
   } = useAuth()
   const authAxios = Axios.create({
-    baseURL: `http://localhost:3000/api/common`,
+    baseURL: `${process.env.REACT_APP_URL_REMOTE_LINK}/common`,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

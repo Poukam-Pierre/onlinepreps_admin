@@ -60,7 +60,9 @@ function ProductionSheetTable({
 
   useEffect(() => {
     // TODO fetch data from DATA
-    Axios.get(`http://localhost:3000/api/admin/getAllEpreuveInProduction`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllEpreuveInProduction`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)

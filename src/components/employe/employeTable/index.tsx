@@ -39,7 +39,7 @@ const columns: {
           <img
             src={
               params.row.profil_img
-                ? `http://localhost:3000/uploads/${params.row.profil_img}`
+                ? `${process.env.REACT_APP_URL_SOCKET_LINK}/uploads/${params.row.profil_img}`
                 : undefined
             }
             alt=""
@@ -118,7 +118,9 @@ function EmployeTable({
   const [rows, setRows] = useState<rowsInterface[]>()
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getAllEmployeInfo`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllEmployeInfo`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)
@@ -133,7 +135,9 @@ function EmployeTable({
 
   const activateEmploye = (id: number) => {
     // TODO fetch data status to activate employe
-    Axios.put(`http://localhost:3000/api/admin/updateActiveStatus/${id}`)
+    Axios.put(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/updateActiveStatus/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setCreatedMsg({
@@ -155,7 +159,9 @@ function EmployeTable({
   }
   const dismissEmploye = (id: number) => {
     // TODO fetch data status to  dismiss employe
-    Axios.put(`http://localhost:3000/api/admin/updateDismissStatus/${id}`)
+    Axios.put(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/updateDismissStatus/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setCreatedMsg({
@@ -178,7 +184,9 @@ function EmployeTable({
 
   const resignedEmploye = (id: number) => {
     // TODO fetch data status to resigned employe
-    Axios.put(`http://localhost:3000/api/admin/updateResignStatus/${id}`)
+    Axios.put(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/updateResignStatus/${id}`
+    )
       .then((res) => {
         if (res?.status === 200) {
           setCreatedMsg({

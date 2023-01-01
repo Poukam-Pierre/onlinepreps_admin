@@ -30,7 +30,9 @@ function ViewPartner() {
 
   useEffect(() => {
     // TODO fetch data to BDD
-    Axios.get(`http://localhost:3000/api/admin/getPartnerInfo/${partnerId}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getPartnerInfo/${partnerId}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setPartnerData(res.data)

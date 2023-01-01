@@ -73,7 +73,9 @@ function ModifyTestSheet() {
 
   useEffect(() => {
     // TODO FETCH DATA FROM bdd
-    Axios.get(`http://localhost:3000/api/employe/getExamModif/${testId}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getExamModif/${testId}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setQuestions(res.data.testSheets)
@@ -140,8 +142,8 @@ function ModifyTestSheet() {
       setLoading(true)
       Axios.post(
         positionImgArray
-          ? `http://localhost:3000/api/employe/savingModifExam/${positionImgArray}`
-          : 'http://localhost:3000/api/employe/savingModifExam',
+          ? `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam/${positionImgArray}`
+          : '${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam',
         testInformations
       )
         .then((res) => {
@@ -178,7 +180,7 @@ function ModifyTestSheet() {
           }
         })
 
-      const socket = io('http://localhost:3000')
+      const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
       socket.emit('newEpreuve', {
         category: values.category,
         session: values.session,

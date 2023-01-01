@@ -22,6 +22,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { alertMsgInterface } from '../createEmploy'
 import { employeDataInterface } from '../viewEmploye'
+import { useAuth } from '../../../utils/context'
 
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -46,14 +47,24 @@ export const StylePhoneNumber = styled(PhoneInput)({
 const Pays: string[] = ['CMR', 'GBA']
 
 function ModifyEmploye() {
+  const { accessToken } = useAuth()
   const { employeId } = useParams()
   const [employeData, setEmployeData] = useState<employeDataInterface>()
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
   const [open, setOpen] = useState<boolean>(false)
 
+  const authAxios = Axios.create({
+    baseURL: `${process.env.REACT_APP_URL_REMOTE_LINK}/admin`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+
   useEffect(() => {
     // TODO fetch data from BDD
-    Axios.get(`http://localhost:3000/api/admin/getEmployeInfo/${employeId}`)
+    Axios.get(
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getEmployeInfo/${employeId}`
+    )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setEmployeData(res.data)
@@ -110,10 +121,8 @@ function ModifyEmploye() {
         body.append('country', country)
         body.append('password', password)
 
-        Axios.put(
-          `http://localhost:3000/api/admin/updateEmployeInfo/${employeId}`,
-          body
-        )
+        authAxios
+          .put(`/updateEmployeInfo/${employeId}`, body)
           .then((res) => {
             if (res?.status === 201) {
               setCreatedMsg({

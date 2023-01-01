@@ -84,7 +84,7 @@ function SheetBuy() {
   useEffect(() => {
     // TODO fetch data from BDD
     Axios.get(
-      `http://localhost:3000/api/admin/getEpreuveByDepartment/${
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getEpreuveByDepartment/${
         poste?.split('|')[1]
       }`
     )
