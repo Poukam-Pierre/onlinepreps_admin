@@ -24,6 +24,7 @@ import Messages from './components/messages'
 import Settings from './components/setting'
 import Manager from './components/managing'
 import SignIn from './pages/login'
+import Error from './components/error'
 
 export const routes = [
   {
@@ -46,7 +47,7 @@ export const routes = [
           { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
           { path: 'feedback', element: <Feedback /> },
           { path: 'messages', element: <Messages /> },
-          // { path: '*', element: <Error /> },
+          { path: '*', element: <Error /> },
         ],
       },
       {
@@ -67,7 +68,7 @@ export const routes = [
           { path: 'messages', element: <Messages /> },
           { path: 'manager', element: <Manager /> },
           { path: 'statistics', element: <Finances /> },
-          // { path: '*', element: <Error /> },
+          { path: '*', element: <Error /> },
         ],
       },
     ],

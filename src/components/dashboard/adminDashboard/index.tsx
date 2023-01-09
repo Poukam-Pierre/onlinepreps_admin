@@ -91,7 +91,7 @@ function AdminDashboard() {
             paddingBottom="20px"
           >
             <Typography variant="h5" color="#555">
-              Apprenant
+              Apprenants
             </Typography>
             {/* <Box display="flex" alignItems="center" color="red">
               <ExpandMoreIcon />

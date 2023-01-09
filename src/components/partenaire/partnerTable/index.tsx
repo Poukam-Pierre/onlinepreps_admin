@@ -106,7 +106,7 @@ function PartnerTable() {
   const signaledPartner = (id: string) => {
     // TODO fetch data to BDD
     Axios.post(
-      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SignaledPartner/${id}`
+      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/signaledPartner/${id}`
     )
       .then((res) => {
         if (res?.status === 200) {
