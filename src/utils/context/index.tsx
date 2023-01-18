@@ -27,20 +27,12 @@ export interface authInterface {
 }
 
 const sampleAuthContext: authInterface = {
-  accessToken:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ5b21ldGNobWFyQGdtYWlsLmNvbSIsInVzZXJJZCI6MTI0LCJpYXQiOjE2NjgzNjU4MTksImV4cCI6MTY2ODQ1MjIxOX0.L4JTj8e1B7BiJbbymTW0aKhT7yfxwKqx4EhzXw0kYJM',
+  accessToken: '',
   userInfo: {
-    id: 124,
-    nom: 'ngamaleu',
-    email: 'ngamaleu2011@gmail.com',
-    prenom: 'pierre Irénée',
-    is_employe: false,
-    is_admin: true,
-    status: 'active',
-    country: 'cameroun',
-    poste: 'agent | Mifi',
-    phoneNumber: '+237696841451',
-    birthDate: ' 03 Avril 1996',
+    id: undefined,
+    nom: '',
+    prenom: '',
+    email: '',
   },
 }
 
