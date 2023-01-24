@@ -27,7 +27,7 @@ function ActionTable() {
   >()
 
   useEffect(() => {
-    // TODO Fetch data for employe's action
+    // TODO Change local link to remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}://localhost:3000/api/employe/getState/${id}`
     )
@@ -38,7 +38,7 @@ function ActionTable() {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   })

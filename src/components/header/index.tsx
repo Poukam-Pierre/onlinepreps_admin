@@ -52,7 +52,7 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function Header() {
   const {
-    userInfo: { nom, id, is_admin },
+    userInfo: { nom, id, is_admin, is_employe },
   } = useAuth()
 
   const [selected, setSelected] = useState<string>(
@@ -93,7 +93,7 @@ function Header() {
 
   useEffect(() => {
     // TODO make greeting connection
-    if (id) {
+    if (is_admin || is_employe) {
       const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
 
       socket.on('greeting', (msg: string) => {

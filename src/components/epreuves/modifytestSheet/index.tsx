@@ -143,7 +143,7 @@ function ModifyTestSheet() {
       Axios.post(
         positionImgArray
           ? `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam/${positionImgArray}`
-          : '${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam',
+          : `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam`,
         testInformations
       )
         .then((res) => {
@@ -392,7 +392,7 @@ function ModifyTestSheet() {
               variant="contained"
               type="submit"
               disabled={
-                values.questionss.length !== 10 ? true : false || loading
+                values.questionss.length !== 40 ? true : false || loading
               }
               sx={submitButtonSx}
             >

@@ -143,6 +143,9 @@ function SignIn() {
               variant="outlined"
               value={values.email}
               onChange={handleChange}
+              sx={{
+                '& input': { color: theme.palette.secondary.contrastText },
+              }}
               {...(errors.email && touched.email
                 ? { error: true, helperText: errors.email }
                 : '')}
@@ -156,6 +159,9 @@ function SignIn() {
                 type={value ? 'text' : 'password'}
                 onChange={handleChange}
                 value={values.password}
+                sx={{
+                  '& input': { color: theme.palette.secondary.contrastText },
+                }}
                 {...(errors.password && touched.password
                   ? { error: true }
                   : '')}

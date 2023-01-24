@@ -94,7 +94,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
           <Typography
             textAlign="center"
             component={StyledLink}
-            to="/admin/settings"
+            to={is_admin ? '/admin/settings' : '/settings'}
             paddingLeft="10px"
           >
             Paramètres
