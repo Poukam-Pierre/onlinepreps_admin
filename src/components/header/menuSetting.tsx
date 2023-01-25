@@ -26,7 +26,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
 
   const {
     authDispatch,
-    userInfo: { is_admin },
+    userInfo: { is_admin, nom, profil_img },
   } = useAuth()
   const navigate = useNavigate()
 
@@ -57,7 +57,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
         onClick={handleOpenUserMenu}
         sx={{ display: { xs: 'none', md: 'inline-flex' }, gap: '10px' }}
       >
-        <Avatar alt="Poukam Marc" src="/static/images/avatar/2.jpg" />
+        <Avatar alt={nom} src={profil_img} />
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -77,7 +77,7 @@ function MenuSettings({ setIsDrawerOpen }: any) {
         <MenuItem
           sx={{ display: 'flex' }}
           onClick={handleCloseUserMenu}
-          disabled={is_admin}
+          disabled={is_admin && true}
         >
           <AccountCircleIcon fontSize="small" />
           <Typography

@@ -14,7 +14,7 @@ export const CreateEmployeSchema = yup.object().shape({
   password: yup
     .string()
     .min(5, 'min 5 caractères,au moins 1 lettre et 1 chiffre')
-    .max(10, 'Max 10 caratères, au moins 1 lettre et 1 chiffre')
+    .max(10, 'Max 10 caratères, au moins 1 lettre magiscule et 1 chiffre')
     .matches(/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{4,10}$/, {
       message: 'Mot de passe incorrect',
     })

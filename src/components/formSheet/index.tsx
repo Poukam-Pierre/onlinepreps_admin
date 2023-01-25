@@ -108,7 +108,7 @@ function FormSheet() {
 
       setLoading(true)
       Axios.post(
-        `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/modifExam`,
+        `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingExamInfos/${id}`,
         testInformations
       )
         .then((res) => {
@@ -132,6 +132,14 @@ function FormSheet() {
             setCreatedMsg({
               message: err.response.data.message,
               severity: 'info',
+            })
+            setOpenS(true)
+          } else if (err.response.status === 404) {
+            setSuccess('echec')
+            setLoading(false)
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'error',
             })
             setOpenS(true)
           } else {
