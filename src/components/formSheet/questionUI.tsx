@@ -538,6 +538,7 @@ function questionsUI(
                             label="Entrez le commentaire"
                             multiline
                             maxRows={4}
+                            autoFocus
                             sx={{ width: '100%' }}
                             value={feedBack}
                             onChange={(e) => setFeedBack(e.target.value)}

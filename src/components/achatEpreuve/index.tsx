@@ -3,7 +3,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import SelleSheetTable from './sheetSelle'
-import { useState, useEffect } from 'react'
 import { useAuth } from '../../utils/context'
 
 function TestSheetBuying() {

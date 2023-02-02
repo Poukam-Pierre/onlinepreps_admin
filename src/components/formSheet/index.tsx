@@ -425,7 +425,7 @@ function FormSheet() {
                 variant="contained"
                 type="submit"
                 disabled={
-                  values.questionss.length !== 40 ? true : false || loading
+                  values.questionss.length !== 6 ? true : false || loading
                 }
                 sx={submitButtonSx}
               >

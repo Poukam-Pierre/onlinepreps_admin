@@ -147,7 +147,7 @@ function ModifyTestSheet() {
         testInformations
       )
         .then((res) => {
-          if (res?.status === 201) {
+          if (res?.status === 200) {
             setSuccess('success')
             setLoading(false)
             setCreatedMsg({
@@ -167,6 +167,14 @@ function ModifyTestSheet() {
             setCreatedMsg({
               message: err.response.data.message,
               severity: 'info',
+            })
+            setOpenS(true)
+          } else if (err.response.status === 404) {
+            setSuccess('echec')
+            setLoading(false)
+            setCreatedMsg({
+              message: err.response.data.message,
+              severity: 'error',
             })
             setOpenS(true)
           } else {
