@@ -88,8 +88,20 @@ function EmployeProfil() {
         .put(`/updateInfos/${id}`, body)
         .then((res) => {
           if (res?.status === 200) {
+            authDispatch({
+              accessToken: accessToken,
+              userInfo: {
+                ...userInfo,
+                nom: res.data.nom,
+                email: res.data.email,
+                adresse: res.data.adresse,
+                profil_img: res.data.profil_img
+                  ? res.data.profil_img
+                  : profil_img,
+              },
+            })
             setCreatedMsg({
-              message: res.data.message,
+              message: 'Modification éffectué avec succès',
               severity: 'success',
             })
             setOpen(true)
@@ -132,30 +144,6 @@ function EmployeProfil() {
     }
     reader.readAsDataURL(file)
   }
-
-  useEffect(() => {
-    // TODO change local link to remote link
-    Axios.get(
-      `${process.env.REACT_APP_URL_REMOTE_LINK}/common/getProfilImg/${id}`
-    )
-      .then((res) => {
-        if (res?.status === 200 && res.data) {
-          authDispatch({
-            accessToken: accessToken,
-            userInfo: { ...userInfo, profil_img: res.data },
-          })
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          setCreatedMsg({
-            message: err.response.data.message,
-            severity: 'error',
-          })
-          setOpen(true)
-        }
-      })
-  }, [open])
 
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
 

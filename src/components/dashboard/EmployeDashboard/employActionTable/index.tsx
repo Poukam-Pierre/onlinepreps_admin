@@ -21,16 +21,14 @@ function ActionTable() {
     {
       id: number
       transaction_type: string
-      date_creation: string
+      date: string
       status: string
     }[]
   >()
 
   useEffect(() => {
     // TODO Change local link to remote link
-    Axios.get(
-      `${process.env.REACT_APP_URL_REMOTE_LINK}://localhost:3000/api/employe/getState/${id}`
-    )
+    Axios.get(`${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getState/${id}`)
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setRows(res.data)
@@ -41,7 +39,7 @@ function ActionTable() {
           return
         }
       })
-  })
+  }, [])
 
   return (
     <TableContainer
@@ -74,7 +72,7 @@ function ActionTable() {
               </TableCell>
               <TableCell align="left">{row.id}</TableCell>
               <TableCell align="left">
-                {new Date(row.date_creation).toLocaleDateString()}
+                {new Date(row.date).toLocaleDateString()}
               </TableCell>
               <TableCell align="left">
                 {row.status === 'stopped' || row.status === 'waiting' ? (

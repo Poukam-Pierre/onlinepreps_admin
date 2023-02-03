@@ -82,7 +82,7 @@ interface rowsInterface {
 interface sellerInterface {
   nom: string
   email: string
-  phoneNumber: string
+  phone: string
 }
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -102,7 +102,7 @@ function SelleSheetTable({
     // TODO fetch data from BDD
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getAllTestSell/${
-        poste?.split('|')[1]
+        poste?.split(' | ')[1]
       }`
     )
       .then((res) => {
@@ -119,7 +119,7 @@ function SelleSheetTable({
     )
       .then((res) => {
         if (res?.status === 200 && res.data) {
-          setSellerInfos(res.data)
+          setSellerInfos(res.data[0])
         }
       })
       .catch((err) => {
@@ -132,7 +132,7 @@ function SelleSheetTable({
   const handleBuy = (id_: string) => {
     Axios.put(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/buyTestSheet/${id_}`,
-      employeId
+      { employeId: employeId }
     )
       .then((res) => {
         if (res?.status === 200) {
@@ -140,6 +140,7 @@ function SelleSheetTable({
             message: res.data.message,
             severity: 'success',
           })
+          setOpenS(true)
         }
       })
       .catch((err) => {
@@ -148,6 +149,7 @@ function SelleSheetTable({
             message: 'Erreur serveur. Veuillez rééssayer plus tart',
             severity: 'error',
           })
+          setOpenS(true)
         }
       })
   }
@@ -242,7 +244,7 @@ function SelleSheetTable({
             </Box>
             <Box display="flex" gap="10px" alignItems="center">
               <Typography variant="h6">Numéro de téléphone :</Typography>
-              <Typography>{sellerInfos?.phoneNumber}</Typography>
+              <Typography>{sellerInfos?.phone}</Typography>
             </Box>
           </Box>
         </Box>
