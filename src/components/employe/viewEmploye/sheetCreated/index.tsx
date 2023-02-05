@@ -18,9 +18,6 @@ const columns: {
     field: 'date_session',
     headerName: 'Session',
     width: 110,
-    renderCell: (params: any) => {
-      return new Date(params.row.date_session).toLocaleDateString()
-    },
   },
   {
     field: 'status',

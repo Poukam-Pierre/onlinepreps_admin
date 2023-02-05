@@ -20,9 +20,6 @@ const columns: {
     field: 'date_session',
     headerName: 'Session',
     width: 180,
-    renderCell: (params: any) => {
-      return new Date(params.row.date_session).toLocaleDateString()
-    },
   },
   { field: 'libele_depart', headerName: 'Département', width: 180 },
   { field: 'code_pays', headerName: 'Pays', width: 70 },
@@ -57,7 +54,7 @@ function StoppedSheetTable({
   const [rows, setRows] = useState<rowsInterface[]>()
 
   useEffect(() => {
-    // TODO fetch data from DATA
+    // TODO change local link into remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getAllEpreuveStopped`
     )

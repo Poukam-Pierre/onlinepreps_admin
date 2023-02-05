@@ -23,9 +23,6 @@ const columns: {
     field: 'paiement_date',
     headerName: 'date',
     width: 150,
-    renderCell: (params: any) => {
-      return new Date(params.row.paiement_date).toLocaleDateString()
-    },
   },
   {
     field: 'montant',
@@ -75,7 +72,7 @@ function TransactionTable({ id }: { id: string | undefined }) {
   const [rows, setRows] = useState<rowsInterface[]>()
 
   useEffect(() => {
-    // TODO fetch data from BDD
+    // TODO change local link into remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getpartnerTransaction/${id}`
     )
@@ -86,7 +83,7 @@ function TransactionTable({ id }: { id: string | undefined }) {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [])

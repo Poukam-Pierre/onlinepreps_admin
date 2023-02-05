@@ -33,7 +33,7 @@ function StatEpreuve() {
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
 
   useEffect(() => {
-    // TODO fetch data from BDD
+    // TODO change local link into remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getStatisticEpreuve`
     )

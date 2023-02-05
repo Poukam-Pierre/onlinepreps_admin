@@ -22,7 +22,7 @@ function ChartConnexion({ id }: { id: string | undefined }) {
     },
   ])
   useEffect(() => {
-    // TODO fetch data from BDD
+    // TODO change local link to remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getRecordConnexion/${id}`
     )
@@ -33,7 +33,7 @@ function ChartConnexion({ id }: { id: string | undefined }) {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [])

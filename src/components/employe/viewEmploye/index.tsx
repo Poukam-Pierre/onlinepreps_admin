@@ -211,7 +211,7 @@ function ViewEmploye() {
           </TabPanel>
           <TabPanel value="2">
             <Box height="24rem" display="flex" justifyContent="center">
-              <SheetBuy />
+              <SheetBuy poste={employeData?.poste} />
             </Box>
           </TabPanel>
         </TabContext>

@@ -1,9 +1,8 @@
 // Made by Poukam Ngamaleu
 
 import { DataGrid } from '@mui/x-data-grid'
-import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { useAuth } from '../../../../utils/context'
+import { useEffect, useState } from 'react'
 
 const columns: {
   field: string
@@ -17,9 +16,6 @@ const columns: {
     field: 'session',
     headerName: 'Session',
     width: 180,
-    renderCell: (params: any) => {
-      return new Date(params.row.session).toLocaleDateString()
-    },
   },
   {
     field: 'status',
@@ -75,17 +71,14 @@ interface rowsInterface {
   status: string
 }
 
-function SheetBuy() {
-  const {
-    userInfo: { poste },
-  } = useAuth()
+function SheetBuy({ poste }: { poste: string | undefined }) {
   const [rows, setRows] = useState<rowsInterface[]>()
 
   useEffect(() => {
-    // TODO fetch data from BDD
+    // TODO change local link into remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getEpreuveByDepartment/${
-        poste?.split('|')[1]
+        poste?.split(' | ')[1]
       }`
     )
       .then((res) => {

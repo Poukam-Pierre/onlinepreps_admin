@@ -29,7 +29,7 @@ function ViewPartner() {
   const [partnerData, setPartnerData] = useState<partnerDataInterface>()
 
   useEffect(() => {
-    // TODO fetch data to BDD
+    // TODO change local link to remote link
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getPartnerInfo/${partnerId}`
     )
@@ -40,7 +40,7 @@ function ViewPartner() {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [])
