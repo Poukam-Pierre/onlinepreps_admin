@@ -74,7 +74,7 @@ export function addOption(
   setQuestions: any
 ) {
   var optionOfQuestion = [...questions]
-  if (optionOfQuestion[index].propositionAnswers.length < 7) {
+  if (optionOfQuestion[index].propositionAnswers.length < 10) {
     optionOfQuestion[index].propositionAnswers.push({
       proposition:
         ' option ' + (optionOfQuestion[index].propositionAnswers.length + 1),

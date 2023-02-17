@@ -24,7 +24,7 @@ function AdminDashboard() {
     testSheetNber: 0,
   })
   useEffect(() => {
-    // TODO Fetch data from BDD
+    // TODO change local link to remote link
     Axios.get(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getStatAdmin`)
       .then((res) => {
         if (res?.status === 200) {
@@ -137,14 +137,14 @@ function AdminDashboard() {
           <Charts />
         </Box>
       </Box>
-      <Box padding="30px 0 0 0">
+      {/* <Box padding="30px 0 0 0">
         <Typography variant="h5" color="#555" padding="0 0  20px 50px">
           Dernieres transactions
         </Typography>
         <Box display="flex" justifyContent="center">
           <ActionAdminTable />
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   )
 }

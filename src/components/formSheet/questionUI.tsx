@@ -276,7 +276,7 @@ function questionsUI(
                             </Box>
                           </Box>
                         ))}
-                        {quest.propositionAnswers.length < 7 ? (
+                        {quest.propositionAnswers.length < 10 ? (
                           <Box padding="10px 10px 10px 20px">
                             <FormControlLabel
                               disabled
