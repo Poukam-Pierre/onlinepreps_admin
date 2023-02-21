@@ -1,6 +1,15 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 // Mqde by Poukam Ngamaleu
 
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined'
+import CheckIcon from '@mui/icons-material/Check'
+import CloseIcon from '@mui/icons-material/Close'
+import CropOriginalIcon from '@mui/icons-material/CropOriginal'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
+import FilterNoneIcon from '@mui/icons-material/FilterNone'
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import {
   Accordion,
   AccordionDetails,
@@ -13,42 +22,32 @@ import {
   IconButton,
   Modal,
   Paper,
-  TextareaAutosize,
   TextField,
   Typography,
 } from '@mui/material'
 import { Draggable } from 'react-beautiful-dnd'
+import { theme } from '../../utils/style/theme'
 import {
-  question,
-  handleExpand,
-  handleChangeQuestionBody,
-  handleChangeOptionValue,
-  removeOption,
-  addOption,
   addAnswer,
-  copyQuestion,
-  deleteQuestion,
   addMoreQuestionField,
-  setPropositionAnswer,
+  addOption,
+  copyQuestion,
   deleteFeedBack,
+  deleteQuestion,
   doneAnswer,
   handleChangeFeedBack,
-  handleOpen,
+  handleChangeOptionValue,
+  handleChangeQuestionBody,
   handleClose,
-  photoUpload,
-  removeImage,
+  handleExpand,
   handleFeedBack,
+  handleOpen,
+  photoUpload,
+  question,
+  removeImage,
+  removeOption,
+  setPropositionAnswer,
 } from './functionSheet'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
-import CropOriginalIcon from '@mui/icons-material/CropOriginal'
-import CheckIcon from '@mui/icons-material/Check'
-import { theme } from '../../utils/style/theme'
-import CloseIcon from '@mui/icons-material/Close'
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined'
-import FilterNoneIcon from '@mui/icons-material/FilterNone'
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 
 function questionsUI(
   questions: question[],

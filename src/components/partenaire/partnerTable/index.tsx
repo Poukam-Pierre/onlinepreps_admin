@@ -104,7 +104,7 @@ function PartnerTable() {
   }, [createdMsg])
 
   const signaledPartner = (id: string) => {
-    // TODO fetch data to BDD
+    // TODO change local link into remote link
     Axios.post(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/signaledPartner/${id}`
     )
