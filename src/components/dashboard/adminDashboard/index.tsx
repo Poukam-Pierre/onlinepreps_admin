@@ -1,13 +1,11 @@
 // Made by Poukam Ngamaleu
 
 import { Box, Paper, Typography } from '@mui/material'
+import Axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { theme } from '../../../utils/style/theme'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Charts from './charts'
-import ActionAdminTable from './actionAdminTable'
-import { useState, useEffect } from 'react'
-import Axios from 'axios'
 
 interface dashDataInterface {
   employeNber: number
@@ -137,14 +135,6 @@ function AdminDashboard() {
           <Charts />
         </Box>
       </Box>
-      {/* <Box padding="30px 0 0 0">
-        <Typography variant="h5" color="#555" padding="0 0  20px 50px">
-          Dernieres transactions
-        </Typography>
-        <Box display="flex" justifyContent="center">
-          <ActionAdminTable />
-        </Box>
-      </Box> */}
     </Box>
   )
 }

@@ -52,7 +52,10 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function Header() {
   const {
-    userInfo: { nom, id, is_admin, is_employe },
+    userInfo: { nom, id, is_admin, is_employe, status_connected },
+    userInfo,
+    accessToken,
+    authDispatch,
   } = useAuth()
 
   const [selected, setSelected] = useState<string>(
@@ -93,15 +96,18 @@ function Header() {
 
   useEffect(() => {
     // TODO make greeting connection
-    if (is_admin || is_employe) {
-      const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
-
-      socket.on('greeting', (msg: string) => {
-        setCreatedMsg({
-          message: `${msg} ${nom.toUpperCase()} !`,
-          severity: 'success',
-        })
-        setOpenS(true)
+    const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
+    if ((is_admin || is_employe) && !status_connected) {
+      setCreatedMsg({
+        message: `Content de vous revoir ${
+          nom.charAt(0).toUpperCase() + nom.slice(1)
+        } !`,
+        severity: 'success',
+      })
+      setOpenS(true)
+      authDispatch({
+        accessToken: accessToken,
+        userInfo: { ...userInfo, status_connected: 'connected' },
       })
 
       // Adding infomation to server io
