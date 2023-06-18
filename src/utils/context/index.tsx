@@ -19,6 +19,7 @@ export interface userInterface {
   phoneNumber?: string
   adresse?: string
   birthDate?: string
+  status_connected?: string
 }
 
 export interface authInterface {
