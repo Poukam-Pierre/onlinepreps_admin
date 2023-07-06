@@ -97,8 +97,13 @@ function SheetCreate({
         }
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          console.log(err.response.data.message)
+        // TODO add notification message here
+        if (err.response.status === 404) {
+          setCreatedMsg({
+            message: err.response.data.message,
+            severity: 'warning',
+          })
+          setOpen(true)
         }
       })
   }, [createdMsg])
@@ -120,7 +125,7 @@ function SheetCreate({
       .catch((err) => {
         if (err.response.status === 400) {
           setCreatedMsg({
-            message: err.response.data.message,
+            message: 'Erreur serveur, rééssayez plutard!',
             severity: 'error',
           })
           setOpen(true)

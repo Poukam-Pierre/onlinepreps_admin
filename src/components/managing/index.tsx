@@ -56,7 +56,11 @@ function Manager() {
     )
       .then((res) => {
         if (res.status === 200) {
-          return
+          setCreatedMsg({
+            message: res.data.message,
+            severity: 'success',
+          })
+          setOpenS(true)
         }
       })
       .catch((err) => {

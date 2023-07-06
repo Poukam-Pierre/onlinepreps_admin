@@ -150,7 +150,7 @@ function EmployeTable({
       .catch((err) => {
         if (err.response.status === 400) {
           setCreatedMsg({
-            message: err.response.data.message,
+            message: 'Erreur serveur, rééssayez plutard!',
             severity: 'error',
           })
           setOpen(true)
@@ -174,7 +174,7 @@ function EmployeTable({
       .catch((err) => {
         if (err.response.status === 400) {
           setCreatedMsg({
-            message: err.response.data.message,
+            message: 'Erreur serveur, rééssayez plutard!',
             severity: 'error',
           })
           setOpen(true)
@@ -199,7 +199,7 @@ function EmployeTable({
       .catch((err) => {
         if (err.response.status === 400) {
           setCreatedMsg({
-            message: err.response.data.message,
+            message: 'Erreur serveur, rééssayez plutard!',
             severity: 'error',
           })
           setOpen(true)

@@ -87,8 +87,9 @@ function SheetBuy({ poste }: { poste: string | undefined }) {
         }
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          console.log(err.response.data.message)
+        // TODO add notifications message here
+        if (err.response.status === 404) {
+          return
         }
       })
   }, [])

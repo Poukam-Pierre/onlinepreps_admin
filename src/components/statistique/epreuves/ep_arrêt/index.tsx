@@ -95,7 +95,7 @@ function StoppedSheetTable({
       })
       .catch((err) => {
         setMsg({
-          message: err.response.data.message,
+          message: 'Erreur serveur, rééssayez plutard!',
           severity: 'error',
         })
         setOpen(true)
