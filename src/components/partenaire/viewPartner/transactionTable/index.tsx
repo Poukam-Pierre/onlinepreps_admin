@@ -6,8 +6,8 @@ import Axios from 'axios'
 import { useEffect, useState } from 'react'
 
 interface rowsInterface {
-  num_paiement: number
-  paiement_date: string
+  num_payment: number
+  payment_date: string
   montant: number
   status: string
 }
@@ -18,9 +18,9 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'num_paiement', headerName: 'TransactionID', width: 250 },
+  { field: 'num_payment', headerName: 'TransactionID', width: 250 },
   {
-    field: 'paiement_date',
+    field: 'payment_date',
     headerName: 'date',
     width: 150,
   },
@@ -90,7 +90,7 @@ function TransactionTable({ id }: { id: string | undefined }) {
 
   return (
     <DataGrid
-      getRowId={(row) => row.num_paiement}
+      getRowId={(row) => row.num_payment}
       rows={rows ? rows : []}
       columns={columns}
       pageSize={5}
