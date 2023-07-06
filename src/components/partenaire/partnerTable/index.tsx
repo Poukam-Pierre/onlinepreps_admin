@@ -101,7 +101,7 @@ function PartnerTable() {
           return
         }
       })
-  }, [createdMsg])
+  }, [])
 
   const signaledPartner = (id: string) => {
     // TODO change local link into remote link
