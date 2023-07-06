@@ -65,10 +65,6 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Partenaires
             </Typography>
-            {/* <Box display="flex" alignItems="center" color="red">
-              <ExpandMoreIcon />
-              <Typography>+5%</Typography>
-            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
             {dashData.partnerNber}
@@ -91,10 +87,6 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Apprenants
             </Typography>
-            {/* <Box display="flex" alignItems="center" color="red">
-              <ExpandMoreIcon />
-              <Typography>5%</Typography>
-            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
             {dashData.studentsNber}
@@ -109,10 +101,6 @@ function AdminDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves
             </Typography>
-            {/* <Box display="flex" alignItems="center" color="red">
-              <ExpandMoreIcon />
-              <Typography>5%</Typography>
-            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
             {dashData.testSheetNber}

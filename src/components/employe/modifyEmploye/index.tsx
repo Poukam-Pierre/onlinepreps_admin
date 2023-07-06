@@ -134,13 +134,7 @@ function ModifyEmploye() {
             }
           })
           .catch((err) => {
-            if (err.response.status === 400) {
-              setCreatedMsg({
-                message: err.response.data.message,
-                severity: 'error',
-              })
-              setOpen(true)
-            } else {
+            if (err) {
               setCreatedMsg({
                 message: 'Erreur serveur. Rééssayez plutard',
                 severity: 'error',

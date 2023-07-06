@@ -34,7 +34,7 @@ function ChartInscription({ id }: { id: string | undefined }) {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [])
