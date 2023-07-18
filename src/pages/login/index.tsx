@@ -62,14 +62,14 @@ function SignIn() {
             }
           })
           .catch((err) => {
-            if (err.response.status === 401) {
+            if (err?.response.status === 401) {
               setCreatedMsg({
                 message: err.response.data.message,
                 severity: 'warning',
               })
               setOpen(true)
               resetForm()
-            } else if (err.response.status === 400) {
+            } else if (err?.response.status === 400) {
               setCreatedMsg({
                 message: err.response.data.message,
                 severity: 'error',
