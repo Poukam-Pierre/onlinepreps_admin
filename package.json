@@ -27,6 +27,7 @@
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-beforeunload": "^2.5.3",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.2.11",
     "react-router-dom": "^6.4.0-pre.2",
@@ -67,6 +68,7 @@
   },
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
-    "@types/react-beforeunload": "^2.1.1"
+    "@types/react-beforeunload": "^2.1.1",
+    "@types/react-custom-scrollbars": "^4.0.10"
   }
 }
