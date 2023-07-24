@@ -10,6 +10,6 @@ export const LoginSchema = yup.object().shape({
   password: yup
     .string()
     .min(5, 'minimum 5 caractères, au moins 1 lettre et 1 chiffre')
-    .max(10, 'Maximum 10 caratères, au moins 1 lettre et 1 chiffre')
+    .max(10, 'Maximum 20 caratères, au moins 1 lettre et 1 chiffre')
     .required('Mot de passe nécéssaire'),
 })
