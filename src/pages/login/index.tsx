@@ -27,6 +27,7 @@ import { alertMsgInterface } from '../../components/employe/createEmploy'
 import { authInterface, useAuth } from '../../utils/context'
 import { theme } from '../../utils/style/theme'
 import { LoginSchema } from './loginSchema'
+import CircularProgress from '@mui/material/CircularProgress'
 
 interface SignInformations {
   email: string
@@ -40,6 +41,7 @@ function SignIn() {
   const { authDispatch } = useAuth()
   const [value, setValue] = useState<boolean>(false)
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+  const [loading, setLoading] = useState<Boolean>(false)
   const { values, handleChange, handleSubmit, errors, touched, resetForm } =
     useFormik<SignInformations>({
       initialValues: {
@@ -47,6 +49,7 @@ function SignIn() {
         password: '',
       },
       onSubmit: (values) => {
+        setLoading(true)
         Axios.post(
           `${process.env.REACT_APP_URL_REMOTE_LINK}/auth/login/admin`,
           {
@@ -69,12 +72,14 @@ function SignIn() {
               })
               setOpen(true)
               resetForm()
+              setLoading(false)
             } else if (err?.response.status === 400) {
               setCreatedMsg({
                 message: err.response.data.message,
                 severity: 'error',
               })
               setOpen(true)
+              setLoading(false)
             } else {
               setCreatedMsg({
                 message: 'Erreur serveur. Rééssayez plutard.',
@@ -82,6 +87,7 @@ function SignIn() {
               })
               setOpen(true)
               resetForm()
+              setLoading(false)
             }
           })
       },
@@ -185,7 +191,12 @@ function SignIn() {
               )}
             </FormControl>
           </Box>
-          <Box marginTop="15px">
+          <Box
+            display="flex"
+            justifyContent="center"
+            margin="15px 0 25px 0"
+            sx={{ position: 'relative' }}
+          >
             <Fab
               variant="extended"
               aria-label="add"
@@ -196,6 +207,18 @@ function SignIn() {
                 CONNEXION
               </Typography>
             </Fab>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
           </Box>
         </Box>
       </Paper>
