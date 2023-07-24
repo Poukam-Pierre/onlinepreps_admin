@@ -20,6 +20,7 @@ import {
   Snackbar,
   TextField,
   Typography,
+  CircularProgress,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import Axios from 'axios'
@@ -57,6 +58,7 @@ function EmployeProfil() {
     },
   })
   const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const {
     values,
     handleSubmit,
@@ -77,6 +79,7 @@ function EmployeProfil() {
       file: '',
     },
     onSubmit: ({ name, email, phoneNumber, file, adresse }) => {
+      setLoading(true)
       const body = new FormData()
       body.append('file', file)
       body.append('nom', name)
@@ -105,6 +108,7 @@ function EmployeProfil() {
               severity: 'success',
             })
             setOpen(true)
+            setLoading(false)
           }
         })
         .catch((err) => {
@@ -114,6 +118,7 @@ function EmployeProfil() {
               severity: 'error',
             })
             setOpen(true)
+            setLoading(false)
           } else if (err.response.status === 401) {
             setCreatedMsg({
               message: err.response.data.message,
@@ -121,12 +126,14 @@ function EmployeProfil() {
             })
             setOpen(true)
             resetForm()
+            setLoading(false)
           } else {
             setCreatedMsg({
               message: 'Erreur serveur. Rééssayez plutard.',
               severity: 'error',
             })
             setOpen(true)
+            setLoading(false)
           }
         })
     },
@@ -339,17 +346,35 @@ function EmployeProfil() {
                   onChange={photoUpload}
                 />
               </Box>
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{
-                  width: 'fit-content',
-                  alignSelf: 'center',
-                  bgcolor: '#369DC1',
-                }}
+              <Box
+                display="flex"
+                justifyContent="center"
+                sx={{ position: 'relative' }}
               >
-                Enregistrer
-              </Button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{
+                    width: 'fit-content',
+                    alignSelf: 'center',
+                    bgcolor: '#369DC1',
+                  }}
+                >
+                  Enregistrer
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
             </Box>
           </Box>
         </Paper>
