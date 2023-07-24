@@ -62,14 +62,6 @@ function EmployeDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves créées
             </Typography>
-            {/* <Box
-              display="flex"
-              alignItems="center"
-              color={theme.palette.secondary.main}
-            >
-              <ExpandLessIcon />
-              <Typography>+ 5%</Typography>
-            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
             {nberTestCreated}
@@ -92,10 +84,6 @@ function EmployeDashboard() {
             <Typography variant="h5" color="#555">
               Epreuves achetées
             </Typography>
-            {/* <Box display="flex" alignItems="center" color="red">
-              <ExpandMoreIcon />
-              <Typography>+5%</Typography>
-            </Box> */}
           </Box>
           <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
             {nberTestBaught}
