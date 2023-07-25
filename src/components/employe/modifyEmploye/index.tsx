@@ -49,7 +49,13 @@ const Pays: string[] = ['CMR', 'GBA']
 function ModifyEmploye() {
   const { accessToken } = useAuth()
   const { employeId } = useParams()
-  const [employeData, setEmployeData] = useState<employeDataInterface>()
+  const [employeData, setEmployeData] = useState<employeDataInterface>({
+    nom: '',
+    email: '',
+    phone: '',
+    adresse: '',
+    poste: '',
+  })
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
   const [open, setOpen] = useState<boolean>(false)
 
@@ -86,19 +92,21 @@ function ModifyEmploye() {
         }
       })
   }, [])
+  const { nom, email, phone, adresse, profil_img, poste } = employeData
 
   const { values, handleSubmit, handleChange, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
-        name: employeData?.nom,
-        email: employeData?.email,
-        phoneNumber: employeData?.phone,
-        adresse: employeData?.adresse,
-        poste: employeData?.poste,
+        name: nom,
+        email: email,
+        phoneNumber: phone,
+        adresse: adresse,
+        poste: poste,
         country: 'CMR',
         password: '',
-        imagePreviewUrl:
-          'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg',
+        imagePreviewUrl: profil_img
+          ? profil_img
+          : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg',
         file: '',
       },
       onSubmit: ({
@@ -174,12 +182,8 @@ function ModifyEmploye() {
       >
         <Box flex={1}>
           <img
-            src={
-              employeData?.profil_img
-                ? employeData.profil_img
-                : values.imagePreviewUrl
-            }
-            alt=""
+            src={values.imagePreviewUrl}
+            alt="photo profil"
             style={{
               width: '100%',
               height: '100%',
