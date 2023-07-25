@@ -15,6 +15,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { alertMsgInterface } from '../../employe/createEmploy'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const columns: {
   field: string
@@ -97,9 +98,11 @@ function SelleSheetTable({
   const [rows, setRows] = useState<rowsInterface[]>([])
   const [sellerInfos, setSellerInfos] = useState<sellerInterface>()
   const [createdMsg, setCreatedMsg] = useState<alertMsgInterface>()
+  const [loadingData, setLoadingData] = useState<Boolean>(false)
 
   useEffect(() => {
     // TODO fetch data from BDD
+    setLoadingData(true)
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getAllTestSell/${
         poste?.split(' | ')[1]
@@ -107,6 +110,7 @@ function SelleSheetTable({
     )
       .then((res) => {
         if (res?.status === 200 && res.data) setRows(res.data)
+        setLoadingData(false)
       })
       .catch((err) => {
         if (err.response.status === 404) return
@@ -201,15 +205,28 @@ function SelleSheetTable({
   }
   return (
     <>
-      <DataGrid
-        getRowId={(rows) => rows.test_selling_id}
-        rows={rows}
-        columns={columns.concat(actionColumns)}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{ maxWidth: '63rem' }}
-      />
+      {loadingData ? (
+        <CircularProgress
+          size={24}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: '-12px',
+            marginLeft: '-12px',
+          }}
+        />
+      ) : (
+        <DataGrid
+          getRowId={(rows) => rows.test_selling_id}
+          rows={rows}
+          columns={columns.concat(actionColumns)}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{ maxWidth: '63rem' }}
+        />
+      )}
       <Modal
         open={open}
         onClose={handleClose}

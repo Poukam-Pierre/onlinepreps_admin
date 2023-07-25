@@ -33,7 +33,12 @@ function TestSheet() {
           Créer épreuve
         </Button>
       </Box>
-      <Box height={600} display="flex" justifyContent="center">
+      <Box
+        height={600}
+        display="flex"
+        justifyContent="center"
+        position="relative"
+      >
         <TestSheetTable id_={id as number} />
       </Box>
     </Box>

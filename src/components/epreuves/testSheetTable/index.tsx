@@ -4,6 +4,7 @@ import { Box, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { StyledLink } from '../../sideBar/sideBarEmploye'
 import { useState, useEffect } from 'react'
+import CircularProgress from '@mui/material/CircularProgress'
 import Axios from 'axios'
 
 const columns: {
@@ -74,13 +75,18 @@ interface rowsInterface {
 }
 function TestSheetTable({ id_ }: { id_: number }) {
   const [rows, setRows] = useState<rowsInterface[]>([])
+  const [loadingData, setLoadingData] = useState<Boolean>(false)
   useEffect(() => {
     // TODO fetch data in epreuve table
+    setLoadingData(true)
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getAllTestCreated/${id_}`
     )
       .then((res) => {
-        if (res?.status === 200 && res.data) setRows(res.data)
+        if (res?.status === 200 && res.data) {
+          setRows(res.data)
+          setLoadingData(false)
+        }
       })
       .catch((err) => {
         if (err.response.status === 404) {
@@ -135,7 +141,18 @@ function TestSheetTable({ id_ }: { id_: number }) {
       },
     },
   ]
-  return (
+  return loadingData ? (
+    <CircularProgress
+      size={24}
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: '-12px',
+        marginLeft: '-12px',
+      }}
+    />
+  ) : (
     <DataGrid
       getRowId={(rows) => rows.id_epreuve}
       rows={rows}

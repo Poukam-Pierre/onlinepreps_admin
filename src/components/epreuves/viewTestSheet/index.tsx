@@ -15,6 +15,7 @@ import {
 import { useState, useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
 import { useParams } from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress'
 import Axios from 'axios'
 
 export interface Proposition {
@@ -34,15 +35,18 @@ function ViewTestSheet() {
   const { testId } = useParams()
   const [valueChecked] = useState<string>()
   const [questions, setQuestions] = useState<question[]>()
+  const [loadingData, setLoadingData] = useState<boolean>(false)
 
   useEffect(() => {
     // TODO FETCH DATA FROM bdd
+    setLoadingData(true)
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getExamView/${testId}`
     )
       .then((res) => {
         if (res?.status === 200 && res.data) {
           setQuestions(res.data)
+          setLoadingData(false)
         }
       })
       .catch((err) => {
@@ -67,59 +71,72 @@ function ViewTestSheet() {
             Epreuve du permis de conduire
           </Typography>
         </Box>
-        {questions?.map((question, index_1) => (
-          <Box key={index_1} paddingTop="15px">
-            <Accordion sx={{ bgcolor: '#F5F0F0' }}>
-              <AccordionSummary>
-                <Box width="100%" display="grid" gap="8px">
-                  <Box display="flex">
-                    <Typography variant="h6" fontSize="1.1rem">
-                      {index_1 + 1}.
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      fontSize="1.1rem"
-                      paddingLeft="5px"
+        {loadingData ? (
+          <CircularProgress
+            size={24}
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              marginTop: '-12px',
+              marginLeft: '-12px',
+            }}
+          />
+        ) : (
+          questions?.map((question, index_1) => (
+            <Box key={index_1} paddingTop="15px">
+              <Accordion sx={{ bgcolor: '#F5F0F0' }}>
+                <AccordionSummary>
+                  <Box width="100%" display="grid" gap="8px">
+                    <Box display="flex">
+                      <Typography variant="h6" fontSize="1.1rem">
+                        {index_1 + 1}.
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        fontSize="1.1rem"
+                        paddingLeft="5px"
+                      >
+                        {question.libele_quest}
+                      </Typography>
+                    </Box>
+                    <Box
+                      paddingLeft="10px"
+                      sx={{
+                        display: question.image ? 'flex' : 'none',
+                        justifyContent: 'center',
+                      }}
                     >
-                      {question.libele_quest}
-                    </Typography>
+                      <img
+                        src={question.image}
+                        alt="image relatif à la question"
+                        style={{ width: '15rem' }}
+                      />
+                    </Box>
+                    <FormControl>
+                      <RadioGroup value={valueChecked}>
+                        {question.libele_propo.map((option, index) => (
+                          <Box key={index} paddingLeft="20px">
+                            <FormControlLabel
+                              value={option}
+                              control={<Radio />}
+                              label={<Typography>{option}</Typography>}
+                            />
+                          </Box>
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
                   </Box>
-                  <Box
-                    paddingLeft="10px"
-                    sx={{
-                      display: question.image ? 'flex' : 'none',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <img
-                      src={question.image}
-                      alt="image relatif à la question"
-                      style={{ width: '15rem' }}
-                    />
-                  </Box>
-                  <FormControl>
-                    <RadioGroup value={valueChecked}>
-                      {question.libele_propo.map((option, index) => (
-                        <Box key={index} paddingLeft="20px">
-                          <FormControlLabel
-                            value={option}
-                            control={<Radio />}
-                            label={<Typography>{option}</Typography>}
-                          />
-                        </Box>
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                </Box>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography textAlign="justify">
-                  {question.commentaire}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-        ))}
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography textAlign="justify">
+                    {question.commentaire}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
+          ))
+        )}
       </Box>
     </Box>
   )

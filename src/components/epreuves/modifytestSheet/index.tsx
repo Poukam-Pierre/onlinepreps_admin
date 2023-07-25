@@ -70,9 +70,11 @@ function ModifyTestSheet() {
   const [questions, setQuestions] = useState<question[]>([])
   const [success, setSuccess] = useState<string>('default')
   const [loading, setLoading] = useState<boolean>(false)
+  const [loadingData, setLoadingData] = useState<Boolean>(false)
 
   useEffect(() => {
     // TODO FETCH DATA FROM bdd
+    setLoadingData(true)
     Axios.get(
       `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/getExamModif/${testId}`
     )
@@ -80,11 +82,12 @@ function ModifyTestSheet() {
         if (res?.status === 200 && res.data) {
           setQuestions(res.data.testSheets)
           setTestSheetInfo(res.data.testSheetInfo)
+          setLoadingData(false)
         }
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [])
@@ -257,169 +260,183 @@ function ModifyTestSheet() {
 
   return (
     <Box component="section" p={3} display="grid" justifyContent="center">
-      <Box component="form" onSubmit={handleSubmit} width="53rem">
-        <Box
-          p={3}
+      {loadingData ? (
+        <CircularProgress
+          size={24}
           sx={{
-            // width: '50rem',
-            bgcolor: '#F5F0F0',
-            borderTop: `15px solid ${theme.palette.primary.main}`,
-            borderRadius: '8px',
+            position: 'absolute',
+            top: '55%',
+            left: '60%',
+            marginTop: '-12px',
+            marginLeft: '-12px',
           }}
-        >
-          <Typography variant="h4" textAlign="center" fontWeight="500">
-            Informations de l'épreuve
-          </Typography>
+        />
+      ) : (
+        <Box component="form" onSubmit={handleSubmit} width="53rem">
           <Box
+            p={3}
             sx={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              paddingTop: '25px',
+              bgcolor: '#F5F0F0',
+              borderTop: `15px solid ${theme.palette.primary.main}`,
+              borderRadius: '8px',
             }}
           >
-            <Box display="grid" gap="15px">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label="Session"
-                  value={values.session}
-                  onChange={(newValue) => {
-                    setFieldValue('session', newValue)
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
+            <Typography variant="h4" textAlign="center" fontWeight="500">
+              Informations de l'épreuve
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                paddingTop: '25px',
+              }}
+            >
+              <Box display="grid" gap="15px">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Session"
+                    value={values.session}
+                    onChange={(newValue) => {
+                      setFieldValue('session', newValue)
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                <Autocomplete
+                  disablePortal
+                  id="category"
+                  value={values.category || null}
+                  onChange={(event, val) => setFieldValue('category', val)}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={categoryArray}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Catégorie" />
+                  )}
                 />
-              </LocalizationProvider>
-              <Autocomplete
-                disablePortal
-                id="category"
-                value={values.category || null}
-                onChange={(event, val) => setFieldValue('category', val)}
-                isOptionEqualToValue={(option, value) => option === value}
-                options={categoryArray}
-                sx={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Catégorie" />
-                )}
-              />
+              </Box>
+              <Box display="grid" gap="15px">
+                <Autocomplete
+                  id="country"
+                  disablePortal
+                  options={dataCountry}
+                  sx={{ width: 300 }}
+                  value={values.country}
+                  onChange={(event, val) => setFieldValue('country', val)}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Pays" />
+                  )}
+                />
+                <Autocomplete
+                  disablePortal
+                  id="department"
+                  value={values.department || null}
+                  onChange={(event, val) => setFieldValue('department', val)}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={values.country === 'Cameroun' ? dataDepartment : []}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Département" />
+                  )}
+                />
+              </Box>
             </Box>
-            <Box display="grid" gap="15px">
+            <Box
+              display="grid"
+              justifyContent="center"
+              paddingTop="10px"
+              width="50rem"
+            >
               <Autocomplete
-                id="country"
+                id="language"
                 disablePortal
-                options={dataCountry}
+                options={languages}
                 sx={{ width: 300 }}
-                value={values.country}
-                onChange={(event, val) => setFieldValue('country', val)}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderInput={(params) => <TextField {...params} label="Pays" />}
-              />
-              <Autocomplete
-                disablePortal
-                id="department"
-                value={values.department || null}
-                onChange={(event, val) => setFieldValue('department', val)}
-                isOptionEqualToValue={(option, value) => option === value}
-                options={values.country === 'Cameroun' ? dataDepartment : []}
-                sx={{ width: 300 }}
+                onChange={(event, val) => setFieldValue('language', val?.code)}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) =>
+                  option.label === value.label
+                }
+                renderOption={(props, option) => (
+                  <Box
+                    component="li"
+                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                  >
+                    <img
+                      loading="lazy"
+                      width="20"
+                      src={`https://flagcdn.com/w20/${option.country_code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${option.country_code.toLowerCase()}.png 2x`}
+                      alt=""
+                    />
+                    {option.label} ({option.code})
+                  </Box>
+                )}
                 renderInput={(params) => (
-                  <TextField {...params} label="Département" />
+                  <TextField
+                    {...params}
+                    inputProps={{ ...params.inputProps }}
+                    label="Langue"
+                  />
                 )}
               />
             </Box>
           </Box>
-          <Box
-            display="grid"
-            justifyContent="center"
-            paddingTop="10px"
-            width="50rem"
-          >
-            <Autocomplete
-              id="language"
-              disablePortal
-              options={languages}
-              sx={{ width: 300 }}
-              onChange={(event, val) => setFieldValue('language', val?.code)}
-              getOptionLabel={(option) => option.label}
-              isOptionEqualToValue={(option, value) =>
-                option.label === value.label
-              }
-              renderOption={(props, option) => (
-                <Box
-                  component="li"
-                  sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                >
-                  <img
-                    loading="lazy"
-                    width="20"
-                    src={`https://flagcdn.com/w20/${option.country_code.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w40/${option.country_code.toLowerCase()}.png 2x`}
-                    alt=""
-                  />
-                  {option.label} ({option.code})
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <Box {...provided.droppableProps} ref={provided.innerRef}>
+                  {questionsUI(
+                    questions,
+                    setQuestions,
+                    open,
+                    feedBack,
+                    setFeedBack,
+                    setOpen
+                  )}
+                  {provided.placeholder}
                 </Box>
               )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  inputProps={{ ...params.inputProps }}
-                  label="Langue"
+            </Droppable>
+          </DragDropContext>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            p={1}
+          >
+            <Typography variant="subtitle1" color="#555">
+              questions restantes {40 - values.questionss.length}
+            </Typography>
+            <Box sx={{ m: 1, position: 'relative' }}>
+              <Button
+                id="saveBtn"
+                variant="contained"
+                type="submit"
+                disabled={
+                  values.questionss.length !== 40 ? true : false || loading
+                }
+                sx={submitButtonSx}
+              >
+                Enregistrer
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    top: 6,
+                    left: 60,
+                    color: theme.common.submitBtnSuccess,
+                  }}
                 />
               )}
-            />
+            </Box>
           </Box>
         </Box>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <Box {...provided.droppableProps} ref={provided.innerRef}>
-                {questionsUI(
-                  questions,
-                  setQuestions,
-                  open,
-                  feedBack,
-                  setFeedBack,
-                  setOpen
-                )}
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-        </DragDropContext>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          p={1}
-        >
-          <Typography variant="subtitle1" color="#555">
-            questions restantes {40 - values.questionss.length}
-          </Typography>
-          <Box sx={{ m: 1, position: 'relative' }}>
-            <Button
-              id="saveBtn"
-              variant="contained"
-              type="submit"
-              disabled={
-                values.questionss.length !== 40 ? true : false || loading
-              }
-              sx={submitButtonSx}
-            >
-              Enregistrer
-            </Button>
-            {loading && (
-              <CircularProgress
-                size={24}
-                sx={{
-                  position: 'absolute',
-                  top: 6,
-                  left: 60,
-                  color: theme.common.submitBtnSuccess,
-                }}
-              />
-            )}
-          </Box>
-        </Box>
-      </Box>
+      )}
       <Snackbar
         open={openS}
         onClose={() => setOpenS(false)}

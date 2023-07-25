@@ -14,7 +14,12 @@ function TestSheetBuying() {
       <Typography variant="h4" color="#555">
         Achat épreuves ({poste?.split('|')[1]} | CMR)
       </Typography>
-      <Box height={600} display="flex" justifyContent="center">
+      <Box
+        height={600}
+        display="flex"
+        justifyContent="center"
+        position="relative"
+      >
         <SelleSheetTable poste={poste as string} id={id as number} />
       </Box>
     </Box>
