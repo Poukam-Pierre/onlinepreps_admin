@@ -32,14 +32,14 @@ const columns: {
   {
     field: 'nom',
     headerName: 'Nom',
-    width: 180,
+    width: 220,
     renderCell: (params: any) => {
       return (
         <Box display="flex" alignItems="center">
           <img
             src={
               params.row.profil_img
-                ? `${process.env.REACT_APP_URL_SOCKET_LINK}/uploads/${params.row.profil_img}`
+                ? `${process.env.REACT_APP_URL_REMOTE_LINK}/uploads/${params.row.profil_img}`
                 : undefined
             }
             alt=""
@@ -62,7 +62,7 @@ const columns: {
   {
     field: 'status',
     headerName: 'Status',
-    width: 180,
+    width: 140,
     renderCell: (params: any) => {
       return (
         <>
