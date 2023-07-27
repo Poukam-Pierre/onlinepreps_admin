@@ -46,7 +46,7 @@ const columns: {
           <img
             src={
               params.row.profil_img
-                ? `${process.env.REACT_APP_URL_REMOTE_LINK}/uploads/${params.row.profil_img}`
+                ? `https://api.onlinepreps.net/uploads/${params.row.profil_img}`
                 : undefined
             }
             alt=""
