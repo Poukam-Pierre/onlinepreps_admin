@@ -71,8 +71,8 @@ function SignIn() {
                 severity: 'warning',
               })
               setOpen(true)
-              resetForm()
               setLoading(false)
+              resetForm()
             } else if (err?.response.status === 400) {
               setCreatedMsg({
                 message: err.response.data.message,
@@ -86,8 +86,8 @@ function SignIn() {
                 severity: 'error',
               })
               setOpen(true)
-              resetForm()
               setLoading(false)
+              resetForm()
             }
           })
       },
@@ -202,6 +202,7 @@ function SignIn() {
               aria-label="add"
               type="submit"
               sx={{ bgcolor: theme.palette.primary.main }}
+              disabled={loading ? true : false}
             >
               <Typography variant="button" paddingLeft="5px">
                 CONNEXION
@@ -216,6 +217,7 @@ function SignIn() {
                   left: '50%',
                   marginTop: '-12px',
                   marginLeft: '-12px',
+                  color: 'yellow',
                 }}
               />
             )}
