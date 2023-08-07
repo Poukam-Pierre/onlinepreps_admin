@@ -58,7 +58,10 @@ function StatEpreuve() {
   }
   return (
     <Box p={2}>
-      <Box display="flex" justifyContent="space-around">
+      <Typography variant="h4" color="#555">
+        Epreuves
+      </Typography>
+      <Box display="flex" justifyContent="space-around" padding="25px 0 0 0">
         <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
           <Typography variant="h5" color="#555" paddingBottom="20px">
             Total
