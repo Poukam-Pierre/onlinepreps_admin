@@ -395,7 +395,9 @@ function FormSheet() {
                 color="primary"
                 id="saveBtn"
                 sx={submitButtonSx}
-                disabled={values.questionss.length !== 40 ? true : false}
+                disabled={
+                  values.questionss.length !== 40 ? true : false || loading
+                }
                 type="submit"
               >
                 {success === 'default' ? (
