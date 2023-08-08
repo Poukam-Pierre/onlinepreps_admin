@@ -113,7 +113,7 @@ function SelleSheetTable({
         setLoadingData(false)
       })
       .catch((err) => {
-        if (err.response.status === 404) return
+        if (err.response.status === 404) setLoadingData(false)
       })
   }, [open])
 

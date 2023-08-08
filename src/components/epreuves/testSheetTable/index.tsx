@@ -90,7 +90,7 @@ function TestSheetTable({ id_ }: { id_: number }) {
       })
       .catch((err) => {
         if (err.response.status === 404) {
-          return
+          setLoadingData(false)
         }
       })
   }, [])
