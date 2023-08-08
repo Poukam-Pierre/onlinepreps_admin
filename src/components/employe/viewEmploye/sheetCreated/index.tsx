@@ -106,7 +106,7 @@ function SheetCreate({
           setOpen(true)
         }
       })
-  }, [createdMsg])
+  }, [])
 
   const deleteEpreuve = (id: number) => {
     // TODO fetch data status to stop production of epreuve
