@@ -158,9 +158,6 @@ function ModifyTestSheet() {
               severity: 'success',
             })
             setOpenS(true)
-            setTimeout(() => {
-              navigate('/epreuves')
-            }, 3000)
           }
         })
         .catch((err) => {
