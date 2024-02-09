@@ -27,6 +27,7 @@ interface rowsInsterface {
   montant?: number
   profil_img?: string
   signaled: boolean | null
+  commission: number
 }
 
 const columns: {
@@ -35,49 +36,50 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id_user', headerName: 'ID', width: 80 },
-  {
-    field: 'nom',
-    headerName: 'Nom',
-    width: 200,
-    renderCell: (params: any) => {
-      return (
-        <Box display="flex" alignItems="center">
-          <img
-            src={
-              params.row.profil_img
-                ? `https://api.onlinepreps.net/uploads/${params.row.profil_img}`
-                : undefined
-            }
-            alt=""
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginRight: '10px',
-            }}
-          />
-          {params.row.nom}
-        </Box>
-      )
+    { field: 'id_user', headerName: 'ID', width: 40 },
+    {
+      field: 'nom',
+      headerName: 'Nom',
+      width: 200,
+      renderCell: (params: any) => {
+        return (
+          <Box display="flex" alignItems="center">
+            <img
+              src={
+                params.row.profil_img
+                  ? `https://api.onlinepreps.net/uploads/${params.row.profil_img}`
+                  : undefined
+              }
+              alt=""
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                marginRight: '10px',
+              }}
+            />
+            {params.row.nom}
+          </Box>
+        )
+      },
     },
-  },
-  { field: 'phone', headerName: 'Phone', width: 180 },
-  { field: 'email', headerName: 'Email', width: 210 },
-  {
-    field: 'montant',
-    headerName: 'Dernière transaction',
-    width: 200,
-    renderCell: (params: any) => {
-      return (
-        <Typography>
-          {params.row.montant ? params.row.montant : 0} frs CFA
-        </Typography>
-      )
+    { field: 'phone', headerName: 'Phone', width: 140 },
+    { field: 'email', headerName: 'Email', width: 210 },
+    {
+      field: 'montant',
+      headerName: 'Dernière transaction',
+      width: 200,
+      renderCell: (params: any) => {
+        return (
+          <Typography>
+            {params.row.montant ? params.row.montant : 0} frs CFA
+          </Typography>
+        )
+      },
     },
-  },
-]
+    { field: 'commission', headerName: 'Gain(%)', width: 80 },
+  ]
 
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -102,7 +104,7 @@ function PartnerTable() {
         }
       })
   }, [])
-
+  console.log(rows)
   const signaledPartner = (id: string) => {
     // TODO change local link into remote link
     Axios.post(
@@ -130,38 +132,38 @@ function PartnerTable() {
     width: number
     renderCell: any
   }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 120,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Tooltip title="Apperçu">
-              <IconButton
-                sx={{ color: theme.palette.primary.light }}
-                component={StyledLink}
-                to={`/admin/partner/${params.row.id_user}`}
-              >
-                <VisibilityOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Signaler">
-              <span>
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 124,
+        renderCell: (params: any) => {
+          return (
+            <Box display="flex" gap="10px">
+              <Tooltip title="Apperçu">
                 <IconButton
-                  sx={{ color: '#A95454' }}
-                  onClick={() => signaledPartner(params.row.id_user)}
-                  disabled={params.row.signaled !== null ? true : false}
+                  sx={{ color: theme.palette.primary.light }}
+                  component={StyledLink}
+                  to={`/admin/partner/${params.row.id_user}`}
                 >
-                  <ReportProblemOutlinedIcon />
+                  <VisibilityOutlinedIcon />
                 </IconButton>
-              </span>
-            </Tooltip>
-          </Box>
-        )
+              </Tooltip>
+              <Tooltip title="Signaler">
+                <span>
+                  <IconButton
+                    sx={{ color: '#A95454' }}
+                    onClick={() => signaledPartner(params.row.id_user)}
+                    disabled={params.row.signaled !== null ? true : false}
+                  >
+                    <ReportProblemOutlinedIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </Box>
+          )
+        },
       },
-    },
-  ]
+    ]
 
   function TransitionUp(props: TransitionProps) {
     return <Slide {...props} direction="up" />
