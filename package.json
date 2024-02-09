@@ -69,6 +69,7 @@
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-beforeunload": "^2.1.1",
-    "@types/react-custom-scrollbars": "^4.0.10"
+    "@types/react-custom-scrollbars": "^4.0.10",
+    "@types/react-phone-number-input": "^3.0.17"
   }
 }

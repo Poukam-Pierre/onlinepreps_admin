@@ -286,7 +286,7 @@ function EmployeProfil() {
                   : '')}
               />
               <StylePhoneNumber
-                value={values.phoneNumber}
+                value={values.phoneNumber as string}
                 onChange={(number) =>
                   setFieldValue(`phoneNumber`, number?.toString())
                 }
