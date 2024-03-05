@@ -80,18 +80,17 @@ function ChangeSousPrice() {
 
     // Functions
     const handleChange = () => {
-        // Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, {amount: newAmount, typeAbon: ""})
-        // .then((res) => {
-        //     if (res?.status === 200 && res.data) {
-        //         setRows(res.data)
-        //     }
-        // })
-        // .catch((err) => {
-        //     if (err.response.status === 400) {
-        //         return
-        //     }
-        // })
-        console.log(newAmount)
+        Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, { amount: newAmount, typeAbon: "" })
+            .then((res) => {
+                if (res?.status === 200 && res.data) {
+                    setRows(res.data)
+                }
+            })
+            .catch((err) => {
+                if (err.response.status === 400) {
+                    return
+                }
+            })
     }
     return (
         <>
