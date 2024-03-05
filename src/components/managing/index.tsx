@@ -185,7 +185,7 @@ function Manager() {
             </Box>
           </Box>
         </Paper>
-        <ChangeSousPrice />
+        <ChangeSousPrice setCreatedMsg={setCreatedMsg} />
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Taux de gain</DialogTitle>
           <DialogContent>

@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { alertMsgInterface } from "../employe/createEmploy";
 
 
 interface dataSousType {
@@ -19,7 +20,7 @@ const columns: {
         { field: 'typeAbon', headerName: "Type d'abonnment ", width: 130 },
         { field: 'montant', headerName: 'Prix (FCFA)', width: 100 },
     ]
-function ChangeSousPrice() {
+function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<React.SetStateAction<alertMsgInterface | undefined>> }) {
     const [rows, setRows] = useState<dataSousType[]>([
         {
             typeAbon: "Normal unique",
@@ -80,10 +81,13 @@ function ChangeSousPrice() {
 
     // Functions
     const handleChange = () => {
-        Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, { amount: newAmount, typeAbon: "" })
+        Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, { amount: newAmount.montant, typeAbon: newAmount.typeAbon })
             .then((res) => {
                 if (res?.status === 200 && res.data) {
-                    setRows(res.data)
+                    setCreatedMsg({
+                        message: res.data.message,
+                        severity: 'error',
+                    })
                 }
             })
             .catch((err) => {
