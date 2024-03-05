@@ -28,83 +28,83 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id_user', headerName: 'ID', width: 80 },
-  {
-    field: 'nom',
-    headerName: 'Nom',
-    width: 220,
-    renderCell: (params: any) => {
-      return (
-        <Box display="flex" alignItems="center">
-          <img
-            src={
-              params.row.profil_img
-                ? `https://api.onlinepreps.net/uploads/${params.row.profil_img}`
-                : undefined
-            }
-            alt=""
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginRight: '10px',
-            }}
-          />
-          {params.row.nom}
-        </Box>
-      )
+    { field: 'id_user', headerName: 'ID', width: 80 },
+    {
+      field: 'nom',
+      headerName: 'Nom',
+      width: 220,
+      renderCell: (params: any) => {
+        return (
+          <Box display="flex" alignItems="center">
+            <img
+              src={
+                params.row.profil_img
+                  ? `https://api.onlinepreps.net/uploads/${params.row.profil_img}`
+                  : undefined
+              }
+              alt=""
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                marginRight: '10px',
+              }}
+            />
+            {params.row.nom}
+          </Box>
+        )
+      },
     },
-  },
-  { field: 'poste', headerName: 'Poste', width: 100 },
-  { field: 'email', headerName: 'Email', width: 200 },
-  { field: 'user_country', headerName: 'Pays', width: 100 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    width: 140,
-    renderCell: (params: any) => {
-      return (
-        <>
-          {params.row.status === 'active' ? (
-            <span
-              style={{
-                backgroundColor: '#D2F0F2',
-                color: '#41B2BA',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              En service
-            </span>
-          ) : params.row.status === 'resigned' ? (
-            <span
-              style={{
-                backgroundColor: '#F89E9E',
-                color: '#A95454',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              Demissionner
-            </span>
-          ) : (
-            <span
-              style={{
-                backgroundColor: '#CAD2FF',
-                color: '#626DA9',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              Congés
-            </span>
-          )}
-        </>
-      )
+    { field: 'poste', headerName: 'Poste', width: 100 },
+    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'user_country', headerName: 'Pays', width: 100 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 140,
+      renderCell: (params: any) => {
+        return (
+          <>
+            {params.row.status === 'active' ? (
+              <span
+                style={{
+                  backgroundColor: '#D2F0F2',
+                  color: '#41B2BA',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                En service
+              </span>
+            ) : params.row.status === 'resigned' ? (
+              <span
+                style={{
+                  backgroundColor: '#F89E9E',
+                  color: '#A95454',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                Demissionner
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: '#CAD2FF',
+                  color: '#626DA9',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                Congés
+              </span>
+            )}
+          </>
+        )
+      },
     },
-  },
-]
+  ]
 
 function EmployeTable({
   setCreatedMsg,
@@ -128,7 +128,7 @@ function EmployeTable({
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          console.log(err.response.data.message)
+          return
         }
       })
   }, [createdMsg])
@@ -213,60 +213,60 @@ function EmployeTable({
     width: number
     renderCell: any
   }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 230,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Tooltip title="Apperçu">
-              <IconButton
-                sx={{ color: theme.palette.primary.light }}
-                component={StyledLink}
-                to={`/admin/employe/${params.row.id_user}`}
-              >
-                <VisibilityOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="En service">
-              <span>
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 230,
+        renderCell: (params: any) => {
+          return (
+            <Box display="flex" gap="10px">
+              <Tooltip title="Apperçu">
                 <IconButton
-                  sx={{ color: '#41B2BA' }}
-                  onClick={() => activateEmploye(params.row.id_user)}
-                  disabled={params.row.status === 'active' ? true : false}
+                  sx={{ color: theme.palette.primary.light }}
+                  component={StyledLink}
+                  to={`/admin/employe/${params.row.id_user}`}
                 >
-                  <DesignServicesOutlinedIcon />
+                  <VisibilityOutlinedIcon />
                 </IconButton>
-              </span>
-            </Tooltip>
-            <Tooltip title="En congés">
-              <span>
-                <IconButton
-                  sx={{ color: '#626DA9' }}
-                  onClick={() => dismissEmploye(params.row.id_user)}
-                  disabled={params.row.status === 'holiday' ? true : false}
-                >
-                  <HouseboatOutlinedIcon />
-                </IconButton>
-              </span>
-            </Tooltip>
-            <Tooltip title="Démissionner">
-              <span>
-                <IconButton
-                  sx={{ color: '#A95454' }}
-                  onClick={() => resignedEmploye(params.row.id_user)}
-                  disabled={params.row.status === 'resigned' ? true : false}
-                >
-                  <HighlightOffOutlinedIcon />
-                </IconButton>
-              </span>
-            </Tooltip>
-          </Box>
-        )
+              </Tooltip>
+              <Tooltip title="En service">
+                <span>
+                  <IconButton
+                    sx={{ color: '#41B2BA' }}
+                    onClick={() => activateEmploye(params.row.id_user)}
+                    disabled={params.row.status === 'active' ? true : false}
+                  >
+                    <DesignServicesOutlinedIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title="En congés">
+                <span>
+                  <IconButton
+                    sx={{ color: '#626DA9' }}
+                    onClick={() => dismissEmploye(params.row.id_user)}
+                    disabled={params.row.status === 'holiday' ? true : false}
+                  >
+                    <HouseboatOutlinedIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title="Démissionner">
+                <span>
+                  <IconButton
+                    sx={{ color: '#A95454' }}
+                    onClick={() => resignedEmploye(params.row.id_user)}
+                    disabled={params.row.status === 'resigned' ? true : false}
+                  >
+                    <HighlightOffOutlinedIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </Box>
+          )
+        },
       },
-    },
-  ]
+    ]
 
   return (
     <DataGrid
