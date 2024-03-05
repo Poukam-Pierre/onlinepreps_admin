@@ -23,6 +23,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Dayjs } from 'dayjs'
 import { alertMsgInterface } from '../employe/createEmploy'
+import ChangeSousPrice from '../changeSousPrice'
 
 type TransitionProps = Omit<SlideProps, 'direction'>
 
@@ -184,6 +185,7 @@ function Manager() {
             </Box>
           </Box>
         </Paper>
+        <ChangeSousPrice />
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Taux de gain</DialogTitle>
           <DialogContent>
