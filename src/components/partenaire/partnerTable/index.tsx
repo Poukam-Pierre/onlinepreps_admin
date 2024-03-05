@@ -104,7 +104,6 @@ function PartnerTable() {
         }
       })
   }, [])
-  console.log(rows)
   const signaledPartner = (id: string) => {
     // TODO change local link into remote link
     Axios.post(
