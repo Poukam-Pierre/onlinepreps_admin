@@ -81,12 +81,12 @@ function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<Reac
 
     // Functions
     const handleChange = () => {
-        Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, { amount: newAmount.montant, typeAbon: newAmount.typeAbon })
+        Axios.put(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/SetNewSouscription`, newAmount)
             .then((res) => {
                 if (res?.status === 200 && res.data) {
                     setCreatedMsg({
                         message: res.data.message,
-                        severity: 'error',
+                        severity: 'success',
                     })
                 }
             })
@@ -105,7 +105,12 @@ function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<Reac
                     columns={columns.concat(actionColumns)}
                     pageSize={2}
                     rowsPerPageOptions={[1]}
-                    sx={{ maxWidth: '25rem' }}
+                    sx={{
+                        maxWidth: '25rem',
+                        '.css-17jjc08-MuiDataGrid-footerContainer': {
+                            display: 'none'
+                        }
+                    }}
                 />
             </Paper>
             <Dialog open={open} onClose={() => setOpen(false)}>
