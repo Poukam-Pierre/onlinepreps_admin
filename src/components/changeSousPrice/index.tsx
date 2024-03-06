@@ -20,13 +20,8 @@ const columns: {
         { field: 'typeAbon', headerName: "Type d'abonnment ", width: 130 },
         { field: 'montant', headerName: 'Prix (FCFA)', width: 100 },
     ]
-function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<React.SetStateAction<alertMsgInterface | undefined>> }) {
-    const [rows, setRows] = useState<dataSousType[]>([
-        {
-            typeAbon: "Normal unique",
-            montant: 5500
-        }
-    ])
+function ChangeSousPrice({ setCreatedMsg, setOpenS }: { setCreatedMsg: React.Dispatch<React.SetStateAction<alertMsgInterface | undefined>>, setOpenS: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const [rows, setRows] = useState<dataSousType[]>()
     const [open, setOpen] = useState<boolean>(false)
     const [newAmount, setNewAmount] = useState<dataSousType>({
         typeAbon: "Normal unique",
@@ -67,7 +62,7 @@ function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<Reac
                                     sx={{ color: '#1D689F' }}
                                     onClick={() => {
                                         setOpen(true)
-                                        setNewAmount({ montant: 0, typeAbon: params.row.typeAbon })
+                                        setNewAmount(params.row)
                                     }}
                                 >
                                     <EditOutlinedIcon />
@@ -88,6 +83,8 @@ function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<Reac
                         message: res.data.message,
                         severity: 'success',
                     })
+                    setOpen(false)
+                    setOpenS(true)
                 }
             })
             .catch((err) => {
@@ -118,6 +115,7 @@ function ChangeSousPrice({ setCreatedMsg }: { setCreatedMsg: React.Dispatch<Reac
                 <DialogContent>
                     <TextField
                         variant="standard"
+                        value={newAmount.montant}
                         type="number"
                         autoFocus
                         label="Prix"
