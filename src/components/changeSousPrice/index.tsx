@@ -43,7 +43,6 @@ function ChangeSousPrice({ setCreatedMsg, setOpenS }: { setCreatedMsg: React.Dis
     }, [open])
 
 
-
     const actionColumns: {
         field: string
         headerName: string
@@ -100,10 +99,10 @@ function ChangeSousPrice({ setCreatedMsg, setOpenS }: { setCreatedMsg: React.Dis
                     getRowId={(row) => row.typeAbon}
                     rows={rows ? rows : []}
                     columns={columns.concat(actionColumns)}
-                    pageSize={2}
+                    pageSize={3}
                     rowsPerPageOptions={[1]}
                     sx={{
-                        maxWidth: '25rem',
+                        Width: '25rem',
                         '.MuiDataGrid-footerContainer': {
                             display: 'none'
                         }
