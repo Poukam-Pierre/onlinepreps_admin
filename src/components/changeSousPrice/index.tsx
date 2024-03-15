@@ -104,7 +104,7 @@ function ChangeSousPrice({ setCreatedMsg, setOpenS }: { setCreatedMsg: React.Dis
                     rowsPerPageOptions={[1]}
                     sx={{
                         maxWidth: '25rem',
-                        '.css-17jjc08-MuiDataGrid-footerContainer': {
+                        '.MuiDataGrid-footerContainer': {
                             display: 'none'
                         }
                     }}
