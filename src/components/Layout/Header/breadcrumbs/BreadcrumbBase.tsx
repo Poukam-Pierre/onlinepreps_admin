@@ -14,10 +14,10 @@ export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
                 underline="hover"
                 color='primary'
             >Admin</Link>
-            {breadcrumbs.map(({ title, href }, index) => (
+            {breadcrumbs.map(({ title, href, unLink }, index) => (
                 <Link
                     key={index}
-                    href={href}
+                    href={unLink ? undefined : href}
                     variant="body2"
                     underline='hover'
                     color='primary'
