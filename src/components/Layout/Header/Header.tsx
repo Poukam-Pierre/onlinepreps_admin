@@ -1,9 +1,10 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import LogoOP from '../../../asset/logoOnlinePreps.png'
 import BreadcrumbBase from "./breadcrumbs/BreadcrumbBase";
 import { useLocation } from "react-router-dom";
-import TranslateIcon from '@mui/icons-material/Translate';
+import LanguageIcon from '@mui/icons-material/Language'
 import { theme } from "../../../utils/style/theme";
+import { useState } from "react";
 
 export interface breadcrumbItem {
     title: string;
@@ -13,6 +14,7 @@ export interface breadcrumbItem {
 
 export default function Header() {
     const location = useLocation()
+    const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
 
     const breadcrumbBase: breadcrumbItem[] = [
         {
@@ -67,15 +69,19 @@ export default function Header() {
         )
     }
     return (
-        <Box>
+        <Box sx={{
+            padding: '8px 16px',
+            backgroundColor: theme.palette.primary.light,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+        }}>
             {getCorrespondingBreadcrumb()}
-            <Button>
-                <TranslateIcon sx={{
-                    fontSize: { xs: 20, sm: 30 },
-                    color: theme.palette.secondary.contrastText,
-                }} />
-            </Button>
-
+            <IconButton
+                onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
+            >
+                <LanguageIcon sx={{ color: theme.palette.secondary.contrastText }} />
+            </IconButton>
         </Box>
     );
 }
