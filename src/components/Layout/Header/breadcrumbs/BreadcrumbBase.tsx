@@ -1,0 +1,30 @@
+import { Breadcrumbs, Link } from "@mui/material";
+import { breadcrumbItem } from "../Header";
+
+interface breadcrumbBaseProps {
+    breadcrumbs: breadcrumbItem[]
+}
+
+export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
+    return (
+        <Breadcrumbs>
+            <Link
+                href='/admin'
+                variant="body2"
+                underline="hover"
+                color='primary'
+            >Admin</Link>
+            {breadcrumbs.map(({ title, href }, index) => (
+                <Link
+                    key={index}
+                    href={href}
+                    variant="body2"
+                    underline='hover'
+                    color='primary'
+                >
+                    {title}
+                </Link>
+            ))}
+        </Breadcrumbs>
+    );
+}
