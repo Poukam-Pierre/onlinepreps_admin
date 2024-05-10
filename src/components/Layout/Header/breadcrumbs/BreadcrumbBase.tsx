@@ -8,7 +8,11 @@ interface breadcrumbBaseProps {
 
 export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
     return (
-        <Breadcrumbs>
+        <Breadcrumbs sx={{
+            '& .MuiBreadcrumbs-separator': {
+                color: theme.palette.secondary.contrastText
+            }
+        }}>
             <Link
                 href='/admin'
                 variant="body2"
