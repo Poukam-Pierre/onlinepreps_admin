@@ -1,5 +1,5 @@
 import { Box, Menu, MenuItem } from "@mui/material";
-import { languages } from ".";
+import { languages } from "../../header";
 import { useState } from "react";
 import i18next from 'i18next'
 
