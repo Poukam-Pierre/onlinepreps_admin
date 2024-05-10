@@ -1,5 +1,6 @@
 import { Breadcrumbs, Link } from "@mui/material";
 import { breadcrumbItem } from "../Header";
+import { theme } from "../../../../utils/style/theme";
 
 interface breadcrumbBaseProps {
     breadcrumbs: breadcrumbItem[]
@@ -12,7 +13,9 @@ export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
                 href='/admin'
                 variant="body2"
                 underline="hover"
-                color='primary'
+                sx={{
+                    color: theme.palette.secondary.contrastText
+                }}
             >Admin</Link>
             {breadcrumbs.map(({ title, href, unLink }, index) => (
                 <Link
@@ -20,8 +23,9 @@ export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
                     href={unLink ? undefined : href}
                     variant="body2"
                     underline='hover'
-                    color='primary'
-                >
+                    sx={{
+                        color: theme.palette.secondary.contrastText
+                    }}                    >
                     {title}
                 </Link>
             ))}
