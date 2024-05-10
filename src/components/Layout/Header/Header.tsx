@@ -1,5 +1,5 @@
 import LanguageIcon from '@mui/icons-material/Language';
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { theme } from "../../../utils/style/theme";
@@ -77,11 +77,13 @@ export default function Header() {
             justifyContent: 'space-between',
         }}>
             {getCorrespondingBreadcrumb()}
-            <IconButton
-                onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
-            >
-                <LanguageIcon sx={{ color: theme.palette.secondary.contrastText }} />
-            </IconButton>
+            <Tooltip arrow title="Change language">
+                <IconButton
+                    onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
+                >
+                    <LanguageIcon sx={{ color: theme.palette.secondary.contrastText }} />
+                </IconButton>
+            </Tooltip>
             <MenuLanguage anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </Box>
     );
