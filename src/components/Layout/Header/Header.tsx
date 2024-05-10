@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import LanguageIcon from '@mui/icons-material/Language'
 import { theme } from "../../../utils/style/theme";
 import { useState } from "react";
+import MenuLanguage from "../../header/MenuLanguage";
 
 export interface breadcrumbItem {
     title: string;
@@ -82,6 +83,7 @@ export default function Header() {
             >
                 <LanguageIcon sx={{ color: theme.palette.secondary.contrastText }} />
             </IconButton>
+            <MenuLanguage anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </Box>
     );
 }
