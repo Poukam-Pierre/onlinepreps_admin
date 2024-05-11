@@ -135,7 +135,7 @@ export default function SideBar() {
             padding: '8px',
             display: 'grid',
             gridTemplateRows: 'auto auto auto 1fr',
-            rowGap: isSideOpen ? '10px' : '25px',
+            rowGap: isSideOpen ? '10px' : '15px',
             position: 'relative'
         }}>
             <Box sx={{
@@ -156,7 +156,7 @@ export default function SideBar() {
                         component='img'
                         src={ShortLogoOP}
                         alt="logo OP"
-                        sx={{ width: 45 }}
+                        sx={{ width: 50 }}
                     />
 
                 )}

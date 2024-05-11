@@ -13,7 +13,7 @@ export default function NavBar({
     return (
         <Box sx={{
             display: 'grid',
-            rowGap: isSideOpen ? '10px' : '25px',
+            rowGap: isSideOpen ? '10px' : '15px',
             padding: '0px 8px'
         }}>
             <Typography
