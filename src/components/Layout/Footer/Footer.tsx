@@ -1,3 +1,4 @@
+import LaunchIcon from '@mui/icons-material/Launch';
 import { Box, Link, Typography } from "@mui/material";
 
 export default function Footer() {
@@ -25,7 +26,7 @@ export default function Footer() {
                     }}
                 >
                     Poukam Tech
-                    <img src='' alt="" />
+                    <LaunchIcon style={{ width: '15px', height: 'auto', paddingLeft: '5px' }} />
                 </Link>
             </Box>
         </Box>
