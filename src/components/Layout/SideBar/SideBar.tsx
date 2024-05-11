@@ -1,5 +1,5 @@
 import { Avatar, Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import HandshakeIcon from '@mui/icons-material/Handshake'
@@ -7,7 +7,8 @@ import LocalMallIcon from '@mui/icons-material/LocalMall'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import TextSnippetIcon from '@mui/icons-material/TextSnippet'
 import TextsmsIcon from '@mui/icons-material/Textsms'
-import LogoOP from '../../../asset/logoOnlinePreps.png'
+import FullLogoOP from '../../../asset/logoOnlinePreps.png'
+import ShortLogoOP from '../../../asset/logo.PNG'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { theme } from "../../../utils/style/theme";
@@ -26,6 +27,7 @@ export interface sideBarSection {
 }
 
 export default function SideBar() {
+    const [isSideOpen, setIsSideBarOpen] = useState<boolean>(true)
     const sideBarSection: sideBarSection[] = [
         {
             title: 'HOME',
@@ -129,26 +131,38 @@ export default function SideBar() {
     return (
         <Box sx={{
             backgroundColor: theme.palette.primary.light,
-            width: '250px',
+            width: isSideOpen ? '220px' : 'fit-content',
             padding: '8px',
             display: 'grid',
             gridTemplateRows: 'auto auto auto 1fr',
-            rowGap: '10px'
+            rowGap: isSideOpen ? '10px' : '25px',
+            position: 'relative'
         }}>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
             }}>
-                <Box
-                    component='img'
-                    src={LogoOP}
-                    alt="logo OP"
-                    sx={{ width: 150 }}
-                />
+                {isSideOpen ? (
+                    <Box
+                        component='img'
+                        src={FullLogoOP}
+                        alt="logo OP"
+                        sx={{ width: 150 }}
+                    />
+
+                ) : (
+                    <Box
+                        component='img'
+                        src={ShortLogoOP}
+                        alt="logo OP"
+                        sx={{ width: 45 }}
+                    />
+
+                )}
                 <Tooltip
                     arrow
-                    title='close'
+                    title={isSideOpen ? 'Close' : 'Open'}
                     placement="right"
                 >
                     <IconButton
@@ -156,13 +170,28 @@ export default function SideBar() {
                         sx={{
                             bgcolor: theme.palette.primary.dark,
                             boxShadow: '0px 6px 12px',
-                        }}>
-                        <ChevronLeftIcon
-                            sx={{
-                                color: theme.palette.secondary.contrastText,
-                                height: '20px',
-                                width: '20px',
-                            }} />
+                            position: 'absolute',
+                            right: isSideOpen ? 0 : '-12px'
+                        }}
+                        onClick={() => setIsSideBarOpen((prev) => !prev)}
+                    >
+                        {isSideOpen ? (
+                            <ChevronLeftIcon
+                                sx={{
+                                    color: theme.palette.secondary.contrastText,
+                                    height: '20px',
+                                    width: '20px',
+                                }} />
+
+                        ) : (
+
+                            <ChevronRightIcon
+                                sx={{
+                                    color: theme.palette.secondary.contrastText,
+                                    height: '20px',
+                                    width: '20px',
+                                }} />
+                        )}
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -174,10 +203,14 @@ export default function SideBar() {
                 rowGap: '20px'
             }}>
                 {sideBarSection.map((sideBarNav, index) => (
-                    <NavBar sideBarNav={sideBarNav} key={index} />
+                    <NavBar
+                        key={index}
+                        sideBarNav={sideBarNav}
+                        isSideOpen={isSideOpen}
+                    />
                 ))}
             </Box>
-            <Profile />
+            <Profile isSideOpen={isSideOpen} />
         </Box>
     );
 }
