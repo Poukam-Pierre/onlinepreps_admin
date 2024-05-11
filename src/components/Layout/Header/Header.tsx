@@ -19,19 +19,19 @@ export default function Header() {
     const breadcrumbBase: breadcrumbItem[] = [
         {
             title: 'dashboard',
-            href: '/'
+            href: '/admin'
         },
         {
-            title: 'employes',
+            title: 'Employes',
             href: '/admin/employes'
         },
         {
-            title: 'new',
-            href: '/admin/employes/new',
+            title: 'New',
+            href: '/admin/employe/new',
             unLink: true
         },
         {
-            title: 'partner',
+            title: 'Partner',
             href: '/admin/partner'
         },
         {
@@ -40,19 +40,19 @@ export default function Header() {
             unLink: true
         },
         {
-            title: 'test',
+            title: 'Test',
             href: '/admin/epreuves'
         },
         {
-            title: 'messages',
+            title: 'Messages',
             href: '/admin/messages'
         },
         {
-            title: 'management',
+            title: 'Management',
             href: '/admin/manager'
         },
         {
-            title: 'statistics',
+            title: 'Statistics',
             href: '/admin/statistics'
         },
     ]
