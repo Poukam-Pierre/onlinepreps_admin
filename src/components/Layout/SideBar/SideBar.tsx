@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton } from "@mui/material";
+import { Box, Divider, IconButton, Tooltip } from "@mui/material";
 import { ReactElement } from "react";
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -100,19 +100,25 @@ export default function SideBar() {
                     alt="logo OP"
                     sx={{ width: 150 }}
                 />
-                <IconButton
-                    size="small"
-                    sx={{
-                        bgcolor: theme.palette.primary.dark,
-                        boxShadow: '0px 6px 12px',
-                    }}>
-                    <ChevronLeftIcon
+                <Tooltip
+                    arrow
+                    title='close'
+                    placement="right"
+                >
+                    <IconButton
+                        size="small"
                         sx={{
-                            color: theme.palette.secondary.contrastText,
-                            height: '20px',
-                            width: '20px',
-                        }} />
-                </IconButton>
+                            bgcolor: theme.palette.primary.dark,
+                            boxShadow: '0px 6px 12px',
+                        }}>
+                        <ChevronLeftIcon
+                            sx={{
+                                color: theme.palette.secondary.contrastText,
+                                height: '20px',
+                                width: '20px',
+                            }} />
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Divider />
 
