@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Tooltip } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
 import { ReactElement } from "react";
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -11,14 +11,16 @@ import LogoOP from '../../../asset/logoOnlinePreps.png'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { theme } from "../../../utils/style/theme";
+import NavBar from "./NavBar";
+import Profile from "./Profile";
 
-interface sideBarItem {
+export interface sideBarItem {
     label: string
     icon: ReactElement
     link: string
 }
 
-interface sideBarSection {
+export interface sideBarSection {
     title: string
     sideBarItems: sideBarItem[]
 }
@@ -30,7 +32,13 @@ export default function SideBar() {
             sideBarItems: [
                 {
                     label: 'Dashboard',
-                    icon: <DashboardIcon />,
+                    icon:
+                        <DashboardIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin'
                 }
             ]
@@ -40,17 +48,35 @@ export default function SideBar() {
             sideBarItems: [
                 {
                     label: 'Employes',
-                    icon: <AccountCircleIcon />,
+                    icon:
+                        <AccountCircleIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/employes'
                 },
                 {
                     label: 'Partners',
-                    icon: <HandshakeIcon />,
+                    icon:
+                        <HandshakeIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/partners'
                 },
                 {
                     label: 'Tests',
-                    icon: <TextSnippetIcon />,
+                    icon:
+                        <TextSnippetIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/epreuves'
                 },
 
@@ -61,7 +87,13 @@ export default function SideBar() {
             sideBarItems: [
                 {
                     label: 'Messages',
-                    icon: <TextsmsIcon />,
+                    icon:
+                        <TextsmsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/messages'
                 }
             ]
@@ -71,12 +103,24 @@ export default function SideBar() {
             sideBarItems: [
                 {
                     label: 'Manage',
-                    icon: < LocalMallIcon />,
+                    icon:
+                        < LocalMallIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/manage'
                 },
                 {
                     label: 'Statistics',
-                    icon: < TimelineIcon />,
+                    icon:
+                        < TimelineIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
                     link: '/admin/statistics'
                 }
             ]
@@ -87,7 +131,9 @@ export default function SideBar() {
             backgroundColor: theme.palette.primary.light,
             width: '250px',
             padding: '8px',
-            // display: 'grid'
+            display: 'grid',
+            gridTemplateRows: 'auto auto auto 1fr',
+            rowGap: '10px'
         }}>
             <Box sx={{
                 display: 'flex',
@@ -120,8 +166,18 @@ export default function SideBar() {
                     </IconButton>
                 </Tooltip>
             </Box>
-            <Divider />
-
+            <Divider sx={{
+                borderColor: theme.palette.primary.dark,
+            }} />
+            <Box sx={{
+                display: 'grid',
+                rowGap: '20px'
+            }}>
+                {sideBarSection.map((sideBarNav, index) => (
+                    <NavBar sideBarNav={sideBarNav} key={index} />
+                ))}
+            </Box>
+            <Profile />
         </Box>
     );
 }
