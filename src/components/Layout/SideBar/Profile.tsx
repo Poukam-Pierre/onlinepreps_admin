@@ -1,4 +1,4 @@
-import { Avatar, Typography, Box } from "@mui/material";
+import { Avatar, Typography, Box, IconButton, Tooltip } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { theme } from "../../../utils/style/theme";
 
@@ -23,7 +23,22 @@ export default function Profile() {
                 >Full name</Typography>
                 <Typography variant="body2"> Fonction</Typography>
             </Box>
-            <LogoutIcon sx={{ justifySelf: 'end' }} />
+            <Tooltip
+                arrow
+                title="Log Out"
+                placement="right"
+            >
+                <IconButton
+                    size="small"
+                    sx={{
+                        justifySelf: 'end',
+                        color: theme.palette.secondary.contrastText
+                    }}
+
+                >
+                    <LogoutIcon />
+                </IconButton>
+            </Tooltip>
         </Box>
 
     );
