@@ -1,8 +1,11 @@
-import { Avatar, Typography, Box, IconButton, Tooltip } from "@mui/material";
+import { Avatar, Typography, Box, IconButton, Tooltip, Collapse } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { theme } from "../../../utils/style/theme";
 
-export default function Profile() {
+interface profileProps {
+    isSideOpen: boolean
+}
+export default function Profile({ isSideOpen }: profileProps) {
     return (
         <Box sx={{
             display: 'grid',
@@ -11,17 +14,34 @@ export default function Profile() {
             columnGap: '10px',
             alignSelf: 'end',
         }}>
-            <Avatar alt="profil photo" />
+            <Avatar
+                alt="profil photo"
+                sx={{
+                    display: isSideOpen ? 'flex' : 'none'
+                }}
+            />
             <Box sx={{
                 color: theme.palette.secondary.contrastText
             }}>
                 <Typography
+                    component={Collapse}
+                    in={isSideOpen}
+                    orientation="horizontal"
                     variant="body1"
                     sx={{
                         fontWeight: 'bold',
+                        textWrap: 'nowrap',
+                        whiteSpace: 'nowrap'
                     }}
                 >Full name</Typography>
-                <Typography variant="body2"> Fonction</Typography>
+                <Typography
+                    variant="body2"
+                    component={Collapse}
+                    in={isSideOpen}
+                    orientation="horizontal"
+                >
+                    Fonction
+                </Typography>
             </Box>
             <Tooltip
                 arrow
