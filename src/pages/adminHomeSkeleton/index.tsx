@@ -27,7 +27,7 @@ function AdminSkeleton() {
           gridTemplateRows: 'auto 1fr auto'
         }}>
           <Header />
-          <Box></Box>
+          <Outlet></Outlet>
           <Footer />
         </Box>
       </Box>
