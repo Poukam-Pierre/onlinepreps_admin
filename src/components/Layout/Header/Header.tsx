@@ -49,7 +49,7 @@ export default function Header() {
         },
         {
             title: 'Management',
-            href: '/admin/manager'
+            href: '/admin/manage'
         },
         {
             title: 'Statistics',
