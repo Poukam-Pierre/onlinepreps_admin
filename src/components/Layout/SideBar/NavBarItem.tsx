@@ -2,6 +2,7 @@ import { Box, Collapse, Tooltip, Typography } from "@mui/material";
 import { sideBarItem } from "./SideBar";
 import { theme } from "../../../utils/style/theme";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface navBarItemProps {
     navEl: sideBarItem
@@ -12,6 +13,7 @@ export default function NavBarItem({
     navBarItemProps) {
     const location = useLocation()
     const navigate = useNavigate()
+    const { t } = useTranslation()
     const isActive = link === location.pathname
     return (
         <Tooltip
@@ -46,7 +48,7 @@ export default function NavBarItem({
                         size: '0.8rem',
                     }}
                 >
-                    {label}
+                    {t(`${label}`)}
                 </Typography>
             </Box>
         </Tooltip>
