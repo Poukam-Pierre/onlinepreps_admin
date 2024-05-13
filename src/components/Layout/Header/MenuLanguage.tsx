@@ -4,6 +4,7 @@ import {
     supportedLanguageFrenshVersionInfos,
     useOPLanguage
 } from "../../../utils/language";
+import { getLanguageCode } from "../../../utils/utilis/GetCountryCode";
 
 
 interface menuLanguageProps {
@@ -13,7 +14,8 @@ interface menuLanguageProps {
 
 export default function MenuLanguage({ anchorEl, setAnchorEl }: menuLanguageProps) {
     const { activeLanguage, languageDispatch } = useOPLanguage()
-    const languages = activeLanguage === 'en-US' ? supportedLanguageEnglishVersionInfos : supportedLanguageFrenshVersionInfos
+    const languages = getLanguageCode(activeLanguage) === 'en' ? supportedLanguageEnglishVersionInfos : supportedLanguageFrenshVersionInfos
+
 
     return (
         <Menu
@@ -25,11 +27,11 @@ export default function MenuLanguage({ anchorEl, setAnchorEl }: menuLanguageProp
                 <MenuItem
                     sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                     key={code}
-                    disabled={code === activeLanguage}
+                    disabled={code === getLanguageCode(activeLanguage)}
                     onClick={() => setAnchorEl(null)}
                 >
                     <Box onClick={() => languageDispatch({
-                        type: activeLanguage === 'en-US' ? 'USE_FRENSH' : 'USE_ENGLISH'
+                        type: activeLanguage === 'en' ? 'USE_FRENSH' : 'USE_ENGLISH'
                     })}>
                         <img
                             loading="lazy"
