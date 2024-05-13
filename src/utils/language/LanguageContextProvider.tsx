@@ -3,17 +3,17 @@ import { Action, Language, LanguageInfos, LanguageType, State } from "./language
 import i18next from "i18next";
 import LanguageContext from "./languageContext";
 
-export const supportedLanguages: LanguageType[] = ['en-US', 'fr-FR']
+export const supportedLanguages: LanguageType[] = ['en', 'fr']
 
 
 export const supportedLanguageFrenshVersionInfos: LanguageInfos[] = [
     {
-        code: 'fr-FR',
+        code: 'fr',
         label: 'Français',
         country_code: 'fr',
     },
     {
-        code: 'en-US',
+        code: 'en',
         label: 'Anglais',
         country_code: 'gb',
     },
@@ -21,12 +21,12 @@ export const supportedLanguageFrenshVersionInfos: LanguageInfos[] = [
 ]
 export const supportedLanguageEnglishVersionInfos: LanguageInfos[] = [
     {
-        code: 'fr-FR',
+        code: 'fr',
         label: 'Frensh',
         country_code: 'fr',
     },
     {
-        code: 'en-US',
+        code: 'en',
         label: 'English',
         country_code: 'gb',
     },
@@ -38,14 +38,12 @@ const languageReducer: Reducer<Language, Action> = (
 ) => {
     switch (action.type) {
         case 'USE_ENGLISH': {
-            localStorage.setItem('systemLanguage', 'en-US');
-            i18next.changeLanguage('en-US');
-            return { ...state, activeLanguage: 'en-US' }
+            i18next.changeLanguage('en');
+            return { ...state, activeLanguage: localStorage.getItem('i18nextLng') as string }
         }
         case 'USE_FRENSH': {
-            localStorage.setItem('systemLanguage', 'fr-FR');
             i18next.changeLanguage('fr');
-            return { ...state, activeLanguage: 'fr-FR' }
+            return { ...state, activeLanguage: localStorage.getItem('i18nextLng') as string }
         }
         default:
             return state;
@@ -58,9 +56,9 @@ function LanguageContextProvider({
 }: {
     children: JSX.Element;
 }): JSX.Element {
-    const defaultLang: LanguageType | string | null = localStorage.getItem('i18nextLng');
+    const defaultLang: LanguageType = localStorage.getItem('i18nextLng') as string
     const initialState: Language = {
-        activeLanguage: defaultLang as LanguageType ?? 'en-US',
+        activeLanguage: defaultLang ?? 'en',
         languageDispatch: () => null,
     }
 
