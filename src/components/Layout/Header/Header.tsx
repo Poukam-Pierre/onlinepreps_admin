@@ -40,7 +40,7 @@ export default function Header() {
             unLink: true
         },
         {
-            title: 'Test',
+            title: 'tests',
             href: '/admin/epreuves'
         },
         {
