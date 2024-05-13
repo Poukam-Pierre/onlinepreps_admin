@@ -1,6 +1,6 @@
 import React from 'react'
 
-export type LanguageType = 'en-US' | 'fr-FR' | null
+export type LanguageType = 'en' | 'fr' | string
 export type CountryCodeType = 'gb' | 'fr'
 export type LabelType = 'Français' | 'Anglais' | 'Frensh' | 'English'
 
