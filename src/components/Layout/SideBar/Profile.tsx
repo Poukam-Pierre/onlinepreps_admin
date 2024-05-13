@@ -52,7 +52,12 @@ export default function Profile({ isSideOpen }: profileProps) {
                     size="small"
                     sx={{
                         justifySelf: 'end',
-                        color: theme.palette.secondary.contrastText
+                        color: theme.palette.secondary.contrastText,
+                        '&:hover': {
+                            background: theme.palette.primary.dark,
+                            borderRadius: '10px'
+                        }
+
                     }}
 
                 >
