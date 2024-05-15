@@ -1,11 +1,32 @@
 import { Avatar, Typography, Box, IconButton, Tooltip, Collapse } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { theme } from "../../../utils/style/theme";
+import { useAuth } from "../../../utils/context";
+import { useNavigate } from "react-router-dom";
 
 interface profileProps {
     isSideOpen: boolean
 }
 export default function Profile({ isSideOpen }: profileProps) {
+    const navigate = useNavigate()
+    const {
+        authDispatch,
+        userInfo: { is_admin, nom, profil_img },
+    } = useAuth()
+
+    const disconnected = () => {
+        authDispatch({
+            accessToken: '',
+            userInfo: {
+                id: undefined,
+                nom: '',
+                prenom: '',
+                email: '',
+            },
+        })
+        navigate('/login')
+    }
+
     return (
         <Box sx={{
             display: 'grid',
@@ -15,7 +36,8 @@ export default function Profile({ isSideOpen }: profileProps) {
             alignSelf: 'end',
         }}>
             <Avatar
-                alt="profil photo"
+                alt="profil"
+                src={profil_img}
                 sx={{
                     display: isSideOpen ? 'flex' : 'none'
                 }}
@@ -33,14 +55,14 @@ export default function Profile({ isSideOpen }: profileProps) {
                         textWrap: 'nowrap',
                         whiteSpace: 'nowrap'
                     }}
-                >Full name</Typography>
+                >{nom.toUpperCase()}</Typography>
                 <Typography
                     variant="body2"
                     component={Collapse}
                     in={isSideOpen}
                     orientation="horizontal"
                 >
-                    Fonction
+                    {is_admin && 'Administrator'}
                 </Typography>
             </Box>
             <Tooltip
@@ -52,9 +74,14 @@ export default function Profile({ isSideOpen }: profileProps) {
                     size="small"
                     sx={{
                         justifySelf: 'end',
-                        color: theme.palette.secondary.contrastText
-                    }}
+                        color: theme.palette.secondary.contrastText,
+                        '&:hover': {
+                            background: theme.palette.primary.dark,
+                            borderRadius: '10px'
+                        }
 
+                    }}
+                    onClick={disconnected}
                 >
                     <LogoutIcon />
                 </IconButton>

@@ -1,16 +1,16 @@
-import { Avatar, Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
-import { ReactElement, useState } from "react";
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import HandshakeIcon from '@mui/icons-material/Handshake'
-import LocalMallIcon from '@mui/icons-material/LocalMall'
-import TimelineIcon from '@mui/icons-material/Timeline'
-import TextSnippetIcon from '@mui/icons-material/TextSnippet'
-import TextsmsIcon from '@mui/icons-material/Textsms'
-import FullLogoOP from '../../../asset/logoOnlinePreps.png'
-import ShortLogoOP from '../../../asset/logo.PNG'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import TextsmsIcon from '@mui/icons-material/Textsms';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import { Box, Divider, IconButton, Tooltip } from "@mui/material";
+import { ReactElement, useState } from "react";
+import ShortLogoOP from '../../../asset/logo.PNG';
+import FullLogoOP from '../../../asset/logoOnlinePreps.png';
 import { theme } from "../../../utils/style/theme";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
@@ -33,7 +33,7 @@ export default function SideBar() {
             title: 'HOME',
             sideBarItems: [
                 {
-                    label: 'Dashboard',
+                    label: 'dashboard',
                     icon:
                         <DashboardIcon
                             sx={{
@@ -49,7 +49,7 @@ export default function SideBar() {
             title: 'QUICK ACCESS',
             sideBarItems: [
                 {
-                    label: 'Employes',
+                    label: 'employes',
                     icon:
                         <AccountCircleIcon
                             sx={{
@@ -60,7 +60,7 @@ export default function SideBar() {
                     link: '/admin/employes'
                 },
                 {
-                    label: 'Partners',
+                    label: 'partners',
                     icon:
                         <HandshakeIcon
                             sx={{
@@ -71,7 +71,7 @@ export default function SideBar() {
                     link: '/admin/partners'
                 },
                 {
-                    label: 'Tests',
+                    label: 'tests',
                     icon:
                         <TextSnippetIcon
                             sx={{
@@ -88,7 +88,7 @@ export default function SideBar() {
             title: 'NOTIFICATIONS',
             sideBarItems: [
                 {
-                    label: 'Messages',
+                    label: 'messages',
                     icon:
                         <TextsmsIcon
                             sx={{
@@ -104,7 +104,7 @@ export default function SideBar() {
             title: 'STUFF',
             sideBarItems: [
                 {
-                    label: 'Manage',
+                    label: 'manage',
                     icon:
                         < LocalMallIcon
                             sx={{
@@ -115,7 +115,7 @@ export default function SideBar() {
                     link: '/admin/manage'
                 },
                 {
-                    label: 'Statistics',
+                    label: 'statistics',
                     icon:
                         < TimelineIcon
                             sx={{

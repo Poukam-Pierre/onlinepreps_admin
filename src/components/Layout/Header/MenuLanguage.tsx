@@ -1,7 +1,10 @@
 import { Box, Menu, MenuItem } from "@mui/material";
-import { languages } from "../../header";
-import { useState } from "react";
-import i18next from 'i18next'
+import {
+    supportedLanguageEnglishVersionInfos,
+    supportedLanguageFrenshVersionInfos,
+    useOPLanguage
+} from "../../../utils/language";
+import { getLanguageCode } from "../../../utils/utilis/GetCountryCode";
 
 
 interface menuLanguageProps {
@@ -10,20 +13,9 @@ interface menuLanguageProps {
 }
 
 export default function MenuLanguage({ anchorEl, setAnchorEl }: menuLanguageProps) {
-    const [selected, setSelected] = useState<string>(
-        localStorage.getItem('systemLanguage') === 'en' ? 'en' : 'fr'
-    )
+    const { activeLanguage, languageDispatch } = useOPLanguage()
+    const languages = getLanguageCode(activeLanguage) === 'en' ? supportedLanguageEnglishVersionInfos : supportedLanguageFrenshVersionInfos
 
-    function handleLanguage(code: string) {
-        setSelected(code)
-        if (code === 'en') {
-            localStorage.setItem('systemLanguage', 'en')
-            i18next.changeLanguage('en')
-        } else {
-            localStorage.setItem('systemLanguage', 'fr')
-            i18next.changeLanguage('fr')
-        }
-    }
 
     return (
         <Menu
@@ -35,10 +27,12 @@ export default function MenuLanguage({ anchorEl, setAnchorEl }: menuLanguageProp
                 <MenuItem
                     sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                     key={code}
-                    disabled={code === selected}
+                    disabled={code === getLanguageCode(activeLanguage)}
                     onClick={() => setAnchorEl(null)}
                 >
-                    <Box onClick={() => handleLanguage(code)}>
+                    <Box onClick={() => languageDispatch({
+                        type: activeLanguage === 'en' ? 'USE_FRENSH' : 'USE_ENGLISH'
+                    })}>
                         <img
                             loading="lazy"
                             width="20"

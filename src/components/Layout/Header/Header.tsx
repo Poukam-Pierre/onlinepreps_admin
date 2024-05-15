@@ -80,6 +80,13 @@ export default function Header() {
             <Tooltip arrow title="Change language">
                 <IconButton
                     onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
+                    sx={{
+                        '&:hover': {
+                            background: theme.palette.primary.dark,
+                            borderRadius: '10px'
+                        }
+
+                    }}
                 >
                     <LanguageIcon sx={{ color: theme.palette.secondary.contrastText }} />
                 </IconButton>
