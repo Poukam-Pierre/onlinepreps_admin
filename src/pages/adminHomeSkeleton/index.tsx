@@ -2,10 +2,9 @@
 
 import { Box } from '@mui/system'
 import { Outlet } from 'react-router'
-import AdminSideBar from '../../components/sideBar/sideBarAdmin'
-import { useAuth } from '../../utils/context'
-import SideBar from '../../components/Layout/SideBar/SideBar'
 import Footer from '../../components/Layout/Footer/Footer'
+import SideBar from '../../components/Layout/SideBar/SideBar'
+import { useAuth } from '../../utils/context'
 // import Header from '../../components/header'
 import Header from '../../components/Layout/Header/Header'
 
@@ -31,15 +30,6 @@ function AdminSkeleton() {
           <Footer />
         </Box>
       </Box>
-      // <>
-      //   <Header />
-      //   <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
-      //     <AdminSideBar />
-      //     <Box>
-      //       <Outlet></Outlet>
-      //     </Box>
-      //   </Box>
-      // </>
     )
   )
 }
