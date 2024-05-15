@@ -31,8 +31,8 @@ export default function Header() {
             unLink: true
         },
         {
-            title: 'Partner',
-            href: '/admin/partner'
+            title: 'Partners',
+            href: '/admin/partners'
         },
         {
             title: 'View',
@@ -49,7 +49,7 @@ export default function Header() {
         },
         {
             title: 'Management',
-            href: '/admin/manager'
+            href: '/admin/manage'
         },
         {
             title: 'Statistics',

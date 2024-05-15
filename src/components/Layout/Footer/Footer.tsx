@@ -6,6 +6,7 @@ export default function Footer() {
         <Box sx={{
             display: 'flex',
             alignItems: 'center',
+            padding: '0 0 8px 8px'
         }}>
             <Typography
                 variant="body2"

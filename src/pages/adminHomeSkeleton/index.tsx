@@ -19,7 +19,7 @@ function AdminSkeleton() {
       <Box sx={{
         display: 'grid',
         gridTemplateColumns: 'auto 1fr',
-        height: '100%',
+        height: '100svh',
       }}>
         <SideBar />
         <Box sx={{
