@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { theme } from "../../../utils/style/theme";
 import BreadcrumbBase from "./breadcrumbs/BreadcrumbBase";
 import MenuLanguage from "./MenuLanguage";
+import { useAuth } from '../../../utils/context';
 
 export interface breadcrumbItem {
     title: string;
@@ -15,8 +16,12 @@ export interface breadcrumbItem {
 export default function Header() {
     const location = useLocation()
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
+    const {
+        userInfo: { is_employe },
+    } = useAuth()
 
-    const breadcrumbBase: breadcrumbItem[] = [
+
+    const breadcrumbBaseAdmin: breadcrumbItem[] = [
         {
             title: 'dashboard',
             href: '/admin'
@@ -44,6 +49,10 @@ export default function Header() {
             href: '/admin/epreuves'
         },
         {
+            title: 'Profile',
+            href: '/admin/profile'
+        },
+        {
             title: 'Messages',
             href: '/admin/messages'
         },
@@ -56,10 +65,43 @@ export default function Header() {
             href: '/admin/statistics'
         },
     ]
+    const breadcrumbBaseEmploye: breadcrumbItem[] = [
+        {
+            title: 'dashboard',
+            href: '/'
+        },
+        {
+            title: 'Profile',
+            href: '/profile'
+        },
+        {
+            title: 'Epreuves',
+            href: '/epreuves'
+        },
+        {
+            title: 'New',
+            href: '/epreuves/new',
+            unLink: true
+        },
+        {
+            title: 'Modified',
+            href: '/epreuves/Modified',
+            unLink: true
+        },
+        {
+            title: 'View',
+            href: '/epreuves/View',
+            unLink: true
+        },
+        {
+            title: 'Messages',
+            href: '/messages'
+        },
+    ]
 
     function getCorrespondingBreadcrumb() {
         const breadcrumbNameMap = location.pathname.split('/').filter((x) => x)
-        const currentBreadcrumbBase = breadcrumbBase.filter((value) =>
+        const currentBreadcrumbBase = (is_employe ? breadcrumbBaseEmploye : breadcrumbBaseAdmin).filter((value) =>
             breadcrumbNameMap.length <= 2 ?
                 value.href === `/${breadcrumbNameMap.join('/')}` :
                 value.href.includes(`/${breadcrumbNameMap.slice(0, -1).join('/')}`)
