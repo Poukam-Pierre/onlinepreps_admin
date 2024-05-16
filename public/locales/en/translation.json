@@ -5,6 +5,15 @@
     "messages": "Messages",
     "manage": "Manage",
     "statistics": "Statistics",
-    "tests": "Tests"
-
+    "tests": "Tests",
+    "settings": "Settings",
+    "home": "HOME",
+    "quickAccess": "QUICK ACCESS",
+    "notifications": "NOTIFICATIONS",
+    "others": "OTHERS",
+    "logOut": "Log Out",
+    "view": "View",
+    "profile": "Profile",
+    "management": "Management",
+    "changeLanguage": "Change language"
 }
