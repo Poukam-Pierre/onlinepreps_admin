@@ -65,6 +65,11 @@ export default function Header() {
             title: 'statistics',
             href: '/admin/statistics'
         },
+        {
+            title: 'settings',
+            href: '/admin/settings',
+        },
+
     ]
     const breadcrumbBaseEmploye: breadcrumbItem[] = [
         {
@@ -88,6 +93,10 @@ export default function Header() {
             title: 'modified',
             href: '/epreuves/Modified',
             unLink: true
+        },
+        {
+            title: 'settings',
+            href: '/settings',
         },
         {
             title: 'view',
