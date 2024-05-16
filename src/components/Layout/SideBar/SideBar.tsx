@@ -7,6 +7,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Box, Divider, IconButton, Tooltip } from "@mui/material";
 import { ReactElement, useState } from "react";
 import ShortLogoOP from '../../../asset/logo.PNG';
@@ -14,6 +15,7 @@ import FullLogoOP from '../../../asset/logoOnlinePreps.png';
 import { theme } from "../../../utils/style/theme";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
+import { useAuth } from '../../../utils/context';
 
 export interface sideBarItem {
     label: string
@@ -28,7 +30,10 @@ export interface sideBarSection {
 
 export default function SideBar() {
     const [isSideOpen, setIsSideBarOpen] = useState<boolean>(true)
-    const sideBarSection: sideBarSection[] = [
+    const {
+        userInfo: { is_employe },
+    } = useAuth()
+    const sideBarSectionAdmin: sideBarSection[] = [
         {
             title: 'HOME',
             sideBarItems: [
@@ -124,6 +129,84 @@ export default function SideBar() {
                             }}
                         />,
                     link: '/admin/statistics'
+                },
+                {
+                    label: 'settings',
+                    icon:
+                        < SettingsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/admin/settings'
+                }
+            ]
+        }
+    ];
+    const sideBarSectionEmploye: sideBarSection[] = [
+        {
+            title: 'HOME',
+            sideBarItems: [
+                {
+                    label: 'dashboard',
+                    icon:
+                        <DashboardIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/'
+                }
+            ]
+        },
+        {
+            title: 'QUICK ACCESS',
+            sideBarItems: [
+                {
+                    label: 'tests',
+                    icon:
+                        <TextSnippetIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/epreuves'
+                },
+
+            ]
+        },
+        {
+            title: 'NOTIFICATIONS',
+            sideBarItems: [
+                {
+                    label: 'messages',
+                    icon:
+                        <TextsmsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/messages'
+                }
+            ]
+        },
+        {
+            title: 'STUFF',
+            sideBarItems: [
+                {
+                    label: 'settings',
+                    icon:
+                        < SettingsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/admin/settings'
                 }
             ]
         }
@@ -202,7 +285,7 @@ export default function SideBar() {
                 display: 'grid',
                 rowGap: '20px'
             }}>
-                {sideBarSection.map((sideBarNav, index) => (
+                {(is_employe ? sideBarSectionEmploye : sideBarSectionAdmin).map((sideBarNav, index) => (
                     <NavBar
                         key={index}
                         sideBarNav={sideBarNav}
