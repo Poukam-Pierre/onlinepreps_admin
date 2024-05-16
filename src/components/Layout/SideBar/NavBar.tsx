@@ -1,6 +1,7 @@
 import { Box, Collapse, Typography } from "@mui/material";
 import { sideBarSection } from "./SideBar";
 import NavBarItem from "./NavBarItem";
+import { useTranslation } from "react-i18next";
 
 interface navBarProps {
     sideBarNav: sideBarSection
@@ -10,6 +11,7 @@ interface navBarProps {
 export default function NavBar({
     sideBarNav: { title, sideBarItems }, isSideOpen }:
     navBarProps) {
+    const { t } = useTranslation()
     return (
         <Box sx={{
             display: 'grid',
@@ -27,7 +29,7 @@ export default function NavBar({
                     textWrap: 'nowrap',
                     whiteSpace: 'nowrap'
                 }}>
-                {title}
+                {t(`${title}`)}
             </Typography>
             {sideBarItems.map((navEl, index) => (
                 <NavBarItem navEl={navEl} key={index} isSideOpen={isSideOpen} />

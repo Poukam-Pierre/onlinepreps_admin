@@ -6,6 +6,7 @@ import { theme } from "../../../utils/style/theme";
 import BreadcrumbBase from "./breadcrumbs/BreadcrumbBase";
 import MenuLanguage from "./MenuLanguage";
 import { useAuth } from '../../../utils/context';
+import { useTranslation } from 'react-i18next';
 
 export interface breadcrumbItem {
     title: string;
@@ -19,7 +20,7 @@ export default function Header() {
     const {
         userInfo: { is_employe },
     } = useAuth()
-
+    const { t } = useTranslation()
 
     const breadcrumbBaseAdmin: breadcrumbItem[] = [
         {
@@ -27,41 +28,41 @@ export default function Header() {
             href: '/admin'
         },
         {
-            title: 'Employes',
+            title: 'employes',
             href: '/admin/employes'
         },
         {
-            title: 'New',
+            title: 'new',
             href: '/admin/employe/new',
             unLink: true
         },
         {
-            title: 'Partners',
+            title: 'partners',
             href: '/admin/partners'
         },
         {
-            title: 'View',
+            title: 'view',
             href: '/admin/partner/:id',
             unLink: true
         },
         {
-            title: 'Test',
+            title: 'tests',
             href: '/admin/epreuves'
         },
         {
-            title: 'Profile',
+            title: 'profile',
             href: '/admin/profile'
         },
         {
-            title: 'Messages',
+            title: 'messages',
             href: '/admin/messages'
         },
         {
-            title: 'Management',
+            title: 'management',
             href: '/admin/manage'
         },
         {
-            title: 'Statistics',
+            title: 'statistics',
             href: '/admin/statistics'
         },
     ]
@@ -71,30 +72,30 @@ export default function Header() {
             href: '/'
         },
         {
-            title: 'Profile',
+            title: 'profile',
             href: '/profile'
         },
         {
-            title: 'Epreuves',
+            title: 'tests',
             href: '/epreuves'
         },
         {
-            title: 'New',
+            title: 'new',
             href: '/epreuves/new',
             unLink: true
         },
         {
-            title: 'Modified',
+            title: 'modified',
             href: '/epreuves/Modified',
             unLink: true
         },
         {
-            title: 'View',
+            title: 'view',
             href: '/epreuves/View',
             unLink: true
         },
         {
-            title: 'Messages',
+            title: 'messages',
             href: '/messages'
         },
     ]
@@ -119,7 +120,10 @@ export default function Header() {
             justifyContent: 'space-between',
         }}>
             {getCorrespondingBreadcrumb()}
-            <Tooltip arrow title="Change language">
+            <Tooltip
+                arrow
+                title={t("changeLanguage")}
+            >
                 <IconButton
                     onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
                     sx={{

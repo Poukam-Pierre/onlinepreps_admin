@@ -35,7 +35,7 @@ export default function SideBar() {
     } = useAuth()
     const sideBarSectionAdmin: sideBarSection[] = [
         {
-            title: 'HOME',
+            title: 'home',
             sideBarItems: [
                 {
                     label: 'dashboard',
@@ -51,7 +51,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'QUICK ACCESS',
+            title: 'quickAccess',
             sideBarItems: [
                 {
                     label: 'employes',
@@ -90,7 +90,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'NOTIFICATIONS',
+            title: 'notifications',
             sideBarItems: [
                 {
                     label: 'messages',
@@ -106,7 +106,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'STUFF',
+            title: 'others',
             sideBarItems: [
                 {
                     label: 'manage',
@@ -146,7 +146,7 @@ export default function SideBar() {
     ];
     const sideBarSectionEmploye: sideBarSection[] = [
         {
-            title: 'HOME',
+            title: 'home',
             sideBarItems: [
                 {
                     label: 'dashboard',
@@ -162,7 +162,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'QUICK ACCESS',
+            title: 'quickAccess',
             sideBarItems: [
                 {
                     label: 'tests',
@@ -179,7 +179,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'NOTIFICATIONS',
+            title: 'notifications',
             sideBarItems: [
                 {
                     label: 'messages',
@@ -195,7 +195,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'STUFF',
+            title: 'others',
             sideBarItems: [
                 {
                     label: 'settings',
