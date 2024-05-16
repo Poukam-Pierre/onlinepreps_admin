@@ -1,34 +1,34 @@
 //  Made by Poukam Ngamaleu
 
-import EmployeDashboard from './components/dashboard/EmployeDashboard'
-import ModifyTestSheet from './components/epreuves/modifytestSheet'
-import AdminDashboard from './components/dashboard/adminDashboard'
-import CreationEmploye from './components/employe/createEmploy'
-import ViewTestSheet from './components/epreuves/viewTestSheet'
-import ModifyEmploye from './components/employe/modifyEmploye'
-import ViewPartner from './components/partenaire/viewPartner'
-import StatEpreuve from './components/statistique/epreuves'
-import ViewEmploye from './components/employe/viewEmploye'
-import EmployeSkeleton from './pages/employeHomeSkeleton'
 import TestSheetBuying from './components/achatEpreuve'
+import AdminDashboard from './components/dashboard/adminDashboard'
+import EmployeDashboard from './components/dashboard/EmployeDashboard'
+import Employes from './components/employe'
+import CreationEmploye from './components/employe/createEmploy'
+import ModifyEmploye from './components/employe/modifyEmploye'
+import ViewEmploye from './components/employe/viewEmploye'
+import TestSheet from './components/epreuves'
+import ModifyTestSheet from './components/epreuves/modifytestSheet'
+import ViewTestSheet from './components/epreuves/viewTestSheet'
+import Error from './components/error'
+import Feedback from './components/feedback'
+import FormSheet from './components/formSheet'
+import Layout from './components/Layout'
+import Manager from './components/managing'
+import Messages from './components/messages'
+import Partner from './components/partenaire'
+import ViewPartner from './components/partenaire/viewPartner'
+import EmployeProfil from './components/profil'
+import Settings from './components/setting'
+import StatEpreuve from './components/statistique/epreuves'
 import Finances from './components/statistique/finance'
 import AdminSkeleton from './pages/adminHomeSkeleton'
-import PrivateRoutes from './utils/privateRoutes'
-import EmployeProfil from './components/profil'
-import FormSheet from './components/formSheet'
-import Partner from './components/partenaire'
-import TestSheet from './components/epreuves'
-import Feedback from './components/feedback'
-import Messages from './components/messages'
-import Employes from './components/employe'
-import Settings from './components/setting'
-import Manager from './components/managing'
-import Error from './components/error'
+import EmployeSkeleton from './pages/employeHomeSkeleton'
 import SignIn from './pages/login'
 
 export const routes = [
   {
-    element: <PrivateRoutes />,
+    element: <Layout />,
     children: [
       {
         path: '/',
@@ -42,7 +42,7 @@ export const routes = [
           { path: 'achat', element: <TestSheetBuying /> },
           { path: 'profil', element: <EmployeProfil /> },
           { path: 'settings', element: <Settings /> },
-          { path: 'form/:formId', element: <FormSheet /> },
+          { path: 'form/:formId', element: <FormSheet /> }, // need to change by epreuve/new/formId link
           { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
           { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
           { path: 'feedback', element: <Feedback /> },
@@ -65,6 +65,7 @@ export const routes = [
           { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
           { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
           { path: 'settings', element: <Settings /> },
+          { path: 'profil', element: <EmployeProfil /> },
           { path: 'messages', element: <Messages /> },
           { path: 'manage', element: <Manager /> },
           { path: 'statistics', element: <Finances /> },
