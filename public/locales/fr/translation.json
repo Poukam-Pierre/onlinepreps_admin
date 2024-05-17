@@ -15,6 +15,7 @@
     "view": "Visualisation",
     "profile": "Profil",
     "management": "Management",
-    "changeLanguage": "Changer la langue"
-
+    "changeLanguage": "Changer la langue",
+    "open": "Ouvrir",
+    "close":"Fermer"
 }
