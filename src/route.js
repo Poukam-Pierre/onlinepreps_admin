@@ -40,7 +40,7 @@ export const routes = [
             element: <TestSheet />,
           },
           { path: 'achat', element: <TestSheetBuying /> },
-          { path: 'profil', element: <EmployeProfil /> },
+          { path: 'profile', element: <EmployeProfil /> },
           { path: 'settings', element: <Settings /> },
           { path: 'form/:formId', element: <FormSheet /> }, // need to change by epreuve/new/formId link
           { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
@@ -65,7 +65,7 @@ export const routes = [
           { path: 'epreuve/view/:testId', element: <ViewTestSheet /> },
           { path: 'epreuve/modify/:testId', element: <ModifyTestSheet /> },
           { path: 'settings', element: <Settings /> },
-          { path: 'profil', element: <EmployeProfil /> },
+          { path: 'profile', element: <EmployeProfil /> },
           { path: 'messages', element: <Messages /> },
           { path: 'manage', element: <Manager /> },
           { path: 'statistics', element: <Finances /> },
