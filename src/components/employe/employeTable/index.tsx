@@ -9,8 +9,8 @@ import { DataGrid } from '@mui/x-data-grid'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../utils/style/theme'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
 import { alertMsgInterface } from '../createEmploy'
+import { Link } from "react-router-dom"
 
 interface rowsInterface {
   id_user: number
@@ -223,7 +223,7 @@ function EmployeTable({
               <Tooltip title="Apperçu">
                 <IconButton
                   sx={{ color: theme.palette.primary.light }}
-                  component={StyledLink}
+                  component={Link}
                   to={`/admin/employe/${params.row.id_user}`}
                 >
                   <VisibilityOutlinedIcon />

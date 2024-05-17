@@ -3,7 +3,7 @@
 import { Box, Paper, Typography } from '@mui/material'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
 import { theme } from '../../../utils/style/theme'
 import Charts from './charts'
 

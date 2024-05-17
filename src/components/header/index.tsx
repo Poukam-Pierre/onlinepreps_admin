@@ -21,11 +21,9 @@ import { useState, useEffect } from 'react'
 import i18next from 'i18next'
 import LanguageIcon from '@mui/icons-material/Language'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import MenuSettings from './menuSetting'
 import { alertMsgInterface } from '../employe/createEmploy'
 import { useAuth } from '../../utils/context'
 import { io } from 'socket.io-client'
-import Notification from './Notifications'
 
 export interface notificationInterface {
   category: string
@@ -99,9 +97,8 @@ function Header() {
     const socket = io(process.env.REACT_APP_URL_SOCKET_LINK as string)
     if ((is_admin || is_employe) && !status_connected) {
       setCreatedMsg({
-        message: `Content de vous revoir ${
-          nom.charAt(0).toUpperCase() + nom.slice(1)
-        } !`,
+        message: `Content de vous revoir ${nom.charAt(0).toUpperCase() + nom.slice(1)
+          } !`,
         severity: 'success',
       })
       setOpenS(true)
@@ -193,8 +190,6 @@ function Header() {
               </MenuItem>
             ))}
           </Menu>
-          <MenuSettings />
-          {openNotif && <Notification notifications={notifications} />}
         </Box>
       </StyledToolbar>
       <Snackbar

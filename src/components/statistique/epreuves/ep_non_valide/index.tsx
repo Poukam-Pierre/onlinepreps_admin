@@ -4,7 +4,7 @@ import { Box, IconButton, Tooltip } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import { StyledLink } from '../../../sideBar/sideBarEmploye'
+import { Link } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { rowsInterface } from '../ep_total'
@@ -17,35 +17,35 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id_epreuve', headerName: 'ID', width: 220 },
-  { field: 'libele_cat', headerName: 'Catégorie', width: 90 },
-  {
-    field: 'date_session',
-    headerName: 'Session',
-    width: 180,
-  },
-  { field: 'libele_depart', headerName: 'Département', width: 180 },
-  { field: 'code_pays', headerName: 'Pays', width: 70 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    width: 150,
-    renderCell: () => {
-      return (
-        <span
-          style={{
-            backgroundColor: '#F89E9E',
-            color: '#A95454',
-            padding: '10px',
-            borderRadius: '15px',
-          }}
-        >
-          Non validé
-        </span>
-      )
+    { field: 'id_epreuve', headerName: 'ID', width: 220 },
+    { field: 'libele_cat', headerName: 'Catégorie', width: 90 },
+    {
+      field: 'date_session',
+      headerName: 'Session',
+      width: 180,
     },
-  },
-]
+    { field: 'libele_depart', headerName: 'Département', width: 180 },
+    { field: 'code_pays', headerName: 'Pays', width: 70 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 150,
+      renderCell: () => {
+        return (
+          <span
+            style={{
+              backgroundColor: '#F89E9E',
+              color: '#A95454',
+              padding: '10px',
+              borderRadius: '15px',
+            }}
+          >
+            Non validé
+          </span>
+        )
+      },
+    },
+  ]
 
 function UnvalidedSheetTable({
   setMsg,
@@ -111,44 +111,44 @@ function UnvalidedSheetTable({
     width: number
     renderCell: any
   }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 150,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Tooltip title="Apperçu">
-              <IconButton
-                sx={{ color: '#1A9EA7' }}
-                component={StyledLink}
-                to={`/admin/epreuve/view/${params.row.id_epreuve}`}
-              >
-                <VisibilityOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Modifier">
-              <IconButton
-                sx={{ color: '#1D689F' }}
-                component={StyledLink}
-                to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
-              >
-                <EditRoundedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Valider">
-              <IconButton
-                sx={{ color: '#1D689F' }}
-                onClick={() => productionStatement(params.row.id_epreuve)}
-              >
-                <ThumbUpIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 150,
+        renderCell: (params: any) => {
+          return (
+            <Box display="flex" gap="10px">
+              <Tooltip title="Apperçu">
+                <IconButton
+                  sx={{ color: '#1A9EA7' }}
+                  component={Link}
+                  to={`/admin/epreuve/view/${params.row.id_epreuve}`}
+                >
+                  <VisibilityOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Modifier">
+                <IconButton
+                  sx={{ color: '#1D689F' }}
+                  component={Link}
+                  to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
+                >
+                  <EditRoundedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Valider">
+                <IconButton
+                  sx={{ color: '#1D689F' }}
+                  onClick={() => productionStatement(params.row.id_epreuve)}
+                >
+                  <ThumbUpIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )
+        },
       },
-    },
-  ]
+    ]
   return (
     <DataGrid
       getRowId={(row) => row.id_epreuve}

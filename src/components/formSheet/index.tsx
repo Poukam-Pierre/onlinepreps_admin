@@ -25,7 +25,7 @@ import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useBeforeunload } from 'react-beforeunload'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from "react-router-dom"
 import { io } from 'socket.io-client'
 import { useAuth } from '../../utils/context'
 import {
@@ -192,13 +192,13 @@ function FormSheet() {
   const submitButtonSx = {
     ...(success === 'default'
       ? {
-          bgcolor: theme.palette.primary.main,
-        }
+        bgcolor: theme.palette.primary.main,
+      }
       : success === 'success'
-      ? {
+        ? {
           bgcolor: theme.common.submitBtnSuccess,
         }
-      : {
+        : {
           bgcolor: theme.common.submitBtnEchec,
         }),
   }

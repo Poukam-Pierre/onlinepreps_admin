@@ -285,7 +285,7 @@ function EmployeProfil() {
                   ? { error: true, helperText: errors.email }
                   : '')}
               />
-              <StylePhoneNumber
+              {/* <StylePhoneNumber
                 value={values.phoneNumber as string}
                 onChange={(number) =>
                   setFieldValue(`phoneNumber`, number?.toString())
@@ -309,7 +309,7 @@ function EmployeProfil() {
                     width: '90%',
                   },
                 }}
-              />
+              /> */}
               <TextField
                 name="adresse"
                 label="Adresse"
