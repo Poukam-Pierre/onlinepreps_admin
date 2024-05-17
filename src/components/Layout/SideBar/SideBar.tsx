@@ -16,6 +16,7 @@ import { theme } from "../../../utils/style/theme";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
 import { useAuth } from '../../../utils/context';
+import { useTranslation } from 'react-i18next';
 
 export interface sideBarItem {
     label: string
@@ -33,6 +34,7 @@ export default function SideBar() {
     const {
         userInfo: { is_employe },
     } = useAuth()
+    const { t } = useTranslation()
     const sideBarSectionAdmin: sideBarSection[] = [
         {
             title: 'home',
@@ -245,7 +247,7 @@ export default function SideBar() {
                 )}
                 <Tooltip
                     arrow
-                    title={isSideOpen ? 'Close' : 'Open'}
+                    title={isSideOpen ? t('close') : t('open')}
                     placement="right"
                 >
                     <IconButton
