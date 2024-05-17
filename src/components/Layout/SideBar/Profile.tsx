@@ -3,15 +3,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { theme } from "../../../utils/style/theme";
 import { useAuth } from "../../../utils/context";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface profileProps {
     isSideOpen: boolean
 }
 export default function Profile({ isSideOpen }: profileProps) {
     const navigate = useNavigate()
+    const { t } = useTranslation()
     const {
         authDispatch,
-        userInfo: { is_admin, nom, profil_img },
+        userInfo: { nom, profil_img, poste, is_employe },
     } = useAuth()
 
     const disconnected = () => {
@@ -35,13 +37,17 @@ export default function Profile({ isSideOpen }: profileProps) {
             columnGap: '10px',
             alignSelf: 'end',
         }}>
-            <Avatar
-                alt="profil"
-                src={profil_img}
-                sx={{
-                    display: isSideOpen ? 'flex' : 'none'
-                }}
-            />
+            <Tooltip arrow title={t('profile')}>
+                <Avatar
+                    alt="profil"
+                    src={profil_img}
+                    sx={{
+                        display: isSideOpen ? 'flex' : 'none',
+                        cursor: 'pointer',
+                    }}
+                    onClick={() => navigate(is_employe ? '/profile' : '/admin/profile')}
+                />
+            </Tooltip>
             <Box sx={{
                 color: theme.palette.secondary.contrastText
             }}>
@@ -62,12 +68,12 @@ export default function Profile({ isSideOpen }: profileProps) {
                     in={isSideOpen}
                     orientation="horizontal"
                 >
-                    {is_admin && 'Administrator'}
+                    {poste}
                 </Typography>
             </Box>
             <Tooltip
                 arrow
-                title="Log Out"
+                title={t('logOut')}
                 placement="right"
             >
                 <IconButton

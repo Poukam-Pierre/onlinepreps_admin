@@ -18,7 +18,7 @@ export default function NavBarItem({
     return (
         <Tooltip
             arrow
-            title={isSideOpen ? "" : label}
+            title={isSideOpen ? "" : t(`${label}`)}
             placement="right"
         >
             <Box
@@ -46,6 +46,8 @@ export default function NavBarItem({
                     sx={{
                         color: theme.palette.secondary.contrastText,
                         size: '0.8rem',
+                        textWrap: 'nowrap',
+                        whiteSpace: 'nowrap'
                     }}
                 >
                     {t(`${label}`)}

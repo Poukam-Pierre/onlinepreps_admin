@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import { theme } from "../../../utils/style/theme";
 import BreadcrumbBase from "./breadcrumbs/BreadcrumbBase";
 import MenuLanguage from "./MenuLanguage";
+import { useAuth } from '../../../utils/context';
+import { useTranslation } from 'react-i18next';
 
 export interface breadcrumbItem {
     title: string;
@@ -15,27 +17,31 @@ export interface breadcrumbItem {
 export default function Header() {
     const location = useLocation()
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
+    const {
+        userInfo: { is_employe },
+    } = useAuth()
+    const { t } = useTranslation()
 
-    const breadcrumbBase: breadcrumbItem[] = [
+    const breadcrumbBaseAdmin: breadcrumbItem[] = [
         {
             title: 'dashboard',
             href: '/admin'
         },
         {
-            title: 'Employes',
+            title: 'employes',
             href: '/admin/employes'
         },
         {
-            title: 'New',
+            title: 'new',
             href: '/admin/employe/new',
             unLink: true
         },
         {
-            title: 'Partners',
+            title: 'partners',
             href: '/admin/partners'
         },
         {
-            title: 'View',
+            title: 'view',
             href: '/admin/partner/:id',
             unLink: true
         },
@@ -44,22 +50,68 @@ export default function Header() {
             href: '/admin/epreuves'
         },
         {
-            title: 'Messages',
+            title: 'profile',
+            href: '/admin/profile'
+        },
+        {
+            title: 'messages',
             href: '/admin/messages'
         },
         {
-            title: 'Management',
+            title: 'management',
             href: '/admin/manage'
         },
         {
-            title: 'Statistics',
+            title: 'statistics',
             href: '/admin/statistics'
+        },
+        {
+            title: 'settings',
+            href: '/admin/settings',
+        },
+
+    ]
+    const breadcrumbBaseEmploye: breadcrumbItem[] = [
+        {
+            title: 'dashboard',
+            href: '/'
+        },
+        {
+            title: 'profile',
+            href: '/profile'
+        },
+        {
+            title: 'tests',
+            href: '/epreuves'
+        },
+        {
+            title: 'new',
+            href: '/epreuves/new',
+            unLink: true
+        },
+        {
+            title: 'modified',
+            href: '/epreuves/Modified',
+            unLink: true
+        },
+        {
+            title: 'settings',
+            href: '/settings',
+        },
+        {
+            title: 'view',
+            href: '/epreuves/View',
+            unLink: true
+        },
+        {
+            title: 'messages',
+            href: '/messages'
         },
     ]
 
     function getCorrespondingBreadcrumb() {
         const breadcrumbNameMap = location.pathname.split('/').filter((x) => x)
-        const currentBreadcrumbBase = breadcrumbBase.filter((value) =>
+        const currentBreadcrumbBase = (is_employe ? breadcrumbBaseEmploye : breadcrumbBaseAdmin).filter((value) =>
             breadcrumbNameMap.length <= 2 ?
                 value.href === `/${breadcrumbNameMap.join('/')}` :
                 value.href.includes(`/${breadcrumbNameMap.slice(0, -1).join('/')}`)
@@ -77,7 +129,10 @@ export default function Header() {
             justifyContent: 'space-between',
         }}>
             {getCorrespondingBreadcrumb()}
-            <Tooltip arrow title="Change language">
+            <Tooltip
+                arrow
+                title={t("changeLanguage")}
+            >
                 <IconButton
                     onClick={(event) => setAnchorEl(event.target as HTMLAnchorElement)}
                     sx={{

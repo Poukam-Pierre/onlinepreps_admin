@@ -1,12 +1,19 @@
 import { Breadcrumbs, Link } from "@mui/material";
 import { breadcrumbItem } from "../Header";
 import { theme } from "../../../../utils/style/theme";
+import { useAuth } from "../../../../utils/context";
+import { useTranslation } from "react-i18next";
 
 interface breadcrumbBaseProps {
     breadcrumbs: breadcrumbItem[]
 }
 
 export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
+    const {
+        userInfo: { is_employe },
+    } = useAuth()
+    const { t } = useTranslation()
+
     return (
         <Breadcrumbs sx={{
             '& .MuiBreadcrumbs-separator': {
@@ -14,13 +21,12 @@ export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
             }
         }}>
             <Link
-                href='/admin'
                 variant="body2"
                 underline="hover"
                 sx={{
                     color: theme.palette.secondary.contrastText
                 }}
-            >Admin</Link>
+            >{is_employe ? t('employes') : 'Admin'}</Link>
             {breadcrumbs.map(({ title, href, unLink }, index) => (
                 <Link
                     key={index}
@@ -30,7 +36,7 @@ export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
                     sx={{
                         color: theme.palette.secondary.contrastText
                     }}                    >
-                    {title}
+                    {t(`${title}`)}
                 </Link>
             ))}
         </Breadcrumbs>
