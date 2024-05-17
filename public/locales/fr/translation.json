@@ -5,5 +5,17 @@
     "messages": "Messages",
     "manage": "Gestions",
     "statistics": "statistiques",
-    "tests": "Epreuves"
+    "tests": "Epreuves",
+    "settings": "Paramètres",
+    "home": "ACCUEIL",
+    "quickAccess": "ACCES RAPIDE",
+    "notifications": "NOTIFICATIONS",
+    "others": "AUTRES",
+    "logOut": "Déconnection",
+    "view": "Visualisation",
+    "profile": "Profil",
+    "management": "Management",
+    "changeLanguage": "Changer la langue",
+    "open": "Ouvrir",
+    "close":"Fermer"
 }

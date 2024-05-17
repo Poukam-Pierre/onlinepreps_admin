@@ -7,6 +7,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Box, Divider, IconButton, Tooltip } from "@mui/material";
 import { ReactElement, useState } from "react";
 import ShortLogoOP from '../../../asset/logo.PNG';
@@ -14,6 +15,8 @@ import FullLogoOP from '../../../asset/logoOnlinePreps.png';
 import { theme } from "../../../utils/style/theme";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
+import { useAuth } from '../../../utils/context';
+import { useTranslation } from 'react-i18next';
 
 export interface sideBarItem {
     label: string
@@ -28,9 +31,13 @@ export interface sideBarSection {
 
 export default function SideBar() {
     const [isSideOpen, setIsSideBarOpen] = useState<boolean>(true)
-    const sideBarSection: sideBarSection[] = [
+    const {
+        userInfo: { is_employe },
+    } = useAuth()
+    const { t } = useTranslation()
+    const sideBarSectionAdmin: sideBarSection[] = [
         {
-            title: 'HOME',
+            title: 'home',
             sideBarItems: [
                 {
                     label: 'dashboard',
@@ -46,7 +53,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'QUICK ACCESS',
+            title: 'quickAccess',
             sideBarItems: [
                 {
                     label: 'employes',
@@ -85,7 +92,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'NOTIFICATIONS',
+            title: 'notifications',
             sideBarItems: [
                 {
                     label: 'messages',
@@ -101,7 +108,7 @@ export default function SideBar() {
             ]
         },
         {
-            title: 'STUFF',
+            title: 'others',
             sideBarItems: [
                 {
                     label: 'manage',
@@ -124,6 +131,84 @@ export default function SideBar() {
                             }}
                         />,
                     link: '/admin/statistics'
+                },
+                {
+                    label: 'settings',
+                    icon:
+                        < SettingsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/admin/settings'
+                }
+            ]
+        }
+    ];
+    const sideBarSectionEmploye: sideBarSection[] = [
+        {
+            title: 'home',
+            sideBarItems: [
+                {
+                    label: 'dashboard',
+                    icon:
+                        <DashboardIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/'
+                }
+            ]
+        },
+        {
+            title: 'quickAccess',
+            sideBarItems: [
+                {
+                    label: 'tests',
+                    icon:
+                        <TextSnippetIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/epreuves'
+                },
+
+            ]
+        },
+        {
+            title: 'notifications',
+            sideBarItems: [
+                {
+                    label: 'messages',
+                    icon:
+                        <TextsmsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/messages'
+                }
+            ]
+        },
+        {
+            title: 'others',
+            sideBarItems: [
+                {
+                    label: 'settings',
+                    icon:
+                        < SettingsIcon
+                            sx={{
+                                fontSize: 30,
+                                color: '#F5FA05'
+                            }}
+                        />,
+                    link: '/settings'
                 }
             ]
         }
@@ -162,7 +247,7 @@ export default function SideBar() {
                 )}
                 <Tooltip
                     arrow
-                    title={isSideOpen ? 'Close' : 'Open'}
+                    title={isSideOpen ? t('close') : t('open')}
                     placement="right"
                 >
                     <IconButton
@@ -202,7 +287,7 @@ export default function SideBar() {
                 display: 'grid',
                 rowGap: '20px'
             }}>
-                {sideBarSection.map((sideBarNav, index) => (
+                {(is_employe ? sideBarSectionEmploye : sideBarSectionAdmin).map((sideBarNav, index) => (
                     <NavBar
                         key={index}
                         sideBarNav={sideBarNav}
