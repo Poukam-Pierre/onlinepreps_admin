@@ -29,9 +29,8 @@ export default function Layout() {
         ||
         activeLocation.pathname === '/'
       ) navigate('/admin');
-      navigate(activeLocation.pathname);
     } else navigate('/login')
-  }, [])
+  }, [activeLocation.pathname, is_admin, is_employe, navigate])
 
   return (
     <Box sx={{
