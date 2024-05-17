@@ -21,8 +21,9 @@ export default function Layout() {
         activeLocation.pathname === '/'
         ||
         activeLocation.pathname === '/admin'
-      ) navigate('/');
-      navigate(activeLocation.pathname)
+      ) {
+        navigate('/');
+      } else navigate(activeLocation.pathname)
     } else if (is_admin) {
       if (
         activeLocation.pathname === '/admin'
