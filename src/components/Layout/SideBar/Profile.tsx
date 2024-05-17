@@ -13,7 +13,7 @@ export default function Profile({ isSideOpen }: profileProps) {
     const { t } = useTranslation()
     const {
         authDispatch,
-        userInfo: { nom, profil_img, poste },
+        userInfo: { nom, profil_img, poste, is_employe },
     } = useAuth()
 
     const disconnected = () => {
@@ -37,13 +37,17 @@ export default function Profile({ isSideOpen }: profileProps) {
             columnGap: '10px',
             alignSelf: 'end',
         }}>
-            <Avatar
-                alt="profil"
-                src={profil_img}
-                sx={{
-                    display: isSideOpen ? 'flex' : 'none'
-                }}
-            />
+            <Tooltip arrow title={t('profile')}>
+                <Avatar
+                    alt="profil"
+                    src={profil_img}
+                    sx={{
+                        display: isSideOpen ? 'flex' : 'none',
+                        cursor: 'pointer',
+                    }}
+                    onClick={() => navigate(is_employe ? '/profile' : '/admin/profile')}
+                />
+            </Tooltip>
             <Box sx={{
                 color: theme.palette.secondary.contrastText
             }}>
