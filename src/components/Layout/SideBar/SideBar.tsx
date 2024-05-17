@@ -208,7 +208,7 @@ export default function SideBar() {
                                 color: '#F5FA05'
                             }}
                         />,
-                    link: '/admin/settings'
+                    link: '/settings'
                 }
             ]
         }
