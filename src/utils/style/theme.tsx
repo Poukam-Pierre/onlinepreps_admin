@@ -13,6 +13,7 @@ declare module '@mui/material/styles' {
       notification: React.CSSProperties['color']
       submitBtnSuccess: React.CSSProperties['color']
       submitBtnEchec: React.CSSProperties['color']
+      background: React.CSSProperties['color']
       // adminBackground: React.CSSProperties['color']
       // offWhite: React.CSSProperties['color']
       // placeholder: React.CSSProperties['color']
@@ -32,6 +33,7 @@ declare module '@mui/material/styles' {
       notification: React.CSSProperties['color']
       submitBtnSuccess: React.CSSProperties['color']
       submitBtnEchec: React.CSSProperties['color']
+      background: React.CSSProperties['color']
       // adminBackground: React.CSSProperties["color"];
       // offWhite: React.CSSProperties["color"];
       // placeholder: React.CSSProperties["color"];
@@ -94,5 +96,6 @@ export const theme = createTheme({
     notification: '#1a7ea0',
     submitBtnSuccess: green[500],
     submitBtnEchec: red[500],
+    background: "#eeeeee"
   },
 })

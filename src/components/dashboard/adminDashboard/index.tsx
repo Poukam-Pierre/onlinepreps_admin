@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import Axios from 'axios'
 import { useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
-import SouscriptionDetails from './AdminSouscriptionRate/SouscriptionDetails'
+import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
 
 function AdminDashboard() {
 
