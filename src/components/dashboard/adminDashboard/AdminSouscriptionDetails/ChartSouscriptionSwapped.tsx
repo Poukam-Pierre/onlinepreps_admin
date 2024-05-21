@@ -8,16 +8,16 @@ interface chartSouscriptionProps {
     activePeriodSelection: fetchingDataSelection;
     setActivePeriodSelection: Dispatch<SetStateAction<fetchingDataSelection>>;
 }
+const souscriptionPeriodMonths: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const souscriptionPeriod: string[] = ["months", 'years']
+export const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2021 },
+    (_, i) => new Date().getFullYear() - i)
 
 export default function ChartSouscriptionSwapped({
     activePeriodSelection,
     setActivePeriodSelection
 }: chartSouscriptionProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
-    const souscriptionPeriod: string[] = ["months", 'years']
-    const souscriptionPeriodMonths: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2021 },
-        (_, i) => new Date().getFullYear() - i)
 
     const handleChangePeriod = (active: string) => {
         setActivePeriodSelection({
