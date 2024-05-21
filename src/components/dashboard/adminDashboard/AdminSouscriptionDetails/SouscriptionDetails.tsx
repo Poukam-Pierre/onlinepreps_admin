@@ -1,8 +1,10 @@
-import { Box, Typography } from "@mui/material";
-import ChartSouscriptionSwapped from "./ChartSouscriptionSwapped";
+import { Box, CircularProgress, IconButton, Tooltip, Typography } from "@mui/material";
+import ChartSouscriptionSwapped, { souscriptionPeriodYears } from "./ChartSouscriptionSwapped";
 import { useEffect, useState } from "react";
 import YearCharts from "./charts/YearCharts";
 import MonthCharts from "./charts/MonthCharts";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export interface fetchingDataSelection {
     type: string;
@@ -19,39 +21,39 @@ interface souscriptionDatas {
 }
 const monthsDataFetched: souscriptionDataFetched[] = [
     {
-        day1: 1,
+        days: 1,
         value: 2
     },
     {
-        day1: 5,
+        days: 5,
         value: 20
     },
     {
-        day1: 7,
+        days: 7,
         value: 10
     },
     {
-        day1: 8,
+        days: 8,
         value: 8
     },
     {
-        day1: 9,
+        days: 9,
         value: 15
     },
     {
-        day1: 10,
+        days: 10,
         value: 20
     },
     {
-        day1: 12,
+        days: 12,
         value: 20
     },
     {
-        day1: 18,
+        days: 18,
         value: 7
     },
     {
-        day1: 25,
+        days: 25,
         value: 2
     },
 ]
@@ -115,14 +117,25 @@ export default function SouscriptionDetails() {
     const [souscriptionDatas, setSouscriptionDatas] = useState<souscriptionDatas>({
         loaded: true
     })
+    const [indexValue, setIndexValue] = useState<number>(0)
     useEffect(() => {
         // Fetch data fro the selection month and year
         setSouscriptionDatas({
-            data: yearsDataFetched,
+            data: monthsDataFetched,
             loaded: false
         })
     }, [activePeriodSelection])
 
+    const forwardDate = () => {
+        setIndexValue(souscriptionPeriodYears
+            .indexOf(souscriptionPeriodYears[indexValue]) + 1)
+        setActivePeriodSelection({ ...activePeriodSelection, period: souscriptionPeriodYears[indexValue] })
+    }
+    const backwardDate = () => {
+        setIndexValue(souscriptionPeriodYears
+            .indexOf(souscriptionPeriodYears[indexValue]) - 1)
+        setActivePeriodSelection({ ...activePeriodSelection, period: souscriptionPeriodYears[indexValue] })
+    }
     return (
         <Box sx={{
             backgroundColor: '#fff',
@@ -142,22 +155,51 @@ export default function SouscriptionDetails() {
                     setActivePeriodSelection={setActivePeriodSelection}
                 />
             </Box>
-            {activePeriodSelection.type === 'years' ? (
-                <Box sx={{
-                    height: 200,
-                    width: 'auto'
-                }}>
+            <Box sx={{
+                height: 200,
+                width: 'auto'
+            }}>
+                {true ? activePeriodSelection.type === 'years' ? (
                     <YearCharts yearsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
-                </Box>
 
-            ) : (
-                <Box sx={{
-                    height: 200,
-                    width: 'auto'
-                }}>
+                ) : (
                     <MonthCharts monthsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
-                </Box>
-            )}
+                ) :
+                    <CircularProgress
+                        disableShrink
+                        variant="indeterminate"
+                        size={30}
+                    />
+                }
+            </Box>
+            <Box sx={{
+                display: activePeriodSelection.type === "months" ? "grid" : "none",
+                gridAutoFlow: 'column',
+                alignItems: 'center',
+                width: 'fit-content',
+            }}>
+                <Tooltip arrow title={'backward'}>
+                    <IconButton
+                        size='small'
+                        onClick={backwardDate}
+                        disabled={indexValue === 0}
+                    >
+                        <KeyboardArrowLeftIcon fontSize='small' />
+                    </IconButton>
+                </Tooltip>
+                <Typography variant="caption">
+                    {souscriptionPeriodYears[indexValue]}
+                </Typography>
+                <Tooltip arrow title={'forward'}>
+                    <IconButton
+                        size='small'
+                        onClick={forwardDate}
+                        disabled={souscriptionPeriodYears.length - 1 === indexValue}
+                    >
+                        <KeyboardArrowRightIcon fontSize='small' />
+                    </IconButton>
+                </Tooltip>
+            </Box>
         </Box>
     );
 }
