@@ -1,16 +1,20 @@
 import { Menu, MenuItem } from "@mui/material";
+import { fetchingDataSelection } from "./SouscriptionDetails";
+import { Dispatch, SetStateAction } from "react";
 
 interface menuActiveProps {
     anchorEl: HTMLAnchorElement | null
     setAnchorEl: (anchorEl: HTMLAnchorElement | null) => void
     souscriptionPeriod: string[] | number[]
-    setActivePeriod: (activePeriod: string | number) => void
+    setActivePeriod: Dispatch<SetStateAction<fetchingDataSelection>>
+    activePeriodSelection: fetchingDataSelection
 }
 export default function MenuActivePeriod({
     anchorEl,
     setAnchorEl,
     souscriptionPeriod,
-    setActivePeriod
+    setActivePeriod,
+    activePeriodSelection
 }: menuActiveProps) {
     return (
         <Menu
@@ -23,7 +27,7 @@ export default function MenuActivePeriod({
                     key={index}
                     value={period}
                     onClick={() => {
-                        setActivePeriod(period);
+                        setActivePeriod({ ...activePeriodSelection, value: period });
                         setAnchorEl(null)
                     }}
                 >

@@ -1,21 +1,32 @@
 import { Box, IconButton, MenuItem, TextField, Tooltip, Typography } from "@mui/material";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import MenuActivePeriod from "./MenuActivePeriod";
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import { fetchingDataSelection } from "./SouscriptionDetails";
 
+interface chartSouscriptionProps {
+    activePeriodSelection: fetchingDataSelection;
+    setActivePeriodSelection: Dispatch<SetStateAction<fetchingDataSelection>>;
+}
 
-
-export default function ChartSouscriptionSwapped() {
-    const [activePeriodSelection, setActivePeriodSelection] = useState<string>('years')
-    const [activePeriod, setActivePeriod] = useState<string | number>(2024)
+export default function ChartSouscriptionSwapped({
+    activePeriodSelection,
+    setActivePeriodSelection
+}: chartSouscriptionProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
     const souscriptionPeriod: string[] = ["months", 'years']
-    const souscriptionPeriodYears: number[] = [2024, 2023, 2022]
     const souscriptionPeriodMonths: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2021 },
+        (_, i) => new Date().getFullYear() - i)
 
     const handleChangePeriod = (active: string) => {
-        setActivePeriodSelection(active)
-        setActivePeriod(active === 'years' ? souscriptionPeriodYears[0] : souscriptionPeriodMonths[0])
+        setActivePeriodSelection({
+            ...activePeriodSelection,
+            type: active,
+            value: active === "years" ? new Date().getFullYear() :
+                souscriptionPeriodMonths[new Date().getMonth()],
+            period: active === "months" ? new Date().getFullYear() : undefined
+        });
     }
     return (
         <>
@@ -23,10 +34,11 @@ export default function ChartSouscriptionSwapped() {
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
                 souscriptionPeriod={
-                    activePeriodSelection === 'years' ?
+                    activePeriodSelection.type === 'years' ?
                         souscriptionPeriodYears : souscriptionPeriodMonths
                 }
-                setActivePeriod={setActivePeriod}
+                setActivePeriod={setActivePeriodSelection}
+                activePeriodSelection={activePeriodSelection}
             />
             <Box sx={{
                 display: 'grid',
@@ -38,7 +50,7 @@ export default function ChartSouscriptionSwapped() {
                 <TextField
                     size="small"
                     select
-                    value={activePeriodSelection}
+                    value={activePeriodSelection.type}
                     onChange={(event) =>
                         handleChangePeriod(event.target.value)
 
@@ -67,10 +79,10 @@ export default function ChartSouscriptionSwapped() {
                     width: 'fit-content',
                     alignItems: 'center'
                 }}>
-                    <Typography variant="body2">{activePeriod}</Typography>
+                    <Typography variant="body2">{activePeriodSelection.value}</Typography>
                     <Tooltip
                         arrow
-                        title={`change ${activePeriodSelection}`}
+                        title={`change ${activePeriodSelection.type}`}
                     >
                         <IconButton
                             size="small"

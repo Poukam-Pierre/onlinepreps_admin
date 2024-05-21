@@ -1,7 +1,20 @@
 import { Box, Typography } from "@mui/material";
 import ChartSouscriptionSwapped from "./ChartSouscriptionSwapped";
+import { useState } from "react";
+
+export interface fetchingDataSelection {
+    type: string;
+    value: string | number;
+    period?: number;
+
+}
 
 export default function SouscriptionDetails() {
+    const [activePeriodSelection, setActivePeriodSelection] = useState<fetchingDataSelection>({
+        type: "years",
+        value: new Date().getFullYear(),
+    })
+
     return (
         <Box sx={{
             backgroundColor: '#fff',
@@ -17,7 +30,10 @@ export default function SouscriptionDetails() {
                 justifyContent: 'space-between',
             }}>
                 <Typography>Souscription details</Typography>
-                <ChartSouscriptionSwapped />
+                <ChartSouscriptionSwapped
+                    activePeriodSelection={activePeriodSelection}
+                    setActivePeriodSelection={setActivePeriodSelection}
+                />
             </Box>
             <Typography>
                 I'm here
