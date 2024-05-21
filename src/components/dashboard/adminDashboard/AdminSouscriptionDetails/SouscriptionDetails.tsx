@@ -159,7 +159,7 @@ export default function SouscriptionDetails() {
                 height: 200,
                 width: 'auto'
             }}>
-                {true ? activePeriodSelection.type === 'years' ? (
+                {!souscriptionDatas.loaded ? activePeriodSelection.type === 'years' ? (
                     <YearCharts yearsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
 
                 ) : (
@@ -168,7 +168,7 @@ export default function SouscriptionDetails() {
                     <CircularProgress
                         disableShrink
                         variant="indeterminate"
-                        size={30}
+                        size={20}
                     />
                 }
             </Box>
