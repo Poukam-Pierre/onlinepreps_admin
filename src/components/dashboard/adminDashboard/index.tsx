@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
 import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
 import Counter from './statistics/Counter'
+import PartnerDetails from './partnersDetails/PartnersDetails'
 
 function AdminDashboard() {
 
@@ -36,6 +37,7 @@ function AdminDashboard() {
         <SouscriptionDetails />
         <Counter />
       </Box>
+      <PartnerDetails />
     </Box>
   )
 }
