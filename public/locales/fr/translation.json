@@ -17,5 +17,8 @@
     "management": "Management",
     "changeLanguage": "Changer la langue",
     "open": "Ouvrir",
-    "close":"Fermer"
+    "close":"Fermer",
+    "souscriptionCharts": "Détails des Inscriptions",
+    "months": "Mois",
+    "years": "Années"    
 }
