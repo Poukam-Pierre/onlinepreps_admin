@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
 import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
+import Counter from './statistics/Counter'
 
 function AdminDashboard() {
 
@@ -24,9 +25,17 @@ function AdminDashboard() {
   return (
     <Box sx={{
       backgroundColor: theme.common.background,
-      padding: 2
+      padding: 2,
+
     }}>
-      <SouscriptionDetails />
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        columnGap: '40px'
+      }}>
+        <SouscriptionDetails />
+        <Counter />
+      </Box>
     </Box>
   )
 }
