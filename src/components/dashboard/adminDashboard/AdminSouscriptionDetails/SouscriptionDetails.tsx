@@ -5,6 +5,7 @@ import YearCharts from "./charts/YearCharts";
 import MonthCharts from "./charts/MonthCharts";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useTranslation } from "react-i18next";
 
 export interface fetchingDataSelection {
     type: string;
@@ -118,6 +119,7 @@ export default function SouscriptionDetails() {
         loaded: true
     })
     const [indexValue, setIndexValue] = useState<number>(0)
+    const { t } = useTranslation()
     useEffect(() => {
         // Fetch data fro the selection month and year
         setSouscriptionDatas({
@@ -149,7 +151,9 @@ export default function SouscriptionDetails() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
             }}>
-                <Typography>Souscription details</Typography>
+                <Typography
+                    variant="h6"
+                >{t('souscriptionCharts')}</Typography>
                 <ChartSouscriptionSwapped
                     activePeriodSelection={activePeriodSelection}
                     setActivePeriodSelection={setActivePeriodSelection}

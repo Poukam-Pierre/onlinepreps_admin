@@ -3,13 +3,14 @@ import { Dispatch, SetStateAction, useState } from "react";
 import MenuActivePeriod from "./MenuActivePeriod";
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { fetchingDataSelection } from "./SouscriptionDetails";
+import { useTranslation } from "react-i18next";
 
 interface chartSouscriptionProps {
     activePeriodSelection: fetchingDataSelection;
     setActivePeriodSelection: Dispatch<SetStateAction<fetchingDataSelection>>;
 }
 const souscriptionPeriodMonths: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-const souscriptionPeriod: string[] = ["months", 'years']
+const souscriptionPeriod: string[] = ["months", "years"]
 export const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2021 },
     (_, i) => new Date().getFullYear() - i)
 
@@ -18,6 +19,7 @@ export default function ChartSouscriptionSwapped({
     setActivePeriodSelection
 }: chartSouscriptionProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
+    const { t } = useTranslation()
 
     const handleChangePeriod = (active: string) => {
         setActivePeriodSelection({
@@ -69,7 +71,7 @@ export default function ChartSouscriptionSwapped({
                             key={index}
                             value={period}
                         >
-                            {period}
+                            {t(`${period}`)}
                         </MenuItem>
                     ))}
                 </TextField>
