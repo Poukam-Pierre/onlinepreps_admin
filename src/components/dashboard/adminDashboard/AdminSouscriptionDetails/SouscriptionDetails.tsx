@@ -143,8 +143,9 @@ export default function SouscriptionDetails() {
             backgroundColor: '#fff',
             height: 'auto',
             display: 'grid',
-            rowGap: 2,
-            padding: 1
+            rowGap: 0.5,
+            padding: 1,
+            borderRadius: '10px'
         }}>
             <Box sx={{
                 display: 'flex',
