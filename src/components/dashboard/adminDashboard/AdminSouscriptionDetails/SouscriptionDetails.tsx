@@ -6,6 +6,7 @@ import MonthCharts from "./charts/MonthCharts";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useTranslation } from "react-i18next";
+import { theme } from "../../../../utils/style/theme";
 
 export interface fetchingDataSelection {
     type: string;
@@ -140,7 +141,7 @@ export default function SouscriptionDetails() {
     }
     return (
         <Box sx={{
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.secondary.contrastText,
             height: 'auto',
             display: 'grid',
             rowGap: 0.5,
