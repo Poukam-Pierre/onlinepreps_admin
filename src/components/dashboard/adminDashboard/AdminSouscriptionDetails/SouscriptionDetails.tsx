@@ -145,7 +145,7 @@ export default function SouscriptionDetails() {
             height: 'auto',
             display: 'grid',
             rowGap: 0.5,
-            padding: 1,
+            padding: '10px',
             borderRadius: '10px'
         }}>
             <Box sx={{
