@@ -2,14 +2,16 @@ import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import BarCharts from "./BarChart";
 import { theme } from "../../../../utils/style/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuList from "./MenuList";
+import { shortenNumber } from "../../../../utils/utilis/ShorterNumber";
 
-interface testCategoryStat {
+export interface testCategoryStat {
+    [key: string]: string | number;
     category: string;
     value: number
 }
-interface partnersDetails {
+export interface partnersDetails {
     name: string,
     uniqueId: string,
     totalSouscriber: number,
@@ -18,6 +20,12 @@ interface partnersDetails {
 }
 export default function PartnerDetails() {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
+    const [partnerSelected, setPartnerSelected] = useState<partnersDetails>({
+        name: '',
+        uniqueId: '',
+        totalSouscriber: 0,
+        testCategory: []
+    })
     const partnersDetailsData: partnersDetails[] = [
         {
             name: "A.E Princèsse",
@@ -128,18 +136,23 @@ export default function PartnerDetails() {
             ]
         },
     ]
+    useEffect(() => {
+        setPartnerSelected(partnersDetailsData[0])
+    }, [])
+    const { name, uniqueId, totalSouscriber, testCategory } = partnerSelected
     return (
         <>
             <MenuList
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                dataList={partnersDetailsData.map(partner => partner.name)}
+                dataList={partnersDetailsData}
+                setPartnerSelected={setPartnerSelected}
             />
             <Box sx={{
                 display: "grid",
                 background: theme.palette.secondary.contrastText,
                 width: "fit-content",
-                padding: 2,
+                padding: "10px",
                 borderRadius: "10px",
             }}>
                 <Box sx={{
@@ -149,7 +162,7 @@ export default function PartnerDetails() {
                 }}>
                     <Box>
                         <Typography variant="h6">Partner Details</Typography>
-                        <Typography variant="caption">A.E La COLOMBE</Typography>
+                        <Typography variant="caption">{name}</Typography>
                     </Box>
                     <Tooltip
                         arrow
@@ -166,7 +179,7 @@ export default function PartnerDetails() {
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <BarCharts />
+                <BarCharts dataSet={testCategory} />
                 <Box sx={{
                     display: "flex",
                     alignItems: "center",
@@ -181,7 +194,9 @@ export default function PartnerDetails() {
                         flex: 1
                     }}>
                         <Typography variant="caption">Total students</Typography>
-                        <Typography variant="body1">35</Typography>
+                        <Typography
+                            variant="body1"
+                        >{shortenNumber(totalSouscriber)}</Typography>
                     </Box>
                     <Box sx={{
                         width: "fit-content",
@@ -191,7 +206,9 @@ export default function PartnerDetails() {
                         flex: 1
                     }}>
                         <Typography variant="caption">Code Preps</Typography>
-                        <Typography variant="body1">nppi204</Typography>
+                        <Typography
+                            variant="body1"
+                        >{uniqueId}</Typography>
                     </Box>
 
                 </Box>
