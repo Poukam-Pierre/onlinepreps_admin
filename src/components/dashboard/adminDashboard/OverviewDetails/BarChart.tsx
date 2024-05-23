@@ -1,5 +1,5 @@
 import { BarChart } from '@mui/x-charts/BarChart';
-import { testCategoryStat } from './PartnersDetails';
+import { testCategoryStat } from '../partnersDetails/PartnersDetails';
 import { theme } from '../../../../utils/style/theme';
 
 interface barChartProps {
