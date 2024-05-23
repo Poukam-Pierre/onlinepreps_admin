@@ -1,15 +1,18 @@
 import { Menu, MenuItem } from "@mui/material";
+import { partnersDetails } from "./PartnersDetails";
 
 interface menuListProps {
     anchorEl: HTMLAnchorElement | null;
     setAnchorEl: (anchorEl: HTMLAnchorElement | null) => void
-    dataList: string[];
+    dataList: partnersDetails[];
+    setPartnerSelected: (partnerDetails: partnersDetails) => void
 }
 
 export default function MenuList({
     anchorEl,
     setAnchorEl,
-    dataList
+    dataList,
+    setPartnerSelected
 }: menuListProps) {
     return (
         <Menu
@@ -17,18 +20,20 @@ export default function MenuList({
             anchorEl={anchorEl}
             onClose={() => setAnchorEl(null)}
         >
-            {dataList.map((partner, index) => (
-                <MenuItem
-                    key={index}
-                    value={partner}
-                    divider
-                    onClick={() => {
-                        setAnchorEl(null);
-                    }}
-                >
-                    {partner}
-                </MenuItem>
-            ))}
+            {(dataList.map(partner => partner.name))
+                .map((partnerName, index) => (
+                    <MenuItem
+                        key={index}
+                        value={partnerName}
+                        divider
+                        onClick={() => {
+                            setAnchorEl(null);
+                            setPartnerSelected(dataList.find((partner) => partner.name === partnerName) as partnersDetails)
+                        }}
+                    >
+                        {partnerName}
+                    </MenuItem>
+                ))}
         </Menu>
     );
 }
