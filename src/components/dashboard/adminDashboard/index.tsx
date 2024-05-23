@@ -27,6 +27,8 @@ function AdminDashboard() {
     <Box sx={{
       backgroundColor: theme.common.background,
       padding: 2,
+      display: 'grid',
+      rowGap: '10px'
 
     }}>
       <Box sx={{
