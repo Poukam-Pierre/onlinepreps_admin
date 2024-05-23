@@ -43,7 +43,7 @@ export default function Counter() {
             data: counterStats,
             loaded: false
         })
-    }, [counterDatas])
+    }, [])
     return (
         <Box sx={{
             display: 'flex',
