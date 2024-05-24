@@ -1,28 +1,22 @@
-import { authAuthentication, Authentication, authInterface, StateLogin } from "./login.interface";
+import { Authentication, authInterface, StateLogin } from "./login.interface";
 import { Reducer, useContext, useReducer } from "react"
 import AuthContext from "./loginContext";
 
 
-const authReducer: Reducer<Authentication, authAuthentication> = (
+const authReducer: Reducer<Authentication, authInterface> = (
     state: StateLogin,
-    payload: authAuthentication
+    payload: authInterface
 ) => {
     localStorage.setItem('auth', JSON.stringify(
         {
             ...state,
-            userData: {
-                authData: { ...payload },
-                isLoading: false
-            }
+            userData: { ...payload }
         }
     )
     )
     return {
         ...state,
-        userData: {
-            authData: { ...payload },
-            isLoading: false,
-        }
+        userData: { ...payload }
     }
 }
 
@@ -34,19 +28,16 @@ function AuthContextProvider({
 }): JSX.Element {
     const initialState: Authentication = {
         userData: authStatus ?
-            (JSON.parse(authStatus.toString()) as authInterface)
+            (JSON.parse(authStatus.toString()).userData as authInterface)
             :
             {
-                authData: {
-                    accessToken: '',
-                    userInfo: {
-                        id: undefined,
-                        nom: '',
-                        prenom: '',
-                        email: '',
-                    },
+                accessToken: '',
+                userInfo: {
+                    id: undefined,
+                    nom: '',
+                    prenom: '',
+                    email: '',
                 },
-                isLoading: true,
             },
         authDispatch: () => null
     };

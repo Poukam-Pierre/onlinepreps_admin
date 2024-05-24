@@ -18,18 +18,15 @@ export interface userInterface {
   birthDate?: string
   status_connected?: string
 }
-export interface authAuthentication {
+
+export interface authInterface {
   accessToken: string
   userInfo: userInterface
-}
-export interface authInterface {
-  authData: authAuthentication
-  isLoading: boolean
 }
 
 export interface Authentication {
   userData: authInterface
-  authDispatch: React.Dispatch<authAuthentication>
+  authDispatch: React.Dispatch<authInterface>
 }
 
 export type StateLogin = Authentication
