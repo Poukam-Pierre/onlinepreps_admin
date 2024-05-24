@@ -7,13 +7,11 @@ import { useNavigate, Outlet, useLocation } from "react-router-dom"
 function PrivateRoutes() {
   const {
     userData: {
-      authData: {
-        userInfo: {
-          is_employe,
-          is_admin
-        }
-      }
-    }
+      userInfo: {
+        is_employe,
+        is_admin
+      },
+    },
   } = useAuth()
 
   const navigate = useNavigate()
