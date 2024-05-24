@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { shortenNumber } from "../../../../utils/utilis/ShorterNumber";
+import { shortenNumber } from "../../../utils/utilis/ShorterNumber";
 import { useEffect, useState } from "react";
-import { theme } from "../../../../utils/style/theme";
+import { theme } from "../../../utils/style/theme";
 
 interface counterStat {
     label: string,

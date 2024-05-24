@@ -1,22 +1,11 @@
 import { useEffect } from "react";
-import { usePartner } from "../../../../utils/context/partners/PartnerContextProvider";
-import OverviewDetails from "../OverviewDetails/OverviewDetails";
+import { usePartner } from "../../../utils/context/partners/PartnerContextProvider";
+import OverviewDetails from "./OverviewDetails/OverviewDetails";
+import { partnersDetails } from "../../../utils/context";
 
-export interface testCategoryStat {
-    [key: string]: string | number;
-    category: string;
-    value: number
-}
-export interface partnersDetails {
-    name: string,
-    uniqueId?: string,
-    total: number,
-    testCategory: testCategoryStat[],
-
-}
 export default function PartnerDetails() {
     const {
-        partnersDetails: { partnersData, isLoading },
+        partnersDetails: { partnersData },
         partnersDispatch
     } = usePartner()
     const partnersDetailsData: partnersDetails[] = [

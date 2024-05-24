@@ -5,8 +5,9 @@ import Axios from 'axios'
 import { useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
 import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
-import Counter from './statistics/Counter'
-import PartnerDetails from './partnersDetails/PartnersDetails'
+import Counter from './Counter'
+import PartnerDetails from './PartnersDetails'
+import EmployesDetails from './EmployesDetails'
 
 function AdminDashboard() {
 
@@ -40,6 +41,7 @@ function AdminDashboard() {
         <Counter />
       </Box>
       <PartnerDetails />
+      <EmployesDetails />
     </Box>
   )
 }
