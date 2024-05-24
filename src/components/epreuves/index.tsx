@@ -10,7 +10,12 @@ import { useAuth } from '../../utils/context'
 function TestSheet() {
   const navigate = useNavigate()
   const {
-    userInfo: { poste, id },
+
+    userData: {
+      authData: {
+        userInfo: { id, poste }
+      }
+    }
   } = useAuth()
   function createFormSheet() {
     const id_ = uuid()

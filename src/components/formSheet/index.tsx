@@ -42,7 +42,12 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function FormSheet() {
   const {
-    userInfo: { id, nom, profil_img },
+    userData: {
+      authData: {
+        userInfo: { id, nom, profil_img },
+      }
+    }
+
   } = useAuth()
   const navigate = useNavigate()
   const { formId } = useParams()

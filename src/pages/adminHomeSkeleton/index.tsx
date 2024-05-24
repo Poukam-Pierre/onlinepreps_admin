@@ -5,7 +5,11 @@ import { useAuth } from '../../utils/context'
 
 function AdminSkeleton() {
   const {
-    userInfo: { is_admin },
+    userData: {
+      authData: {
+        userInfo: { is_admin },
+      }
+    },
   } = useAuth()
 
   return (

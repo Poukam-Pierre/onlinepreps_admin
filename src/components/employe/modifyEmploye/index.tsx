@@ -47,7 +47,13 @@ export const StylePhoneNumber = styled(PhoneInput)({
 const Pays: string[] = ['CMR', 'GBA']
 
 function ModifyEmploye() {
-  const { accessToken } = useAuth()
+  const {
+    userData: {
+      authData: {
+        accessToken
+      }
+    }
+  } = useAuth()
   const { employeId } = useParams()
   const [employeData, setEmployeData] = useState<employeDataInterface>({
     nom: '',

@@ -35,20 +35,25 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function EmployeProfil() {
   const {
-    userInfo: {
-      id,
-      nom,
-      email,
-      phoneNumber,
-      adresse,
-      profil_img,
-      poste,
-      prenom,
-      birthDate,
+    userData: {
+      authData: {
+        userInfo: {
+          id,
+          nom,
+          email,
+          phoneNumber,
+          adresse,
+          profil_img,
+          poste,
+          prenom,
+          birthDate,
+
+        },
+        accessToken,
+        userInfo,
+      }
     },
     authDispatch,
-    accessToken,
-    userInfo,
   } = useAuth()
 
   const authAxios = Axios.create({

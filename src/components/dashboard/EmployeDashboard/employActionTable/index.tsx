@@ -15,7 +15,11 @@ import { useAuth } from '../../../../utils/context'
 
 function ActionTable() {
   const {
-    userInfo: { id },
+    userData: {
+      authData: {
+        userInfo: { id }
+      }
+    }
   } = useAuth()
   const [rows, setRows] = useState<
     {

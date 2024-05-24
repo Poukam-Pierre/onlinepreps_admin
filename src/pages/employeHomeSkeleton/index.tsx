@@ -5,7 +5,11 @@ import { useAuth } from '../../utils/context'
 
 function EmployeSkeleton() {
   const {
-    userInfo: { is_employe },
+    userData: {
+      authData: {
+        userInfo: { is_employe },
+      }
+    },
   } = useAuth()
 
   return (

@@ -12,8 +12,12 @@ export default function Profile({ isSideOpen }: profileProps) {
     const navigate = useNavigate()
     const { t } = useTranslation()
     const {
-        authDispatch,
-        userInfo: { nom, profil_img, poste, is_employe },
+        userData: {
+            authData: {
+                userInfo: { nom, profil_img, poste, is_employe },
+            }
+        },
+        authDispatch
     } = useAuth()
 
     const disconnected = () => {

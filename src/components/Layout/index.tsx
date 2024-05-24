@@ -12,7 +12,11 @@ export default function Layout() {
   const navigate = useNavigate()
   const activeLocation = useLocation()
   const {
-    userInfo: { is_employe, is_admin },
+    userData: {
+      authData: {
+        userInfo: { is_employe, is_admin },
+      }
+    },
   } = useAuth()
 
   useEffect(() => {

@@ -12,7 +12,11 @@ function EmployeDashboard() {
   const [nberTestCreated, setNberTestCreated] = useState<number>()
   const [nberTestBaught, setNbreTestBaught] = useState<number>()
   const {
-    userInfo: { id },
+    userData: {
+      authData: {
+        userInfo: { id }
+      }
+    }
   } = useAuth()
 
   useEffect(() => {

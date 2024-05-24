@@ -24,7 +24,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import logo from '../../asset/logo.PNG'
 import { alertMsgInterface } from '../../components/employe/createEmploy'
-import { authInterface, useAuth } from '../../utils/context'
+import { authAuthentication, useAuth } from '../../utils/context'
 import { theme } from '../../utils/style/theme'
 import { LoginSchema } from './loginSchema'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -59,7 +59,7 @@ function SignIn() {
         )
           .then((res) => {
             if (res?.status === 200 && res.data) {
-              const data: authInterface = res.data as authInterface
+              const data: authAuthentication = res.data as authAuthentication
               authDispatch(data)
               navigate('/')
             }
