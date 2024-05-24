@@ -6,7 +6,6 @@ export const PartnersDetailsContext = createContext<PartnersDetails>({
     partnersData: [
       {
         name: '',
-        uniqueId: '',
         total: 0,
         testCategory: [],
       },

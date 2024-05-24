@@ -10,12 +10,9 @@ import {
 } from 'recharts'
 import Axios from 'axios'
 import { useState, useEffect } from 'react'
-import { souscriptionDataInterface } from '../../../dashboard/adminDashboard/charts'
 
 function ChartConnexion({ id }: { id: string | undefined }) {
-  const [connexionRecord, setConnexionRecord] = useState<
-    souscriptionDataInterface[]
-  >([
+  const [connexionRecord, setConnexionRecord] = useState([
     {
       name: 'Janvier',
       total: 0,

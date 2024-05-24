@@ -10,12 +10,9 @@ import {
 } from 'recharts'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { souscriptionDataInterface } from '../../../dashboard/adminDashboard/charts'
 
 function ChartInscription({ id }: { id: string | undefined }) {
-  const [inscriptionData, setInscriptionData] = useState<
-    souscriptionDataInterface[]
-  >([
+  const [inscriptionData, setInscriptionData] = useState([
     {
       name: 'Janvier',
       total: 0,

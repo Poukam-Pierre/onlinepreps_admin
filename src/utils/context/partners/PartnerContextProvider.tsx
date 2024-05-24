@@ -2,7 +2,6 @@ import { Reducer, useContext, useReducer } from "react";
 import {
     partnersDetails,
     PartnersDetails,
-    partnersDetailsType,
     State
 } from "./partner.interface";
 import PartnersDetailsContext from "./partnerContext";
@@ -31,7 +30,6 @@ function PartnerDetailsContextProvider({
             partnersData: [
                 {
                     name: '',
-                    uniqueId: '',
                     total: 0,
                     testCategory: [],
                 },

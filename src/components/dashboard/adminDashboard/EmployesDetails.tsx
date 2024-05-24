@@ -119,7 +119,7 @@ export default function EmployesDetails() {
     useEffect(() => {
         employesDispatch(employesDetailsData)
     }, [employesDispatch])
-    console.log(employesData)
+
     return (
         <OverviewDetails
             label="Employes"
