@@ -8,6 +8,7 @@ import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
 import Counter from './Counter'
 import PartnerDetails from './PartnersDetails'
 import EmployesDetails from './EmployesDetails'
+import TestDetails from './TestDetails'
 
 function AdminDashboard() {
 
@@ -40,8 +41,16 @@ function AdminDashboard() {
         <SouscriptionDetails />
         <Counter />
       </Box>
-      <PartnerDetails />
-      <EmployesDetails />
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+
+      }}>
+        <PartnerDetails />
+        <EmployesDetails />
+        <TestDetails />
+      </Box>
     </Box>
   )
 }
