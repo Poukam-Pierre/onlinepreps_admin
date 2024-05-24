@@ -1,6 +1,6 @@
 import { BarChart } from '@mui/x-charts/BarChart';
-import { testCategoryStat } from '../partnersDetails/PartnersDetails';
 import { theme } from '../../../../utils/style/theme';
+import { testCategoryStat } from '../../../../utils/context';
 
 interface barChartProps {
     dataSet: testCategoryStat[]

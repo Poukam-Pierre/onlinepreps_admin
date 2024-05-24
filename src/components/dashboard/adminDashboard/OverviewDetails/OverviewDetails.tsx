@@ -3,9 +3,9 @@ import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { theme } from "../../../../utils/style/theme";
 import { shortenNumber } from "../../../../utils/utilis/ShorterNumber";
-import { partnersDetails } from '../partnersDetails/PartnersDetails';
 import BarCharts from './BarChart';
 import MenuList from './MenuList';
+import { partnersDetails } from '../../../../utils/context';
 
 
 interface overviewDetailsProps {
@@ -63,38 +63,58 @@ export default function OverviewDetails({
                     </Tooltip>
                 </Box>
                 <BarCharts dataSet={testCategory} />
-                <Box sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-evenly",
-                    gap: 2
-                }}>
+                {uniqueId ? (
                     <Box sx={{
-                        width: "fit-content",
-                        border: "2px solid #0D3A4A",
-                        borderRadius: "5px",
-                        padding: "5px",
-                        flex: 1
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        gap: 2
                     }}>
-                        <Typography variant="caption">Total students</Typography>
-                        <Typography
-                            variant="body1"
-                        >{shortenNumber(total)}</Typography>
-                    </Box>
-                    <Box sx={{
-                        width: "fit-content",
-                        border: "2px solid #0D3A4A",
-                        borderRadius: "5px",
-                        padding: "5px",
-                        flex: 1
-                    }}>
-                        <Typography variant="caption">Code Preps</Typography>
-                        <Typography
-                            variant="body1"
-                        >{uniqueId}</Typography>
-                    </Box>
+                        <Box sx={{
+                            width: "fit-content",
+                            border: "2px solid #0D3A4A",
+                            borderRadius: "5px",
+                            padding: "5px",
+                            flex: 1
+                        }}>
+                            <Typography variant="caption">Total students</Typography>
+                            <Typography
+                                variant="body1"
+                            >{shortenNumber(total)}</Typography>
+                        </Box>
+                        <Box sx={{
+                            width: "fit-content",
+                            border: "2px solid #0D3A4A",
+                            borderRadius: "5px",
+                            padding: "5px",
+                            flex: 1,
+                        }}>
+                            <Typography variant="caption">Code Preps</Typography>
+                            <Typography
+                                variant="body1"
+                            >{uniqueId}</Typography>
+                        </Box>
 
-                </Box>
+                    </Box>
+                ) : (
+                    <Box sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2
+                    }}>
+                        <Box sx={{
+                            width: "fit-content",
+                            border: "2px solid #0D3A4A",
+                            borderRadius: "5px",
+                            padding: "5px",
+                        }}>
+                            <Typography variant="caption">Total tests</Typography>
+                            <Typography
+                                variant="body1"
+                            >{shortenNumber(total)}</Typography>
+                        </Box>
+                    </Box>
+                )}
             </Box>
         </>
     );
