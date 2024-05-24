@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { usePartner } from "../../../../utils/context/partner/PartnerContextProvider";
+import { usePartner } from "../../../../utils/context/partners/PartnerContextProvider";
 import OverviewDetails from "../OverviewDetails/OverviewDetails";
 
 export interface testCategoryStat {
@@ -15,7 +15,10 @@ export interface partnersDetails {
 
 }
 export default function PartnerDetails() {
-    const { partnersDetails, partnersDispatch } = usePartner()
+    const {
+        partnersDetails: { partnersData, isLoading },
+        partnersDispatch
+    } = usePartner()
     const partnersDetailsData: partnersDetails[] = [
         {
             name: "A.E Princèsse",
@@ -133,7 +136,7 @@ export default function PartnerDetails() {
     return (
         <OverviewDetails
             label="Partner"
-            dataList={partnersDetails}
+            dataList={partnersData}
         />
     );
 }
