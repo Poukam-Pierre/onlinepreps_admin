@@ -32,4 +32,4 @@ export interface Authentication {
   authDispatch: React.Dispatch<authAuthentication>
 }
 
-export type State = Authentication
+export type StateLogin = Authentication

@@ -1,10 +1,10 @@
-import { authAuthentication, Authentication, authInterface, State } from "./login.interface";
+import { authAuthentication, Authentication, authInterface, StateLogin } from "./login.interface";
 import { Reducer, useContext, useReducer } from "react"
 import AuthContext from "./loginContext";
 
 
 const authReducer: Reducer<Authentication, authAuthentication> = (
-    state: State,
+    state: StateLogin,
     payload: authAuthentication
 ) => {
     localStorage.setItem('auth', JSON.stringify(
@@ -34,7 +34,7 @@ function AuthContextProvider({
 }): JSX.Element {
     const initialState: Authentication = {
         userData: authStatus ?
-            (JSON.parse(authStatus?.toString()) as authInterface)
+            (JSON.parse(authStatus.toString()) as authInterface)
             :
             {
                 authData: {
