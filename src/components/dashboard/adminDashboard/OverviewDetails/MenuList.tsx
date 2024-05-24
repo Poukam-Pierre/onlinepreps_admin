@@ -1,5 +1,5 @@
 import { Menu, MenuItem } from "@mui/material";
-import { usePartner } from "../../../../utils/context/partner/PartnerContextProvider";
+import { usePartner } from "../../../../utils/context/partners/PartnerContextProvider";
 
 interface menuListProps {
     anchorEl: HTMLAnchorElement | null;
@@ -14,7 +14,7 @@ export default function MenuList({
     dataNameList,
     setPartnerSelected
 }: menuListProps) {
-    const { partnersDetails } = usePartner()
+    const { partnersDetails: { partnersData } } = usePartner()
 
     return (
         <Menu
@@ -26,10 +26,9 @@ export default function MenuList({
                 <MenuItem
                     key={index}
                     value={partnerName}
-                    divider
                     onClick={() => {
                         setAnchorEl(null);
-                        setPartnerSelected(partnersDetails.find(partner => partner.name === partnerName))
+                        setPartnerSelected(partnersData.find(partner => partner.name === partnerName))
                     }}
                 >
                     {partnerName}

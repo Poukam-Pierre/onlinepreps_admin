@@ -3,20 +3,14 @@ import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { theme } from "../../../../utils/style/theme";
 import { shortenNumber } from "../../../../utils/utilis/ShorterNumber";
-import MenuList from './MenuList';
+import { partnersDetails } from '../partnersDetails/PartnersDetails';
 import BarCharts from './BarChart';
-import { partnersDetailsType } from '../../../../utils/context/partner/partner.interface';
-
-export interface testCategoryStat {
-    [key: string]: string | number;
-    category: string;
-    value: number
-}
+import MenuList from './MenuList';
 
 
 interface overviewDetailsProps {
     label: string;
-    dataList: partnersDetailsType[];
+    dataList: partnersDetails[];
 }
 
 export default function OverviewDetails({
@@ -24,7 +18,7 @@ export default function OverviewDetails({
     dataList,
 }: overviewDetailsProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
-    const [selectedPartner, setSelectedPartner] = useState<partnersDetailsType>(dataList[0])
+    const [selectedPartner, setSelectedPartner] = useState<partnersDetails>(dataList[0])
     const { name, total, uniqueId, testCategory } = selectedPartner
     useEffect(() => {
         setSelectedPartner(dataList[0])
