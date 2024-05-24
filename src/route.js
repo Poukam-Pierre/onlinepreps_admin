@@ -39,7 +39,6 @@ export const routes = [
             path: 'epreuves',
             element: <TestSheet />,
           },
-          { path: 'achat', element: <TestSheetBuying /> },
           { path: 'profile', element: <EmployeProfil /> },
           { path: 'settings', element: <Settings /> },
           { path: 'form/:formId', element: <FormSheet /> }, // need to change by epreuve/new/formId link
