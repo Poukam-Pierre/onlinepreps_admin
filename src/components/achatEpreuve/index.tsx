@@ -8,9 +8,7 @@ import { useAuth } from '../../utils/context'
 function TestSheetBuying() {
     const {
         userData: {
-            authData: {
-                userInfo: { poste, id },
-            }
+            userInfo: { poste, id },
         }
     } = useAuth()
     return (

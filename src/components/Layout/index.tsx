@@ -13,9 +13,7 @@ export default function Layout() {
   const activeLocation = useLocation()
   const {
     userData: {
-      authData: {
-        userInfo: { is_employe, is_admin },
-      }
+      userInfo: { is_employe, is_admin },
     },
   } = useAuth()
 

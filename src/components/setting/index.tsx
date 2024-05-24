@@ -25,10 +25,8 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 function Settings() {
   const {
     userData: {
-      authData: {
-        userInfo: { id },
-        accessToken,
-      }
+      userInfo: { id },
+      accessToken,
     },
   } = useAuth()
   const authAxios = Axios.create({

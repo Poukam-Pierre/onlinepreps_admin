@@ -12,9 +12,7 @@ function TestSheet() {
   const {
 
     userData: {
-      authData: {
-        userInfo: { id, poste }
-      }
+      userInfo: { id, poste }
     }
   } = useAuth()
   function createFormSheet() {

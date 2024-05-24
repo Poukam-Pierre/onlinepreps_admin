@@ -49,9 +49,7 @@ const Pays: string[] = ['CMR', 'GBA']
 function ModifyEmploye() {
   const {
     userData: {
-      authData: {
-        accessToken
-      }
+      accessToken
     }
   } = useAuth()
   const { employeId } = useParams()

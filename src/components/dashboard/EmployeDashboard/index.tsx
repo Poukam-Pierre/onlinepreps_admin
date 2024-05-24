@@ -13,9 +13,7 @@ function EmployeDashboard() {
   const [nberTestBaught, setNbreTestBaught] = useState<number>()
   const {
     userData: {
-      authData: {
-        userInfo: { id }
-      }
+      userInfo: { id }
     }
   } = useAuth()
 

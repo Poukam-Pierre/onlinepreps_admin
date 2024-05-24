@@ -11,9 +11,7 @@ interface breadcrumbBaseProps {
 export default function BreadcrumbBase({ breadcrumbs }: breadcrumbBaseProps) {
     const {
         userData: {
-            authData: {
-                userInfo: { is_employe },
-            }
+            userInfo: { is_employe },
         }
     } = useAuth()
     const { t } = useTranslation()

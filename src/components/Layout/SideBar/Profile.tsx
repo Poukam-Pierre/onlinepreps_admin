@@ -13,9 +13,7 @@ export default function Profile({ isSideOpen }: profileProps) {
     const { t } = useTranslation()
     const {
         userData: {
-            authData: {
-                userInfo: { nom, profil_img, poste, is_employe },
-            }
+            userInfo: { nom, profil_img, poste, is_employe },
         },
         authDispatch
     } = useAuth()

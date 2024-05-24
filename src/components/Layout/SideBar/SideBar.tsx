@@ -33,9 +33,7 @@ export default function SideBar() {
     const [isSideOpen, setIsSideBarOpen] = useState<boolean>(true)
     const {
         userData: {
-            authData: {
-                userInfo: { is_employe },
-            }
+            userInfo: { is_employe },
         },
     } = useAuth()
     const { t } = useTranslation()

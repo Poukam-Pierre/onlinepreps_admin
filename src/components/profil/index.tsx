@@ -36,22 +36,20 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 function EmployeProfil() {
   const {
     userData: {
-      authData: {
-        userInfo: {
-          id,
-          nom,
-          email,
-          phoneNumber,
-          adresse,
-          profil_img,
-          poste,
-          prenom,
-          birthDate,
+      userInfo: {
+        id,
+        nom,
+        email,
+        phoneNumber,
+        adresse,
+        profil_img,
+        poste,
+        prenom,
+        birthDate,
 
-        },
-        accessToken,
-        userInfo,
-      }
+      },
+      accessToken,
+      userInfo,
     },
     authDispatch,
   } = useAuth()
