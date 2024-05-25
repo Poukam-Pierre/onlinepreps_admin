@@ -7,6 +7,7 @@ export const EmployesDetailsContext = createContext<EmployesDetails>({
       {
         name: '',
         total: 0,
+        poste: '',
         testCategory: [],
       },
     ],

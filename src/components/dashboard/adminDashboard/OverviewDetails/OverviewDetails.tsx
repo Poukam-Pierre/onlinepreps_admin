@@ -20,7 +20,7 @@ export default function OverviewDetails({
 }: overviewDetailsProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
     const [isSelected, setIsSelected] = useState<overviewStat>(dataList[0])
-    const { name, total, uniqueId, testCategory } = isSelected
+    const { name, total, uniqueId, testCategory, poste } = isSelected
 
     useEffect(() => {
         setIsSelected(dataList[0])
@@ -66,7 +66,7 @@ export default function OverviewDetails({
                     </Tooltip>
                 </Box>
                 <BarCharts dataSet={testCategory} />
-                {uniqueId ? (
+                {label !== 'Tests' ? (
                     <Box sx={{
                         display: "flex",
                         alignItems: "center",
@@ -80,7 +80,7 @@ export default function OverviewDetails({
                             padding: "5px",
                             flex: 1
                         }}>
-                            <Typography variant="caption">Total students</Typography>
+                            <Typography variant="caption">Total {poste ? 'Tests' : 'Students'}</Typography>
                             <Typography
                                 variant="body1"
                             >{shortenNumber(total)}</Typography>
@@ -92,10 +92,10 @@ export default function OverviewDetails({
                             padding: "5px",
                             flex: 1,
                         }}>
-                            <Typography variant="caption">Code Preps</Typography>
+                            <Typography variant="caption">{poste ? 'Poste' : 'Code Preps'}</Typography>
                             <Typography
                                 variant="body1"
-                            >{uniqueId}</Typography>
+                            >{poste ? poste : uniqueId}</Typography>
                         </Box>
 
                     </Box>

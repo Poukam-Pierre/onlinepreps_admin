@@ -26,6 +26,7 @@ function EmployesDetailsContextProvider({
             employesData: [
                 {
                     name: '',
+                    poste: '',
                     total: 0,
                     testCategory: [],
                 },

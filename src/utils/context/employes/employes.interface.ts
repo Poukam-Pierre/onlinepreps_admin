@@ -10,6 +10,7 @@ interface testCategoryStat {
 
 export interface employesDetails {
   name: string
+  poste: string
   total: number
   testCategory: testCategoryStat[]
 }

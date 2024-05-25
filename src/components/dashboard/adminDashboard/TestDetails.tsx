@@ -13,6 +13,7 @@ export default function TestDetails() {
         {
             name: "NANA",
             total: 25,
+            poste: "Agent | NDE",
             testCategory: [
                 {
                     category: "A",
@@ -39,6 +40,7 @@ export default function TestDetails() {
         {
             name: "NGAMALEU",
             total: 10,
+            poste: "Agent | BAF",
             testCategory: [
                 {
                     category: "A",
@@ -65,6 +67,7 @@ export default function TestDetails() {
         {
             name: "POUKAM",
             total: 10,
+            poste: "Agent | DLA",
             testCategory: [
                 {
                     category: "A",
@@ -91,6 +94,7 @@ export default function TestDetails() {
         {
             name: "YOMETCHEU",
             total: 100,
+            poste: "Agent | YDE",
             testCategory: [
                 {
                     category: "A",
