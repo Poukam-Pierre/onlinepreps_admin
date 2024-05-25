@@ -1,6 +1,7 @@
 export interface LanguageContextProviderProps {
   children: JSX.Element
 }
+export interface overviewStat extends partnersDetails {}
 
 export interface testCategoryStat {
   [key: string]: string | number

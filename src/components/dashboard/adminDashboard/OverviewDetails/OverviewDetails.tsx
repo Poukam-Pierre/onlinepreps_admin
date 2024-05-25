@@ -5,12 +5,13 @@ import { theme } from "../../../../utils/style/theme";
 import { shortenNumber } from "../../../../utils/utilis/ShorterNumber";
 import BarCharts from './BarChart';
 import MenuList from './MenuList';
-import { partnersDetails } from '../../../../utils/context';
+import { overviewStat } from '../../../../utils/context';
+
 
 
 interface overviewDetailsProps {
     label: string;
-    dataList: partnersDetails[];
+    dataList: overviewStat[];
 }
 
 export default function OverviewDetails({
@@ -18,18 +19,20 @@ export default function OverviewDetails({
     dataList,
 }: overviewDetailsProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
-    const [selectedPartner, setSelectedPartner] = useState<partnersDetails>(dataList[0])
-    const { name, total, uniqueId, testCategory } = selectedPartner
+    const [isSelected, setIsSelected] = useState<overviewStat>(dataList[0])
+    const { name, total, uniqueId, testCategory } = isSelected
+
     useEffect(() => {
-        setSelectedPartner(dataList[0])
+        setIsSelected(dataList[0])
     }, [dataList])
+
     return (
         <>
             <MenuList
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                dataNameList={dataList.map(partner => partner.name)}
-                setPartnerSelected={setSelectedPartner}
+                dataList={dataList}
+                setSelected={setIsSelected}
             />
             <Box sx={{
                 display: "grid",
@@ -49,7 +52,7 @@ export default function OverviewDetails({
                     </Box>
                     <Tooltip
                         arrow
-                        title="Partners list"
+                        title={`${label} list`}
                     >
                         <IconButton
                             size="small"
