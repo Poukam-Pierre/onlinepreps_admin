@@ -18,7 +18,9 @@ export default function Header() {
     const location = useLocation()
     const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null)
     const {
-        userInfo: { is_employe },
+        userData: {
+            userInfo: { is_employe },
+        }
     } = useAuth()
     const { t } = useTranslation()
 

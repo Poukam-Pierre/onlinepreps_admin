@@ -20,7 +20,7 @@ import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useBeforeunload } from 'react-beforeunload'
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import { io } from 'socket.io-client'
 import {
   countries,
@@ -31,7 +31,7 @@ import { theme } from '../../../utils/style/theme'
 import { alertMsgInterface } from '../../employe/createEmploy'
 import { question } from '../../formSheet/functionSheet'
 import questionsUI from '../../formSheet/questionUI'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
 
 // Chargement des données statiques de la BDD
 const categoryArray: string[] = []
@@ -244,13 +244,13 @@ function ModifyTestSheet() {
   const submitButtonSx = {
     ...(success === 'default'
       ? {
-          bgcolor: theme.palette.primary.main,
-        }
+        bgcolor: theme.palette.primary.main,
+      }
       : success === 'success'
-      ? {
+        ? {
           bgcolor: theme.common.submitBtnSuccess,
         }
-      : {
+        : {
           bgcolor: theme.common.submitBtnEchec,
         }),
   }

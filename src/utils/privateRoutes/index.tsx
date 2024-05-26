@@ -2,11 +2,16 @@
 
 import { useAuth } from '../../utils/context'
 import { useEffect } from 'react'
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
+import { useNavigate, Outlet, useLocation } from "react-router-dom"
 
 function PrivateRoutes() {
   const {
-    userInfo: { is_employe, is_admin },
+    userData: {
+      userInfo: {
+        is_employe,
+        is_admin
+      },
+    },
   } = useAuth()
 
   const navigate = useNavigate()

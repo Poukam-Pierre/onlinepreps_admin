@@ -17,5 +17,9 @@
     "management": "Management",
     "changeLanguage": "Change language",
     "open": "Open",
-    "close":"Close"
+    "close":"Close",
+    "souscriptionCharts": "Souscription details",
+    "months": "Months",
+    "years": "Years",
+    "Administrator":"Administrator"
 }

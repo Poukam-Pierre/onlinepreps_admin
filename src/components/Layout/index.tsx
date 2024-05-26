@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import SideBar from "./SideBar/SideBar";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
+import { useNavigate, Outlet, useLocation } from "react-router-dom"
 import { useEffect } from "react";
 import { useAuth } from "../../utils/context";
 
@@ -12,7 +12,9 @@ export default function Layout() {
   const navigate = useNavigate()
   const activeLocation = useLocation()
   const {
-    userInfo: { is_employe, is_admin },
+    userData: {
+      userInfo: { is_employe, is_admin },
+    },
   } = useAuth()
 
   useEffect(() => {

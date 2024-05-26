@@ -4,7 +4,7 @@ import { Box, IconButton, Tooltip } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { StyledLink } from '../../../sideBar/sideBarEmploye'
+import { Link } from "react-router-dom"
 import { rowsInterface } from '../ep_total'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
@@ -16,35 +16,35 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id_epreuve', headerName: 'ID', width: 220 },
-  { field: 'libele_cat', headerName: 'Catégorie', width: 90 },
-  {
-    field: 'date_session',
-    headerName: 'Session',
-    width: 180,
-  },
-  { field: 'libele_depart', headerName: 'Département', width: 180 },
-  { field: 'code_pays', headerName: 'Pays', width: 70 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    width: 150,
-    renderCell: () => {
-      return (
-        <span
-          style={{
-            backgroundColor: '#D2F0F2',
-            color: '#41B2BA',
-            padding: '10px',
-            borderRadius: '15px',
-          }}
-        >
-          En production
-        </span>
-      )
+    { field: 'id_epreuve', headerName: 'ID', width: 220 },
+    { field: 'libele_cat', headerName: 'Catégorie', width: 90 },
+    {
+      field: 'date_session',
+      headerName: 'Session',
+      width: 180,
     },
-  },
-]
+    { field: 'libele_depart', headerName: 'Département', width: 180 },
+    { field: 'code_pays', headerName: 'Pays', width: 70 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 150,
+      renderCell: () => {
+        return (
+          <span
+            style={{
+              backgroundColor: '#D2F0F2',
+              color: '#41B2BA',
+              padding: '10px',
+              borderRadius: '15px',
+            }}
+          >
+            En production
+          </span>
+        )
+      },
+    },
+  ]
 
 function ProductionSheetTable({
   setMsg,
@@ -88,36 +88,36 @@ function ProductionSheetTable({
     width: number
     renderCell: any
   }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 120,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Tooltip title="Apperçu">
-              <IconButton
-                sx={{ color: '#1A9EA7' }}
-                component={StyledLink}
-                to={`/admin/epreuve/view/${params.row.id_epreuve}`}
-              >
-                <VisibilityOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Modifier">
-              <IconButton
-                sx={{ color: '#1D689F' }}
-                component={StyledLink}
-                to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
-              >
-                <EditOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 120,
+        renderCell: (params: any) => {
+          return (
+            <Box display="flex" gap="10px">
+              <Tooltip title="Apperçu">
+                <IconButton
+                  sx={{ color: '#1A9EA7' }}
+                  component={Link}
+                  to={`/admin/epreuve/view/${params.row.id_epreuve}`}
+                >
+                  <VisibilityOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Modifier">
+                <IconButton
+                  sx={{ color: '#1D689F' }}
+                  component={Link}
+                  to={`/admin/epreuve/modify/${params.row.id_epreuve}`}
+                >
+                  <EditOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )
+        },
       },
-    },
-  ]
+    ]
   return (
     <DataGrid
       getRowId={(row) => row.id_epreuve}

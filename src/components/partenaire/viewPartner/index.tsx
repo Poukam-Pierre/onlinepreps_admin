@@ -21,7 +21,7 @@ import {
 import { Box } from '@mui/system'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import ChartInscription from './chartInscription'
 import TransactionTable from './transactionTable'
 import { alertMsgInterface } from '../../employe/createEmploy'

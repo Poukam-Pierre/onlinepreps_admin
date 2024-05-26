@@ -35,20 +35,23 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function EmployeProfil() {
   const {
-    userInfo: {
-      id,
-      nom,
-      email,
-      phoneNumber,
-      adresse,
-      profil_img,
-      poste,
-      prenom,
-      birthDate,
+    userData: {
+      userInfo: {
+        id,
+        nom,
+        email,
+        phoneNumber,
+        adresse,
+        profil_img,
+        poste,
+        prenom,
+        birthDate,
+
+      },
+      accessToken,
+      userInfo,
     },
     authDispatch,
-    accessToken,
-    userInfo,
   } = useAuth()
 
   const authAxios = Axios.create({
@@ -285,7 +288,7 @@ function EmployeProfil() {
                   ? { error: true, helperText: errors.email }
                   : '')}
               />
-              <StylePhoneNumber
+              {/* <StylePhoneNumber
                 value={values.phoneNumber as string}
                 onChange={(number) =>
                   setFieldValue(`phoneNumber`, number?.toString())
@@ -309,7 +312,7 @@ function EmployeProfil() {
                     width: '90%',
                   },
                 }}
-              />
+              /> */}
               <TextField
                 name="adresse"
                 label="Adresse"

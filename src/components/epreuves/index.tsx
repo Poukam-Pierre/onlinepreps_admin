@@ -4,13 +4,16 @@ import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import TestSheetTable from './testSheetTable'
 import uuid from 'react-uuid'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
 import { useAuth } from '../../utils/context'
 
 function TestSheet() {
   const navigate = useNavigate()
   const {
-    userInfo: { poste, id },
+
+    userData: {
+      userInfo: { id, poste }
+    }
   } = useAuth()
   function createFormSheet() {
     const id_ = uuid()

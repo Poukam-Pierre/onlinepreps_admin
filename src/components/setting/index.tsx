@@ -24,8 +24,10 @@ type TransitionProps = Omit<SlideProps, 'direction'>
 
 function Settings() {
   const {
-    accessToken,
-    userInfo: { id },
+    userData: {
+      userInfo: { id },
+      accessToken,
+    },
   } = useAuth()
   const authAxios = Axios.create({
     baseURL: `${process.env.REACT_APP_URL_REMOTE_LINK}/common`,

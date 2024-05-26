@@ -12,8 +12,10 @@ export default function Profile({ isSideOpen }: profileProps) {
     const navigate = useNavigate()
     const { t } = useTranslation()
     const {
-        authDispatch,
-        userInfo: { nom, profil_img, poste, is_employe },
+        userData: {
+            userInfo: { nom, profil_img, poste, is_employe },
+        },
+        authDispatch
     } = useAuth()
 
     const disconnected = () => {
@@ -68,7 +70,7 @@ export default function Profile({ isSideOpen }: profileProps) {
                     in={isSideOpen}
                     orientation="horizontal"
                 >
-                    {poste}
+                    {t(`${poste}`)}
                 </Typography>
             </Box>
             <Tooltip

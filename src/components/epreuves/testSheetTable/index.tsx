@@ -1,11 +1,11 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Button } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
-import { useState, useEffect } from 'react'
-import CircularProgress from '@mui/material/CircularProgress'
-import Axios from 'axios'
+import { Box, Button } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Axios from 'axios';
 
 const columns: {
   field: string
@@ -13,59 +13,59 @@ const columns: {
   width: number
   renderCell?: any
 }[] = [
-  { field: 'id_epreuve', headerName: 'ID', width: 200 },
-  { field: 'libele_cat', headerName: 'Catégorie', width: 130 },
-  {
-    field: 'date_session',
-    headerName: 'Session',
-    width: 180,
-  },
-  {
-    field: 'status',
-    headerName: 'Status',
-    width: 180,
-    renderCell: (params: any) => {
-      return (
-        <>
-          {params.row.status === 'production' ? (
-            <span
-              style={{
-                backgroundColor: '#D2F0F2',
-                color: '#41B2BA',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              En production
-            </span>
-          ) : params.row.status === 'stopped' ? (
-            <span
-              style={{
-                backgroundColor: ' #CAD2FF',
-                color: '#626DA9',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              En arrêt
-            </span>
-          ) : (
-            <span
-              style={{
-                backgroundColor: '#F89E9E',
-                color: '#A95454 ',
-                padding: '10px',
-                borderRadius: '15px',
-              }}
-            >
-              Non validé
-            </span>
-          )}
-        </>
-      )
+    { field: 'id_epreuve', headerName: 'ID', width: 200 },
+    { field: 'libele_cat', headerName: 'Catégorie', width: 130 },
+    {
+      field: 'date_session',
+      headerName: 'Session',
+      width: 180,
     },
-  },
-]
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 180,
+      renderCell: (params: any) => {
+        return (
+          <>
+            {params.row.status === 'production' ? (
+              <span
+                style={{
+                  backgroundColor: '#D2F0F2',
+                  color: '#41B2BA',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                En production
+              </span>
+            ) : params.row.status === 'stopped' ? (
+              <span
+                style={{
+                  backgroundColor: ' #CAD2FF',
+                  color: '#626DA9',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                En arrêt
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: '#F89E9E',
+                  color: '#A95454 ',
+                  padding: '10px',
+                  borderRadius: '15px',
+                }}
+              >
+                Non validé
+              </span>
+            )}
+          </>
+        )
+      },
+    },
+  ]
 
 interface rowsInterface {
   id_epreuve: string
@@ -101,46 +101,46 @@ function TestSheetTable({ id_ }: { id_: number }) {
     width: number
     renderCell: any
   }[] = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 230,
-      renderCell: (params: any) => {
-        return (
-          <Box display="flex" gap="10px">
-            <Box
-              component={StyledLink}
-              to={`/epreuve/view/${params.row.id_epreuve}`}
-            >
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: '#CBCBCB',
-                  color: '#1A9EA7',
-                }}
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 230,
+        renderCell: (params: any) => {
+          return (
+            <Box display="flex" gap="10px">
+              <Box
+                component={Link}
+                to={`/epreuve/view/${params.row.id_epreuve}`}
               >
-                Apperçu
-              </Button>
-            </Box>
-            <Box
-              component={StyledLink}
-              to={`/epreuve/modify/${params.row.id_epreuve}`}
-            >
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: '#CBCBCB',
-                  color: '#1D689F',
-                }}
+                <Button
+                  variant="outlined"
+                  sx={{
+                    borderColor: '#CBCBCB',
+                    color: '#1A9EA7',
+                  }}
+                >
+                  Apperçu
+                </Button>
+              </Box>
+              <Box
+                component={Link}
+                to={`/epreuve/modify/${params.row.id_epreuve}`}
               >
-                Modifier
-              </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    borderColor: '#CBCBCB',
+                    color: '#1D689F',
+                  }}
+                >
+                  Modifier
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        )
+          )
+        },
       },
-    },
-  ]
+    ]
   return loadingData ? (
     <CircularProgress
       size={24}

@@ -17,7 +17,7 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { alertMsgInterface } from '../createEmploy'
@@ -47,7 +47,11 @@ export const StylePhoneNumber = styled(PhoneInput)({
 const Pays: string[] = ['CMR', 'GBA']
 
 function ModifyEmploye() {
-  const { accessToken } = useAuth()
+  const {
+    userData: {
+      accessToken
+    }
+  } = useAuth()
   const { employeId } = useParams()
   const [employeData, setEmployeData] = useState<employeDataInterface>({
     nom: '',
@@ -237,7 +241,7 @@ function ModifyEmploye() {
             sx={{ width: '45%' }}
           />
 
-          <StylePhoneNumber
+          {/* <StylePhoneNumber
             value={values.phoneNumber}
             onChange={(number) =>
               setFieldValue(`phoneNumber`, number?.toString())
@@ -258,7 +262,7 @@ function ModifyEmploye() {
                 width: '100%',
               },
             }}
-          />
+          /> */}
           <TextField
             label="Mot de passe"
             type="password"

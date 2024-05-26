@@ -32,7 +32,9 @@ export interface sideBarSection {
 export default function SideBar() {
     const [isSideOpen, setIsSideBarOpen] = useState<boolean>(true)
     const {
-        userInfo: { is_employe },
+        userData: {
+            userInfo: { is_employe },
+        },
     } = useAuth()
     const { t } = useTranslation()
     const sideBarSectionAdmin: sideBarSection[] = [

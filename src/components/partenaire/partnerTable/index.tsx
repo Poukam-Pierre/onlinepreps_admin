@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { theme } from '../../../utils/style/theme'
-import { StyledLink } from '../../sideBar/sideBarEmploye'
+import { Link } from "react-router-dom"
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import { useState, useEffect } from 'react'
@@ -141,7 +141,7 @@ function PartnerTable() {
               <Tooltip title="Apperçu">
                 <IconButton
                   sx={{ color: theme.palette.primary.light }}
-                  component={StyledLink}
+                  component={Link}
                   to={`/admin/partner/${params.row.id_user}`}
                 >
                   <VisibilityOutlinedIcon />

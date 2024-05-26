@@ -1,55 +1,28 @@
 // Made by Poukam Ngamaleu
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from 'recharts'
-import { useState, useEffect } from 'react'
-import Axios from 'axios'
+import { souscriptionDataFetched } from '../SouscriptionDetails'
 
-export interface souscriptionDataInterface {
-  name: string
-  total: number
+interface yearChartProps {
+  yearsDataFetched: souscriptionDataFetched[]
 }
 
-function Charts() {
-  const [souscriptionData, setSouscriptionData] = useState<
-    souscriptionDataInterface[]
-  >([
-    {
-      name: 'Janvier',
-      total: 0,
-    },
-  ])
+export default function YearCharts({ yearsDataFetched }: yearChartProps) {
 
-  useEffect(() => {
-    //TODO change local link to remote link
-
-    Axios.get(
-      `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getSouscriptionDate`
-    )
-      .then((res) => {
-        if (res?.status === 200) {
-          setSouscriptionData(res.data)
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          return
-        }
-      })
-  }, [])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         width={730}
         height={250}
-        data={souscriptionData}
+        data={yearsDataFetched}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
         <defs>
@@ -58,7 +31,7 @@ function Charts() {
             <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="name" />
+        <XAxis dataKey="month" />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
@@ -74,4 +47,3 @@ function Charts() {
   )
 }
 
-export default Charts

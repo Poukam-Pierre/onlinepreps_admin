@@ -216,7 +216,7 @@ function CreationEmploye() {
               ? { error: true, helperText: errors.email }
               : '')}
           />
-          <Box display="grid" width="45%">
+          {/* <Box display="grid" width="45%">
             <StylePhoneNumber
               value={values.phoneNumber}
               onChange={(number) =>
@@ -243,7 +243,7 @@ function CreationEmploye() {
             ) : (
               ''
             )}
-          </Box>
+          </Box> */}
           <TextField
             label="Mot de passe"
             type="password"

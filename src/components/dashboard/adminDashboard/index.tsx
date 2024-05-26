@@ -1,32 +1,23 @@
 // Made by Poukam Ngamaleu
 
-import { Box, Paper, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import Axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import { theme } from '../../../utils/style/theme'
-import Charts from './charts'
-
-interface dashDataInterface {
-  employeNber: number
-  partnerNber: number
-  studentsNber: number
-  testSheetNber: number
-}
+import SouscriptionDetails from './AdminSouscriptionDetails/SouscriptionDetails'
+import Counter from './Counter'
+import PartnerDetails from './PartnersDetails'
+import EmployesDetails from './EmployesDetails'
+import TestDetails from './TestDetails'
 
 function AdminDashboard() {
-  const [dashData, setDashData] = useState<dashDataInterface>({
-    employeNber: 0,
-    partnerNber: 0,
-    studentsNber: 0,
-    testSheetNber: 0,
-  })
+
   useEffect(() => {
     // TODO change local link to remote link
     Axios.get(`${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getStatAdmin`)
       .then((res) => {
         if (res?.status === 200) {
-          setDashData(res.data)
+          return
         }
       })
       .catch((err) => {
@@ -35,93 +26,30 @@ function AdminDashboard() {
   }, [])
 
   return (
-    <Box p={3}>
-      <Typography variant="h4" color="#555">
-        Tableau de bord
-      </Typography>
-      <Box display="flex" justifyContent="space-around" padding="50px 0 0 0">
-        <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
-          <Typography variant="h5" color="#555" paddingBottom="20px">
-            Employes
-          </Typography>
-          <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            {dashData.employeNber}
-          </Typography>
-          <Box
-            component={Link}
-            to="/admin/employes"
-            color={theme.palette.primary.main}
-            sx={{ '& :hover': { color: theme.palette.secondary.main } }}
-          >
-            <Typography>Liste des employes</Typography>
-          </Box>
-        </Paper>
-        <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            paddingBottom="20px"
-          >
-            <Typography variant="h5" color="#555">
-              Partenaires
-            </Typography>
-          </Box>
-          <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            {dashData.partnerNber}
-          </Typography>
-          <Box
-            component={Link}
-            to="/admin/partner"
-            color={theme.palette.primary.main}
-            sx={{ '& :hover': { color: theme.palette.secondary.main } }}
-          >
-            <Typography>Liste des partenaires</Typography>
-          </Box>
-        </Paper>
-        <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            paddingBottom="20px"
-          >
-            <Typography variant="h5" color="#555">
-              Apprenants
-            </Typography>
-          </Box>
-          <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            {dashData.studentsNber}
-          </Typography>
-        </Paper>
-        <Paper sx={{ padding: '20px', width: '15rem', bgcolor: '#F5F0F0' }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            paddingBottom="20px"
-          >
-            <Typography variant="h5" color="#555">
-              Epreuves
-            </Typography>
-          </Box>
-          <Typography variant="h4" fontWeight="bold" paddingBottom="20px">
-            {dashData.testSheetNber}
-          </Typography>
-          <Box
-            component={Link}
-            to="/admin/epreuves"
-            color={theme.palette.primary.main}
-            sx={{ '& :hover': { color: theme.palette.secondary.main } }}
-          >
-            <Typography>Liste des epreuves</Typography>
-          </Box>
-        </Paper>
+    <Box sx={{
+      backgroundColor: theme.common.background,
+      padding: 2,
+      display: 'grid',
+      rowGap: '10px'
+
+    }}>
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        columnGap: '40px'
+      }}>
+        <SouscriptionDetails />
+        <Counter />
       </Box>
-      <Box paddingTop="15px" component={Paper} marginTop="30px">
-        <Typography variant="h5" color="#555" padding="0 0  20px 50px">
-          Graphe d'abonnement
-        </Typography>
-        <Box display="flex" justifyContent="center" height="25rem" padding={1}>
-          <Charts />
-        </Box>
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+
+      }}>
+        <PartnerDetails />
+        <EmployesDetails />
+        <TestDetails />
       </Box>
     </Box>
   )
