@@ -7,6 +7,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useTranslation } from "react-i18next";
 import { theme } from "../../../../utils/style/theme";
+import apiMiddleware from "../../../../utils/utilis/apiMiddleware";
 
 export interface fetchingDataSelection {
     type: string;
@@ -21,95 +22,6 @@ interface souscriptionDatas {
     data?: souscriptionDataFetched[],
     loaded: boolean,
 }
-const monthsDataFetched: souscriptionDataFetched[] = [
-    {
-        days: 1,
-        value: 2
-    },
-    {
-        days: 5,
-        value: 20
-    },
-    {
-        days: 7,
-        value: 10
-    },
-    {
-        days: 8,
-        value: 8
-    },
-    {
-        days: 9,
-        value: 15
-    },
-    {
-        days: 10,
-        value: 20
-    },
-    {
-        days: 12,
-        value: 20
-    },
-    {
-        days: 18,
-        value: 7
-    },
-    {
-        days: 25,
-        value: 2
-    },
-]
-const yearsDataFetched: souscriptionDataFetched[] = [
-    {
-        month: 'Jan',
-        total: 2
-    },
-    {
-        month: 'Feb',
-        total: 10
-    },
-    {
-        month: 'Mar',
-        total: 20
-    },
-    {
-        month: 'Apr',
-        total: 3
-    },
-    {
-        month: 'May',
-        total: 5
-    },
-    {
-        month: 'Jun',
-        total: 8
-    },
-    {
-        month: 'Jul',
-        total: 7
-    },
-    {
-        month: 'Aug',
-        total: 10
-    },
-    {
-        month: 'Sep',
-        total: 13
-    },
-    {
-        month: 'Oct',
-        total: 27
-    },
-    {
-        month: 'Nov',
-        total: 18
-    },
-    {
-        month: 'Dec',
-        total: 26
-    },
-
-]
 
 export default function SouscriptionDetails() {
     const [activePeriodSelection, setActivePeriodSelection] = useState<fetchingDataSelection>({
@@ -121,24 +33,46 @@ export default function SouscriptionDetails() {
     })
     const [indexValue, setIndexValue] = useState<number>(0)
     const { t } = useTranslation()
+
     useEffect(() => {
         // Fetch data fro the selection month and year
-        setSouscriptionDatas({
-            data: monthsDataFetched,
-            loaded: false
+        apiMiddleware({
+            url: "/admin/getSouscriptionDate",
+            data: activePeriodSelection,
+            method: 'GET',
+            onSuccess: (data) => {
+                setSouscriptionDatas({
+                    data: data as souscriptionDataFetched[],
+                    loaded: false
+                })
+            },
+            onFailure: (data) => { }
         })
     }, [activePeriodSelection])
 
     const forwardDate = () => {
         setIndexValue(souscriptionPeriodYears
             .indexOf(souscriptionPeriodYears[indexValue]) + 1)
-        setActivePeriodSelection({ ...activePeriodSelection, period: souscriptionPeriodYears[indexValue] })
+
+        setActivePeriodSelection(
+            {
+                ...activePeriodSelection,
+                period: souscriptionPeriodYears[indexValue + 1]
+            }
+        )
     }
     const backwardDate = () => {
         setIndexValue(souscriptionPeriodYears
             .indexOf(souscriptionPeriodYears[indexValue]) - 1)
-        setActivePeriodSelection({ ...activePeriodSelection, period: souscriptionPeriodYears[indexValue] })
+
+        setActivePeriodSelection(
+            {
+                ...activePeriodSelection,
+                period: souscriptionPeriodYears[indexValue - 1]
+            }
+        )
     }
+
     return (
         <Box sx={{
             backgroundColor: theme.palette.secondary.contrastText,
@@ -165,12 +99,14 @@ export default function SouscriptionDetails() {
                 height: 200,
                 width: 'auto'
             }}>
-                {!souscriptionDatas.loaded ? activePeriodSelection.type === 'years' ? (
-                    <YearCharts yearsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
+                {!souscriptionDatas.loaded ?
+                    activePeriodSelection.type === 'years' ?
+                        (
+                            <YearCharts yearsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
 
-                ) : (
-                    <MonthCharts monthsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
-                ) :
+                        ) : (
+                            <MonthCharts monthsDataFetched={souscriptionDatas.data as souscriptionDataFetched[]} />
+                        ) :
                     <CircularProgress
                         disableShrink
                         variant="indeterminate"
