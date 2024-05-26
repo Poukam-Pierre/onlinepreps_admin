@@ -16,21 +16,7 @@ interface yearChartProps {
 
 export default function YearCharts({ yearsDataFetched }: yearChartProps) {
 
-  // useEffect(() => {
-  //   Axios.get(
-  //     `${process.env.REACT_APP_URL_REMOTE_LINK}/admin/getSouscriptionDate`
-  //   )
-  //     .then((res) => {
-  //       if (res?.status === 200) {
-  //         setSouscriptionData(res.data)
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.status === 400) {
-  //         return
-  //       }
-  //     })
-  // }, [])
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
