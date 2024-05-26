@@ -70,7 +70,7 @@ export default function Profile({ isSideOpen }: profileProps) {
                     in={isSideOpen}
                     orientation="horizontal"
                 >
-                    {poste}
+                    {t(`${poste}`)}
                 </Typography>
             </Box>
             <Tooltip
