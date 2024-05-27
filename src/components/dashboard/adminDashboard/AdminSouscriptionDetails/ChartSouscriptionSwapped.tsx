@@ -11,7 +11,7 @@ interface chartSouscriptionProps {
 }
 const souscriptionPeriodMonths: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 const souscriptionPeriod: string[] = ["months", "years"]
-export const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2021 },
+export const souscriptionPeriodYears: number[] = Array.from({ length: new Date().getFullYear() - 2022 },
     (_, i) => new Date().getFullYear() - i)
 
 export default function ChartSouscriptionSwapped({

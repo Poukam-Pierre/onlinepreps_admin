@@ -3,7 +3,7 @@ import axios, { AxiosHeaders } from 'axios'
 interface apiMiddlewareProps {
   url: string
   method: string
-  data: unknown
+  data?: unknown
   accessToken?: string
   onSuccess: (data: unknown) => void
   onFailure: (data: string) => void
