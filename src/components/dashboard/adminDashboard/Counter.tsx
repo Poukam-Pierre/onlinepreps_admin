@@ -2,8 +2,10 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { shortenNumber } from "../../../utils/utilis/ShorterNumber";
 import { useEffect, useState } from "react";
 import { theme } from "../../../utils/style/theme";
+import apiMiddleware from "../../../utils/utilis/apiMiddleware";
 
 interface counterStat {
+    [key: string]: number | string;
     label: string,
     value: number,
 }
@@ -11,25 +13,7 @@ interface counterStatDatas {
     data?: counterStat[]
     loaded: boolean
 }
-const counterStats: counterStat[] = [
-    {
-        label: "Students",
-        value: 20
-    },
-    {
-        label: "Partners",
-        value: 200
-    },
-    {
-        label: "Employes",
-        value: 10
-    },
-    {
-        label: "Partners",
-        value: 9
-    },
 
-]
 export default function Counter() {
     const [counterDatas, setCounterDatas] = useState<counterStatDatas>(
         {
@@ -37,11 +21,16 @@ export default function Counter() {
         }
     )
     useEffect(() => {
-        // Fetch data for counter stat data
-        setCounterDatas({
-            ...counterDatas,
-            data: counterStats,
-            loaded: false
+        apiMiddleware({
+            url: "/admin/getStatAdmin",
+            method: "GET",
+            onSuccess: (data) => {
+                setCounterDatas({
+                    data: data as counterStat[],
+                    loaded: false
+                })
+            },
+            onFailure: (data) => { }
         })
     }, [])
     return (
