@@ -41,11 +41,12 @@ export default function Profile({ isSideOpen }: profileProps) {
         }}>
             <Tooltip arrow title={t('profile')}>
                 <Avatar
-                    alt="profil"
+                    alt={nom}
                     src={profil_img}
                     sx={{
                         display: isSideOpen ? 'flex' : 'none',
                         cursor: 'pointer',
+                        color: theme.palette.primary.light
                     }}
                     onClick={() => navigate(is_employe ? '/profile' : '/admin/profile')}
                 />
@@ -63,7 +64,7 @@ export default function Profile({ isSideOpen }: profileProps) {
                         textWrap: 'nowrap',
                         whiteSpace: 'nowrap'
                     }}
-                >{nom.toUpperCase()}</Typography>
+                >{nom.toUpperCase().split(' ')[0]}</Typography>
                 <Typography
                     variant="body2"
                     component={Collapse}
