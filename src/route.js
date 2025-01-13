@@ -1,6 +1,5 @@
 //  Made by Poukam Ngamaleu
 
-import TestSheetBuying from './components/achatEpreuve'
 import AdminDashboard from './components/dashboard/adminDashboard'
 import EmployeDashboard from './components/dashboard/EmployeDashboard'
 import Employes from './components/employe'
