@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, Tab, Tabs } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import uploadImg from '../../asset/upload_img.png';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
@@ -113,7 +113,7 @@ function ImgDialog({
                 Télécharger
                 <VisuallyHiddenInput
                     type="file"
-                    onChange={(event) => console.log(event.target.files)}
+                    onChange={(e) => photoUpload(index, questions, setQuestions, e)}
                 />
             </Button>
         </Box>,
@@ -137,7 +137,6 @@ function ImgDialog({
             fullWidth
             maxWidth="md"
             open={open}
-            onClose={() => setOpen(false)}
             sx={{ '.MuiDialog-paper': { height: '500px' } }}
         >
             <DialogTitle
@@ -146,7 +145,9 @@ function ImgDialog({
             </DialogTitle>
             <IconButton
                 aria-label="close"
-                onClick={() => setOpen(false)}
+                onClick={() => setData(
+                    prevData => ({ ...prevData, open: false }))
+                }
                 sx={(theme) => ({
                     position: 'absolute',
                     right: 8,
