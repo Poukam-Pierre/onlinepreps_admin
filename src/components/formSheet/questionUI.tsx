@@ -600,4 +600,4 @@ function QuestionsUI(
   )
 }
 
-export default questionsUI
+export default QuestionsUI
