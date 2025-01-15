@@ -65,6 +65,13 @@ function QuestionsUI(
   setFeedBack: any,
   setOpen: any
 ) {
+
+  const [dataDialog, setDataDialog] = useState<dataDialog>({
+    open: false,
+    questions: [],
+    index: 0,
+    setQuestions,
+  })
   return (
     <>
       <ImgDialog />
