@@ -1,8 +1,22 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, Tab, Tabs } from "@mui/material";
+import { Box, Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, Tab, Tabs } from "@mui/material";
 import { ReactNode, useState } from "react";
+import uploadImg from '../../asset/upload_img.png';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
 
 type TabComponent = Record<number, ReactNode>;
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 function ImgDialog() {
     const [open, setOpen] = useState<boolean>(true);
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
@@ -62,7 +76,35 @@ function ImgDialog() {
     ];
 
     const tabComponent: TabComponent = {
-        0: <Button>Télécharger</Button>,
+        0: <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            p: '16px 0'
+        }}>
+            <Box
+                component='img'
+                src={uploadImg}
+                alt='upload image'
+                sx={{ maxWidth: 150 }}
+            />
+            <Button
+                component='label'
+                variant='contained'
+                disableElevation
+                size='small'
+                startIcon={<CloudUploadIcon />}
+            >
+                Télécharger
+                <VisuallyHiddenInput
+                    type="file"
+                    onChange={(event) => console.log(event.target.files)}
+                />
+            </Button>
+        </Box>,
         1: <ImageList>
             {itemData.map((item) => (
                 <ImageListItem key={item.img}>
@@ -101,23 +143,23 @@ function ImgDialog() {
                 <CloseIcon />
             </IconButton>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-                value={activeTabIndex}
-                onChange={(_, tabIndex) => handleTabIndex(tabIndex)}
-                textColor='primary'
-                indicatorColor="primary"
-            >
-                {
-                    tabTitle.map((title, index) => (
-                        <Tab
-                            disableRipple
-                            key={index}
-                            label={title}
+                <Tabs
+                    value={activeTabIndex}
+                    onChange={(_, tabIndex) => handleTabIndex(tabIndex)}
+                    textColor='primary'
+                    indicatorColor="primary"
+                >
+                    {
+                        tabTitle.map((title, index) => (
+                            <Tab
+                                disableRipple
+                                key={index}
+                                label={title}
                                 sx={{ fontSize: '0.75rem' }}
-                        />
-                    ))
-                }
-            </Tabs>
+                            />
+                        ))
+                    }
+                </Tabs>
             </Box>
             {tabComponent[activeTabIndex]}
         </Dialog>
