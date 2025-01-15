@@ -105,7 +105,7 @@ function ImgDialog() {
                 />
             </Button>
         </Box>,
-        1: <ImageList>
+        1: <ImageList cols={5} sx={{ p: 2 }}>
             {itemData.map((item) => (
                 <ImageListItem key={item.img}>
                     <img
@@ -128,7 +128,7 @@ function ImgDialog() {
         >
             <DialogTitle
                 sx={{ m: 0, p: 2, fontSize: '1rem' }}>
-                Inserer d'image
+                Inserer image
             </DialogTitle>
             <IconButton
                 aria-label="close"
