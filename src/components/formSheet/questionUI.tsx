@@ -74,7 +74,11 @@ function QuestionsUI(
   })
   return (
     <>
-      <ImgDialog />
+      <ImgDialog
+        dataDialog={dataDialog}
+        setData={setDataDialog}
+        photoUpload={photoUpload}
+      />
       {questions.map((quest, index_1) => (
         <Draggable key={index_1} draggableId={`${index_1}id`} index={index_1}>
           {(provided, snapshot) => (
