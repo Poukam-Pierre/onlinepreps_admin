@@ -78,10 +78,14 @@ function ImgDialog() {
     }
     return (
         <Dialog
+            fullWidth
+            maxWidth="md"
             open={open}
             onClose={() => setOpen(false)}
+            sx={{ '.MuiDialog-paper': { height: '500px' } }}
         >
-            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+            <DialogTitle
+                sx={{ m: 0, p: 2, fontSize: '1rem' }}>
                 Inserer d'image
             </DialogTitle>
             <IconButton
@@ -96,12 +100,12 @@ function ImgDialog() {
             >
                 <CloseIcon />
             </IconButton>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
                 value={activeTabIndex}
                 onChange={(_, tabIndex) => handleTabIndex(tabIndex)}
                 textColor='primary'
                 indicatorColor="primary"
-                centered
             >
                 {
                     tabTitle.map((title, index) => (
@@ -109,10 +113,12 @@ function ImgDialog() {
                             disableRipple
                             key={index}
                             label={title}
+                                sx={{ fontSize: '0.75rem' }}
                         />
                     ))
                 }
             </Tabs>
+            </Box>
             {tabComponent[activeTabIndex]}
         </Dialog>
     );
