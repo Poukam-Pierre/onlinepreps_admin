@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import uploadImg from '../../asset/upload_img.png';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import { dataDialog } from './questionUI';
 
 type TabComponent = Record<number, ReactNode>;
 const VisuallyHiddenInput = styled('input')({
@@ -17,8 +18,18 @@ const VisuallyHiddenInput = styled('input')({
     whiteSpace: 'nowrap',
     width: 1,
 });
-function ImgDialog() {
-    const [open, setOpen] = useState<boolean>(true);
+
+interface ImgDialogProps {
+    dataDialog: dataDialog;
+    setData: Dispatch<SetStateAction<dataDialog>>;
+    photoUpload: any;
+
+}
+function ImgDialog({
+    dataDialog: { open, questions, index, setQuestions },
+    setData,
+    photoUpload
+}: ImgDialogProps) {
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
     const tabTitle: string[] = ['Télécharger', 'Photos'];
     const handleTabIndex = (index: number) => {
@@ -119,6 +130,8 @@ function ImgDialog() {
             ))}
         </ImageList>
     }
+
+
     return (
         <Dialog
             fullWidth
