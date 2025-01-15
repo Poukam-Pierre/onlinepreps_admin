@@ -166,17 +166,12 @@ function questionsUI(
                                   )
                                 }
                               />
-                              <IconButton component="label" htmlFor="file">
+                              <IconButton onClick={() =>
+                                setDataDialog({ open: true, questions, index: index_1, setQuestions })
+                              }
+                              >
                                 <CropOriginalIcon sx={{ fontSize: 30 }} />
                               </IconButton>
-                              <input
-                                type="file"
-                                id="file"
-                                style={{ display: 'none' }}
-                                onChange={(e) =>
-                                  photoUpload(index_1, questions, setQuestions, e)
-                                }
-                              />
                             </Box>
                             <Box
                               paddingLeft="10px"
