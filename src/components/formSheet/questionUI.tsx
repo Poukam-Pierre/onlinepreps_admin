@@ -49,8 +49,15 @@ import {
   setPropositionAnswer,
 } from './functionSheet'
 import ImgDialog from './imageDialog'
+import { Dispatch, SetStateAction, useState } from 'react'
 
-function questionsUI(
+export interface dataDialog {
+  open: boolean,
+  questions: question[],
+  index: number,
+  setQuestions: Dispatch<SetStateAction<question[]>>,
+}
+function QuestionsUI(
   questions: question[],
   setQuestions: any,
   open: boolean,
