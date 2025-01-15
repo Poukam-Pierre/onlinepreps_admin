@@ -89,6 +89,7 @@ function ImgDialog() {
                 component='img'
                 src={uploadImg}
                 alt='upload image'
+                loading='lazy'
                 sx={{ maxWidth: 150 }}
             />
             <Button
