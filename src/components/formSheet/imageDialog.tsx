@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, Tab, Tabs } from "@mui/material";
+import { Box, Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, LinearProgress, Tab, Tabs } from "@mui/material";
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import uploadImg from '../../asset/upload_img.png';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -32,8 +32,17 @@ function ImgDialog({
 }: ImgDialogProps) {
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
     const tabTitle: string[] = ['Télécharger', 'Photos'];
+    const [progress, setProgress] = useState(0);
+    const [buffer, setBuffer] = useState(0);
+    const [hideUploadBtn, setHideUploadBtn] = useState(false);
+
     const handleTabIndex = (index: number) => {
         setActiveTabIndex(index)
+    }
+
+    const initLoader = () => {
+        setProgress(0);
+        setBuffer(0);
     }
     const itemData = [
         {
@@ -104,18 +113,38 @@ function ImgDialog({
                 sx={{ maxWidth: 150 }}
             />
             <Button
+                sx={{ display: !hideUploadBtn ? 'inherit' : 'none' }}
                 component='label'
                 variant='contained'
                 disableElevation
                 size='small'
                 startIcon={<CloudUploadIcon />}
+                onClick={initLoader}
             >
                 Télécharger
                 <VisuallyHiddenInput
                     type="file"
-                    onChange={(e) => photoUpload(index, questions, setQuestions, e)}
+                    onChange={(e) =>
+                        photoUpload(
+                            index,
+                            questions,
+                            setQuestions,
+                            e,
+                            setProgress,
+                            setBuffer,
+                            setHideUploadBtn,
+                            setData,
+
+                        )
+                    }
                 />
             </Button>
+            <Box sx={{
+                width: '90%',
+                display: hideUploadBtn ? 'block' : 'none',
+            }}>
+                <LinearProgress variant="buffer" value={progress} valueBuffer={buffer} />
+            </Box>
         </Box>,
         1: <ImageList cols={5} sx={{ p: 2 }}>
             {itemData.map((item) => (
