@@ -1,5 +1,7 @@
 // Made by Poukam Ngamaleu
 
+import { ChangeEvent } from "react"
+
 export const categoryArray: string[] = ['A', 'B', 'C', 'D', 'E']
 
 export interface Proposition {
@@ -217,17 +219,42 @@ export function photoUpload(
   index: number,
   questions: question[],
   setQuestions: any,
-  e: any
+  e: ChangeEvent<HTMLInputElement>,
+  setProgress: (value: number) => void,
+  setBuffer: (value: number) => void,
+  setHideUploadBtn: (value: boolean) => void,
+  setData: any
 ) {
   const reader = new FileReader()
-  const File = e.target.files[0]
-  reader.onloadend = () => {
-    var question = [...questions]
-    question[index].file = File
-    question[index].questionImg = reader.result as string
-    setQuestions(question)
+  const Files = e.target.files
+  if (Files && Files.length > 0) {
+    setHideUploadBtn(true);
+    const File = Files[0];
+    reader.onloadstart = () => {
+      setProgress(0)
+      setBuffer(10)
+    };
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded * 100) / event.total);
+        setProgress(percentComplete);
+        setBuffer(percentComplete + 10);
+      }
+    };
+    reader.onloadend = () => {
+      var question = [...questions];
+      question[index].file = File;
+      question[index].questionImg = reader.result as string;
+      setProgress(100);
+      setQuestions(question);
+      setTimeout(() => {
+        setHideUploadBtn(false);
+        setData((prevData: any) => ({ ...prevData, open: false }));
+      }, 1300);
+
+    };
+    reader.readAsDataURL(File);
   }
-  reader.readAsDataURL(File)
 }
 
 export function handleFeedBack(text: string, setFeedBack: any, setOpen: any) {
