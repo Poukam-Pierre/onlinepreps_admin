@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import Axios from 'axios'
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { CreateEmployeSchema } from './create_empl-schem'
@@ -125,14 +125,17 @@ function CreationEmploye() {
     validationSchema: CreateEmployeSchema,
   })
 
-  function photoUpload(e: any) {
+  function photoUpload(e: ChangeEvent<HTMLInputElement>) {
     const reader = new FileReader()
-    const file = e.target.files[0]
-    reader.onloadend = () => {
-      setFieldValue('file', file)
-      setFieldValue('imagePreviewUrl', reader.result)
+    const files = e.target.files
+    if (files && files.length > 0) {
+      const file = files[0]
+      reader.onloadend = () => {
+        setFieldValue('file', file)
+        setFieldValue('imagePreviewUrl', reader.result)
+      }
+      reader.readAsDataURL(file)
     }
-    reader.readAsDataURL(file)
   }
 
   function TransitionUp(props: TransitionProps) {

@@ -105,7 +105,9 @@ function FormSheet() {
           `propositionAnswer`,
           JSON.stringify(propositionAnswers)
         )
-        testInformations.append('file', file as string)
+        if (file) {
+          testInformations.append('file', file)
+        }
         testInformations.append(`feedback`, feedback as string)
       })
 

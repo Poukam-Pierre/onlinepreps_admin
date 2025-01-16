@@ -13,7 +13,7 @@ export interface question {
   questionBody: string
   propositionAnswers: Proposition[]
   questionImg?: string
-  file?: string
+  file?: File
   open: boolean
   answer?: boolean
   feedback?: string
