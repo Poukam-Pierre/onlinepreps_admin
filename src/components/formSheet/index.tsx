@@ -99,7 +99,7 @@ function FormSheet() {
       testInformations.append('language', language)
       testInformations.append('department', department)
       // eslint-disable-next-line array-callback-return
-      questionss.map(({ questionBody, propositionAnswers, feedback, file }) => {
+      questionss.map(({ questionBody, propositionAnswers, feedback, file, existingImg }) => {
         testInformations.append(`questionBody`, questionBody)
         testInformations.append(
           `propositionAnswer`,
@@ -107,6 +107,9 @@ function FormSheet() {
         )
         if (file) {
           testInformations.append('file', file)
+        }
+        if (existingImg) {
+          testInformations.append('existingImg', existingImg);
         }
         testInformations.append(`feedback`, feedback as string)
       })

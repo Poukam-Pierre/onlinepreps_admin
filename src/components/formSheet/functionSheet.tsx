@@ -19,6 +19,7 @@ export interface question {
   open: boolean
   answer?: boolean
   feedback?: string
+  existingImg?: string
 }
 
 // Functions
@@ -250,7 +251,7 @@ export function photoUpload(
       setTimeout(() => {
         setHideUploadBtn(false);
         setData((prevData: any) => ({ ...prevData, open: false }));
-      }, 1300);
+      }, 1000);
 
     };
     reader.readAsDataURL(File);
@@ -260,4 +261,18 @@ export function photoUpload(
 export function handleFeedBack(text: string, setFeedBack: any, setOpen: any) {
   setFeedBack(text)
   setOpen(true)
+}
+
+export function handleExistingImage(
+  index: number,
+  questions: question[],
+  setQuestions: any,
+  setData: any,
+  imgURL: string
+) {
+  var question = [...questions];
+  question[index].questionImg = imgURL;
+  question[index].existingImg = imgURL;
+  setQuestions(question);
+  setData((prevData: any) => ({ ...prevData, open: false }));
 }

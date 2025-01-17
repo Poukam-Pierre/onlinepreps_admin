@@ -132,7 +132,7 @@ function ModifyTestSheet() {
       testInformations.append('language', language as string)
       testInformations.append('department', department as string)
       // eslint-disable-next-line array-callback-return
-      questionss.map(({ questionBody, propositionAnswers, feedback, file }) => {
+      questionss.map(({ questionBody, propositionAnswers, feedback, file, existingImg }) => {
         testInformations.append(`questionBody`, questionBody)
         testInformations.append(
           `propositionAnswer`,
@@ -140,6 +140,9 @@ function ModifyTestSheet() {
         )
         if (file) {
           testInformations.append('file', file)
+        }
+        if (existingImg) {
+          testInformations.append('existingImg', existingImg)
         }
         testInformations.append(`feedback`, feedback as string)
       })

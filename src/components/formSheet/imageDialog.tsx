@@ -6,6 +6,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import { dataDialog } from './questionUI';
 import Axios from 'axios';
+import { handleExistingImage } from './functionSheet';
 
 type TabComponent = Record<number, ReactNode>;
 const VisuallyHiddenInput = styled('input')({
@@ -110,7 +111,13 @@ function ImgDialog({
                 <ImageListItem
                     key={item.img}
                     sx={{ cursor: 'pointer' }}
-                    onClick={() => console.log(item.img)}
+                    onClick={() => handleExistingImage(
+                        index,
+                        questions,
+                        setQuestions,
+                        setData,
+                        item.img,
+                    )}
                 >
                     <img
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
