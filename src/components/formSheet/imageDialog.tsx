@@ -104,9 +104,14 @@ function ImgDialog({
                 <LinearProgress variant="buffer" value={progress} valueBuffer={buffer} />
             </Box>
         </Box>,
-        1: <ImageList cols={5} sx={{ p: 2 }}>
-            {itemData.map((item) => (
-                <ImageListItem key={item.img}>
+
+        1: dataImg?.length > 0 ? <ImageList cols={5} sx={{ p: 2 }}>
+            {dataImg.map((item) => (
+                <ImageListItem
+                    key={item.img}
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => console.log(item.img)}
+                >
                     <img
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
