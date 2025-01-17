@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, LinearProgress, Tab, Tabs } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogTitle, IconButton, ImageList, ImageListItem, LinearProgress, Tab, Tabs } from "@mui/material";
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import uploadImg from '../../asset/upload_img.png';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -36,6 +36,7 @@ function ImgDialog({
     const [progress, setProgress] = useState(0);
     const [buffer, setBuffer] = useState(0);
     const [hideUploadBtn, setHideUploadBtn] = useState(false);
+    const [dataImg, setDataImg] = useState<{ img: string, title: string }[]>([]);
 
     const handleTabIndex = (index: number) => {
         setActiveTabIndex(index)
@@ -92,7 +93,6 @@ function ImgDialog({
                             setBuffer,
                             setHideUploadBtn,
                             setData,
-
                         )
                     }
                 />
@@ -121,6 +121,15 @@ function ImgDialog({
                 </ImageListItem>
             ))}
         </ImageList>
+            : <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+            }}
+            >
+                <CircularProgress size={30} />
+            </Box>
     }
 
 
@@ -138,7 +147,8 @@ function ImgDialog({
             <IconButton
                 aria-label="close"
                 onClick={() => setData(
-                    prevData => ({ ...prevData, open: false }))
+                    prevData => ({ ...prevData, open: false })
+                )
                 }
                 sx={(theme) => ({
                     position: 'absolute',
