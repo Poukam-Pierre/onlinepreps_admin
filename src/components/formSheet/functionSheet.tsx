@@ -68,6 +68,7 @@ export function removeImage(
   var question = [...questions]
   delete question[index].file
   delete question[index].questionImg
+  delete question[index].existingImg
   setQuestions(question)
 }
 
