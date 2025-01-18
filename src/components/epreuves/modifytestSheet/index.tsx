@@ -147,7 +147,7 @@ function ModifyTestSheet() {
         testInformations.append(`feedback`, feedback as string)
       })
 
-      setLoading(true)
+      setLoading(true);
       Axios.post(
         positionImgArray
           ? `${process.env.REACT_APP_URL_REMOTE_LINK}/employe/savingModifExam/${positionImgArray}`
